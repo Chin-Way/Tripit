@@ -1,0 +1,155 @@
+{
+  "city": "San Francisco",
+  "note": "Seed dataset for the TripIt itinerary engine. Ratings/review counts are illustrative seed values for the demo; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
+  "venues": [
+    {
+      "id": "sf-cal-academy", "name": "California Academy of Sciences", "icon": "museum", "color": "blue",
+      "area": "Golden Gate Park", "meta": "$$$ · aquarium + planetarium", "price": "$$$",
+      "rating": 4.6, "count": 28000, "category": "museum", "durationMins": 150,
+      "tags": ["stroller", "indoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "Aquarium, rainforest dome, and planetarium under one roof — fully indoor with changing tables.",
+      "hl": {
+        "stroller": "Ramps and elevators throughout; easy with a stroller.",
+        "indoor": "Everything indoors — perfect for a foggy SF afternoon."
+      }
+    },
+    {
+      "id": "sf-exploratorium", "name": "Exploratorium", "icon": "museum", "color": "purple",
+      "area": "Embarcadero", "meta": "$$$ · hands-on · Pier 15", "price": "$$$",
+      "rating": 4.7, "count": 16000, "category": "museum", "durationMins": 150,
+      "tags": ["stroller", "indoor"], "napFriendly": false, "meal": false,
+      "why": "Hundreds of hands-on exhibits right on the bay — endlessly engaging for curious kids.",
+      "hl": {
+        "stroller": "Wide-open floors; strollers roll anywhere.",
+        "indoor": "A huge indoor playground for the mind on the waterfront."
+      }
+    },
+    {
+      "id": "sf-golden-gate-park", "name": "Golden Gate Park", "icon": "tree", "color": "green",
+      "area": "Golden Gate Park", "meta": "Free · gardens & playgrounds", "price": "Free",
+      "rating": 4.8, "count": 52000, "category": "park", "durationMins": 100,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Bigger than Central Park, with gardens, a carousel, and the Koret playground — calm and free.",
+      "hl": {
+        "stroller": "Flat, shaded paths between the gardens.",
+        "naptimed": "Quiet meadows make an easy stroller nap.",
+        "free": "Free to roam — pick a corner and linger."
+      }
+    },
+    {
+      "id": "sf-zoo", "name": "San Francisco Zoo", "icon": "paw", "color": "blue",
+      "area": "Sunset District", "meta": "$$ · oceanside zoo", "price": "$$",
+      "rating": 4.4, "count": 17000, "category": "zoo", "durationMins": 120,
+      "tags": ["stroller", "outdoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "An oceanside zoo with a little steam train and a hands-on children's zoo.",
+      "hl": {
+        "stroller": "Flat, paved loops — easy going with little ones."
+      }
+    },
+    {
+      "id": "sf-pier-39", "name": "Pier 39", "icon": "wheel", "color": "green",
+      "area": "Fisherman's Wharf", "meta": "Free · sea lions & carousel", "price": "Free",
+      "rating": 4.6, "count": 110000, "category": "landmark", "durationMins": 90,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Barking sea lions, a double-decker carousel, and bay views — free to wander.",
+      "hl": {
+        "stroller": "Flat boardwalk along the water.",
+        "naptimed": "The mellow waterfront stroll lulls kids right off.",
+        "free": "Free to walk the pier and watch the sea lions."
+      }
+    },
+    {
+      "id": "sf-crissy-field", "name": "Crissy Field", "icon": "boat", "color": "teal",
+      "area": "Presidio", "meta": "Free · beach & Golden Gate views", "price": "Free",
+      "rating": 4.8, "count": 14000, "category": "water", "durationMins": 90,
+      "tags": ["outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Flat shoreline paths and a calm beach under the Golden Gate Bridge — wide open and free.",
+      "hl": {
+        "naptimed": "The long, flat shoreline path is a dependable nap walk.",
+        "free": "Free beach and bridge views — bring a picnic."
+      }
+    },
+    {
+      "id": "sf-aquarium-bay", "name": "Aquarium of the Bay", "icon": "fish", "color": "blue",
+      "area": "Fisherman's Wharf", "meta": "$$$ · indoor · Pier 39", "price": "$$$",
+      "rating": 4.3, "count": 9000, "category": "museum", "durationMins": 90,
+      "tags": ["stroller", "indoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "Walk-through tunnels of local bay sea life — compact, indoor, and right on Pier 39.",
+      "hl": {
+        "stroller": "Step-free tunnels; easy with a stroller.",
+        "indoor": "A quick indoor option by the wharf."
+      }
+    },
+    {
+      "id": "sf-creativity-museum", "name": "Children's Creativity Museum", "icon": "play", "color": "amber",
+      "area": "SoMa", "meta": "$$ · ages 2–12 · indoor", "price": "$$",
+      "rating": 4.3, "count": 2400, "category": "play", "durationMins": 100,
+      "tags": ["stroller", "indoor", "changing", "highchair"], "napFriendly": false, "meal": false,
+      "why": "Hands-on art and tech studios plus the historic carousel next door at Yerba Buena.",
+      "hl": {
+        "stroller": "Open, step-free studios with stroller parking.",
+        "indoor": "All-indoor making and tinkering — a good rainy backup."
+      }
+    },
+    {
+      "id": "sf-mels", "name": "Mel's Drive-In", "icon": "fork", "color": "amber",
+      "area": "Mission / multiple", "meta": "$$ · retro diner", "price": "$$",
+      "rating": 4.3, "count": 9000, "category": "food", "durationMins": 60,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "A retro diner with a kids' menu, high chairs, and milkshakes — easy crowd-pleaser.",
+      "hl": {
+        "kidmenu": "Classic kids' plates and shakes; high chairs ready.",
+        "indoor": "Comfy booths for a midday break."
+      }
+    },
+    {
+      "id": "sf-tonys-pizza", "name": "Tony's Pizza Napoletana", "icon": "pizza", "color": "amber",
+      "area": "North Beach", "meta": "$$ · award-winning pizza", "price": "$$",
+      "rating": 4.6, "count": 11000, "category": "food", "durationMins": 70,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "Famous pizza in North Beach with simple cheese pies the kids will devour.",
+      "hl": {
+        "kidmenu": "Plain cheese pizza and high chairs keep everyone happy.",
+        "indoor": "A warm indoor sit-down between sights."
+      }
+    },
+    {
+      "id": "sf-ghirardelli", "name": "Ghirardelli Square", "icon": "cup", "color": "amber",
+      "area": "Fisherman's Wharf", "meta": "Free entry · sundaes", "price": "$",
+      "rating": 4.5, "count": 23000, "category": "food", "durationMins": 45,
+      "tags": ["kidmenu", "indoor"], "napFriendly": false, "meal": true,
+      "why": "A hot-fudge sundae stop in a historic square — a sweet, low-key midday treat.",
+      "hl": {
+        "kidmenu": "Sundaes and simple bites the whole family shares.",
+        "indoor": "Duck inside the chocolate shop out of the wind."
+      }
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Argonaut Hotel", "area": "Fisherman's Wharf", "rating": 4.5, "count": 4100,
+      "color": "teal", "price": "$$$", "badge": "Top family pick",
+      "tags": [["Bay views", "teal"], ["Walk to Pier 39", "blue"], ["Cribs", "purple"], ["Nautical theme", "green"]],
+      "why": "A playful nautical hotel right on the wharf — walk to the sea lions, the cable car, and Ghirardelli Square."
+    },
+    {
+      "name": "Hyatt Regency San Francisco", "area": "Embarcadero", "rating": 4.4, "count": 9800,
+      "color": "blue", "price": "$$$",
+      "tags": [["Atrium lobby", "blue"], ["By the Ferry Building", "teal"], ["Spacious rooms", "purple"], ["Tram outside", "green"]],
+      "why": "Big rooms and a dramatic atrium right by the Embarcadero and the historic F-line streetcar to the wharf."
+    },
+    {
+      "name": "Hotel Zephyr Fisherman's Wharf", "area": "Fisherman's Wharf", "rating": 4.2, "count": 5200,
+      "color": "green", "price": "$$",
+      "tags": [["Outdoor games yard", "green"], ["Walk to Pier 39", "blue"], ["Family rooms", "amber"]],
+      "why": "A fun waterfront hotel with an outdoor games courtyard the kids love, steps from Pier 39.",
+      "note": "Heads up: a daily amenity fee applies."
+    },
+    {
+      "name": "Hilton San Francisco Union Square", "area": "Union Square", "rating": 4.2, "count": 14000,
+      "color": "purple", "price": "$$",
+      "tags": [["Central location", "purple"], ["Pool", "blue"], ["Cable car nearby", "green"]],
+      "why": "A central base by Union Square with a pool and the Powell St cable car a block away."
+    }
+  ]
+}

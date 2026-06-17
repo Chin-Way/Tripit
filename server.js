@@ -7,7 +7,7 @@
 // @anthropic-ai/sdk is installed; otherwise the rules engine handles everything.
 
 import http from "node:http";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -20,11 +20,21 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, "public");
 const PORT = process.env.PORT || 3000;
 
-// Seed dataset (fallback). When GOOGLE_PLACES_API_KEY is set we fetch live data
-// instead and cache it; otherwise this curated file is used.
-const seed = JSON.parse(await readFile(path.join(__dirname, "data", "chicago.json"), "utf8"));
+// Load every seed city dataset from /data into a map keyed by lowercased city.
+// These are the cities the demo works for with no Places key.
+const DATA_DIR = path.join(__dirname, "data");
+const seeds = new Map(); // cityLower -> { city, venues, hotels }
+for (const f of await readdir(DATA_DIR)) {
+  if (!f.endsWith(".json")) continue;
+  try {
+    const d = JSON.parse(await readFile(path.join(DATA_DIR, f), "utf8"));
+    if (d && d.city) seeds.set(d.city.toLowerCase(), d);
+  } catch (err) {
+    console.warn(`[data] skipped ${f}:`, err.message);
+  }
+}
+const SEED_CITIES = [...seeds.values()].map((d) => d.city).sort();
 
-const SEED_CITY = seed.city || "Chicago";
 const PLACES_TTL_MS = 6 * 60 * 60 * 1000; // refresh live venues every 6 hours
 const dataCache = new Map(); // cityKey -> { at, data }
 
@@ -32,15 +42,16 @@ function sanitizeCity(c) {
   return typeof c === "string" ? c.replace(/\s+/g, " ").trim().slice(0, 80) : "";
 }
 
-// Returns the venue dataset for a city. With a Places key, fetches live data
-// (cached per city). Without a key, only the seed city is available — other
-// cities come back with no venues (the front-end shows a "try Chicago" state).
+// Returns the venue dataset for a city. With a Places key, fetches live data for
+// any city (cached). Without a key, only the seeded cities are available; others
+// come back with no venues (the front-end shows a "try another city" state).
 async function getData(cityArg) {
-  const city = sanitizeCity(cityArg) || SEED_CITY;
-  const isSeedCity = city.toLowerCase() === SEED_CITY.toLowerCase();
+  const cityIn = sanitizeCity(cityArg) || "Chicago";
+  const seed = seeds.get(cityIn.toLowerCase()); // full seed file if we have this city
+  const city = seed ? seed.city : cityIn; // canonical display name
   const key = process.env.GOOGLE_PLACES_API_KEY;
 
-  if (!key) return isSeedCity ? seed : { city, venues: [], hotels: [] };
+  if (!key) return seed || { city, venues: [], hotels: [] };
 
   const ck = city.toLowerCase();
   const hit = dataCache.get(ck);
@@ -48,13 +59,13 @@ async function getData(cityArg) {
   try {
     const { getVenues } = await import("./lib/places.js");
     const venues = await getVenues(city, key);
-    const data = { city, venues, hotels: isSeedCity ? seed.hotels : [], source: "places" };
+    const data = { city, venues, hotels: seed ? seed.hotels : [], source: "places" };
     dataCache.set(ck, { at: Date.now(), data });
     console.log(`[places] loaded ${venues.length} live venues for ${city}`);
     return data;
   } catch (err) {
     console.warn(`[places] live fetch failed for ${city}:`, err.message);
-    return isSeedCity ? seed : { city, venues: [], hotels: [] };
+    return seed || { city, venues: [], hotels: [] };
   }
 }
 
@@ -109,7 +120,7 @@ async function handlePlan(req, res) {
   const data = await getData(answers.city); // live Places data for the city, else seed
   if (!data.venues || !data.venues.length) {
     // No data for this city (non-seed city without a Places key, or a fetch error).
-    return send(res, 200, JSON.stringify({ city: data.city, days: [], unavailable: true }), {
+    return send(res, 200, JSON.stringify({ city: data.city, days: [], hotels: data.hotels || [], unavailable: true }), {
       "Content-Type": MIME[".json"],
     });
   }
@@ -126,6 +137,7 @@ async function handlePlan(req, res) {
     }
   }
   if (!plan) plan = generatePlan(answers, data);
+  plan.hotels = data.hotels || []; // the city's stays, for the Stay tab
 
   send(res, 200, JSON.stringify(plan), { "Content-Type": MIME[".json"] });
 }
@@ -149,8 +161,13 @@ async function serveStatic(req, res) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    if (req.url.split("?")[0] === "/api/plan" && req.method === "POST") {
+    const route = req.url.split("?")[0];
+    if (route === "/api/plan" && req.method === "POST") {
       return await handlePlan(req, res);
+    }
+    if (route === "/api/cities" && req.method === "GET") {
+      // The cities the demo can plan without a Places key (drives the survey chips).
+      return send(res, 200, JSON.stringify({ cities: SEED_CITIES }), { "Content-Type": MIME[".json"] });
     }
     if (req.method === "GET") return await serveStatic(req, res);
     send(res, 405, "Method not allowed");

@@ -147,10 +147,14 @@ app — the "visit the site" and "download the app" goals in one code.
 - [x] Swap seed venue data for the **Google Places API** (live ratings, locations,
       kid attributes) — set `GOOGLE_PLACES_API_KEY`. *Next: map opening hours and
       photos; add a human-vetted overlay for nap-timing/changing tables.*
-- [x] Plan **any city** — the survey now asks where you're headed and the Places
-      layer fetches that city. *Without a Places key, the demo only has Chicago data;
-      other cities show a "try Chicago" prompt.* *Next: seed a few more cities so the
-      no-key demo isn't Chicago-only, and make the Stay tab city-aware.*
+- [x] Plan **any city** — the survey asks where you're headed; the Places layer
+      fetches that city (any city with a key).
+- [x] **Seeded cities for the keyless demo:** Chicago, New York, San Francisco,
+      Washington DC, San Diego (each ~11–16 venues + hotels in `data/*.json`).
+      Cities outside this set show a "try one of these" prompt unless a Places key
+      is set. The survey chips come from `GET /api/cities`.
+- [x] **City-aware Stay tab** — hotels come from each city's data; cities without
+      hotel data show a "coming soon" state.
 - [ ] User accounts + saved trips in a database (currently saved on-device only).
 - [ ] Wire the **Stay** tab to the data layer / hotel booking affiliates.
 - [ ] Real PNG app icons (an SVG icon is included for now).

@@ -1,0 +1,157 @@
+{
+  "city": "New York",
+  "note": "Seed dataset for the TripIt itinerary engine. Ratings/review counts are illustrative seed values for the demo; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
+  "venues": [
+    {
+      "id": "ny-central-park", "name": "Central Park", "icon": "tree", "color": "green",
+      "area": "Midtown", "meta": "Free · 843 acres", "price": "Free",
+      "rating": 4.8, "count": 285000, "category": "park", "durationMins": 120,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Endless flat, paved paths and playgrounds — the easiest stroller-nap loop in the city, and free.",
+      "hl": {
+        "stroller": "Miles of smooth, level paths — even a double stroller rolls easily.",
+        "naptimed": "Find a quiet bench by the Mall and the stroller does the rest.",
+        "free": "No ticket needed — wander as long as the kids are happy."
+      }
+    },
+    {
+      "id": "ny-amnh", "name": "American Museum of Natural History", "icon": "museum", "color": "purple",
+      "area": "Upper West Side", "meta": "$$$ · dinosaurs · indoor", "price": "$$$",
+      "rating": 4.7, "count": 95000, "category": "museum", "durationMins": 150,
+      "tags": ["stroller", "indoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "Dinosaurs, the blue whale, and the planetarium — fully indoor with elevators and changing tables.",
+      "hl": {
+        "stroller": "Elevators reach every floor; visitors confirm it's fully stroller-friendly.",
+        "indoor": "A huge indoor day — the go-to when the weather turns."
+      }
+    },
+    {
+      "id": "ny-bronx-zoo", "name": "Bronx Zoo", "icon": "paw", "color": "blue",
+      "area": "The Bronx", "meta": "$$ · 265 acres", "price": "$$",
+      "rating": 4.6, "count": 38000, "category": "zoo", "durationMins": 150,
+      "tags": ["stroller", "outdoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "One of the country's largest zoos with wide, stroller-easy paths and a dedicated children's zoo.",
+      "hl": {
+        "stroller": "Broad paved loops — families say it's an easy push between exhibits."
+      }
+    },
+    {
+      "id": "ny-brooklyn-bridge-park", "name": "Brooklyn Bridge Park", "icon": "boat", "color": "teal",
+      "area": "Brooklyn", "meta": "Free · riverfront", "price": "Free",
+      "rating": 4.8, "count": 26000, "category": "park", "durationMins": 90,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Flat riverside paths with skyline views and playgrounds — a calm, free stroller stretch.",
+      "hl": {
+        "stroller": "Smooth waterfront promenade from end to end.",
+        "naptimed": "The breezy river walk is a reliable nap-window stroll.",
+        "free": "Free and open — an easy add-on near DUMBO."
+      }
+    },
+    {
+      "id": "ny-high-line", "name": "The High Line", "icon": "tree", "color": "green",
+      "area": "Chelsea", "meta": "Free · elevated park", "price": "Free",
+      "rating": 4.7, "count": 60000, "category": "landmark", "durationMins": 60,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "A flat, car-free elevated garden walk — stroller-smooth, scenic, and free.",
+      "hl": {
+        "stroller": "Step-free the whole way (use the elevators at access points).",
+        "naptimed": "A gentle, steady stroll above the streets — good for a nap.",
+        "free": "No ticket — a quick, pretty stretch between Chelsea stops."
+      }
+    },
+    {
+      "id": "ny-intrepid", "name": "Intrepid Museum", "icon": "boat", "color": "blue",
+      "area": "Hell's Kitchen", "meta": "$$$ · aircraft carrier", "price": "$$$",
+      "rating": 4.8, "count": 42000, "category": "museum", "durationMins": 150,
+      "tags": ["stroller", "indoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "A real aircraft carrier, a space shuttle, and a submarine — big, indoor, and a hit with kids.",
+      "hl": {
+        "stroller": "Elevators and ramps connect the decks for strollers.",
+        "indoor": "Mostly indoor — a solid all-weather plan on the West Side."
+      }
+    },
+    {
+      "id": "ny-cmom", "name": "Children's Museum of Manhattan", "icon": "play", "color": "amber",
+      "area": "Upper West Side", "meta": "$$ · ages 0–10 · indoor", "price": "$$",
+      "rating": 4.5, "count": 3200, "category": "play", "durationMins": 120,
+      "tags": ["stroller", "indoor", "changing", "highchair"], "napFriendly": false, "meal": false,
+      "why": "Five floors built for little kids — hands-on play, story time, and a toddler zone.",
+      "hl": {
+        "stroller": "Stroller parking inside and step-free play areas.",
+        "indoor": "All-indoor and designed for under-10s — a great backup."
+      }
+    },
+    {
+      "id": "ny-battery-park", "name": "Battery Park", "icon": "star", "color": "purple",
+      "area": "Lower Manhattan", "meta": "Free · harbor views", "price": "Free",
+      "rating": 4.7, "count": 30000, "category": "landmark", "durationMins": 60,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Open harbor-front lawns with Statue of Liberty views — a calm, free finish to the day.",
+      "hl": {
+        "stroller": "Wide, flat paths along the water.",
+        "naptimed": "Sea breeze and open space — an easy wind-down.",
+        "free": "Free views of the harbor and Lady Liberty."
+      }
+    },
+    {
+      "id": "ny-juniors", "name": "Junior's Restaurant", "icon": "fork", "color": "amber",
+      "area": "Times Square", "meta": "$$ · diner · cheesecake", "price": "$$",
+      "rating": 4.5, "count": 18000, "category": "food", "durationMins": 70,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "A classic diner with a real kids' menu, high chairs, and famous cheesecake to seal the deal.",
+      "hl": {
+        "kidmenu": "Kids' menu and high chairs ready — easy with picky eaters.",
+        "indoor": "Roomy indoor booths for a calm midday reset."
+      }
+    },
+    {
+      "id": "ny-joes-pizza", "name": "Joe's Pizza", "icon": "pizza", "color": "amber",
+      "area": "Greenwich Village", "meta": "$ · classic slices", "price": "$",
+      "rating": 4.6, "count": 24000, "category": "food", "durationMins": 45,
+      "tags": ["kidmenu", "indoor"], "napFriendly": false, "meal": true,
+      "why": "Fast, cheap, beloved plain slices kids actually eat — grab a slice and keep moving.",
+      "hl": {
+        "kidmenu": "Simple cheese slices please little eaters.",
+        "indoor": "A quick indoor refuel between stops."
+      }
+    },
+    {
+      "id": "ny-shake-shack", "name": "Shake Shack — Madison Square", "icon": "fork", "color": "green",
+      "area": "Flatiron", "meta": "$ · burgers · the original", "price": "$",
+      "rating": 4.5, "count": 16000, "category": "food", "durationMins": 50,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "The original Shake Shack by the park — burgers, a kids' menu, and high chairs.",
+      "hl": {
+        "kidmenu": "Kid-sized burgers and shakes; high chairs on hand.",
+        "indoor": "Order and sit by Madison Square Park."
+      }
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Hotel Beacon", "area": "Upper West Side", "rating": 4.5, "count": 3400,
+      "color": "teal", "price": "$$$", "badge": "Top family pick",
+      "tags": [["Kitchenette suites", "teal"], ["Near the museum", "blue"], ["Quiet UWS", "green"], ["Central Park close", "purple"]],
+      "why": "Kitchenette suites on the calm Upper West Side — walk to the Natural History museum and Central Park. A longtime family favorite."
+    },
+    {
+      "name": "Embassy Suites by Hilton Manhattan Times Square", "area": "Midtown · near Times Square",
+      "rating": 4.3, "count": 5400, "color": "blue", "price": "$$$", "badge": "Most room to spread out",
+      "tags": [["2-room suites", "blue"], ["Free hot breakfast", "amber"], ["Kids stay free", "purple"], ["Steps to Times Square", "teal"]],
+      "why": "Apartment-style two-room suites and a made-to-order breakfast give everyone space to recharge, a short walk from Times Square and the subway.",
+      "note": "Heads up: Midtown can be loud — ask for a higher floor."
+    },
+    {
+      "name": "Hyatt Place New York/Midtown-South", "area": "Midtown · 28th St",
+      "rating": 4.3, "count": 3100, "color": "purple", "price": "$$",
+      "tags": [["Sofa-bed rooms", "purple"], ["Free breakfast", "amber"], ["Family favorite", "green"]],
+      "why": "Roomy rooms with a pull-out sofa, free breakfast, and an easy walk to the Empire State Building."
+    },
+    {
+      "name": "The Manhattan at Times Square", "area": "Midtown · 7th Ave",
+      "rating": 4.0, "count": 9000, "color": "green", "price": "$$",
+      "tags": [["Central location", "green"], ["Connecting rooms", "blue"], ["On-site dining", "amber"]],
+      "why": "A budget-friendly, very central base with connecting rooms for bigger families."
+    }
+  ]
+}

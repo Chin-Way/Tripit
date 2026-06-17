@@ -380,13 +380,15 @@ const PIC={moon:'<svg viewBox="0 0 24 24" fill="none" stroke="#06131f" stroke-wi
 let svStep=0; const svAns={}; SURVEY.forEach(s=>svAns[s.id]= s.type==='multi'?[]:null);
 let activeDay=1, activeFilters=new Set(), saved=[], done=new Set(), profileData=null, currentTab='plan';
 let TRIP=DAYS;  // the live itinerary — seeded with the sample until the engine returns a tailored one
+let stayHotels=HOTELS;  // the city's hotels for the Stay tab (defaults to the Chicago sample)
+let SEED_CITIES=['Chicago','New York','San Francisco','Washington DC','San Diego']; // cities the demo covers without a Places key
 
 /* ---- persistence: keep the trip, Saved, check-offs & profile across reloads ---- */
 const STORE='tripit.v1';
-function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,activeDay}));}catch(e){}}
+function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay}));}catch(e){}}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');if(!s)return false;
   Object.assign(svAns,s.svAns||{});saved=s.saved||[];done=new Set(s.done||[]);profileData=s.profileData||null;
-  if(s.TRIP&&s.TRIP.length)TRIP=s.TRIP;activeDay=s.activeDay||1;
+  if(s.TRIP&&s.TRIP.length)TRIP=s.TRIP;if(Array.isArray(s.stayHotels))stayHotels=s.stayHotels;activeDay=s.activeDay||1;
   return !!(profileData&&TRIP&&TRIP.length);}catch(e){return false;}}
 
 /* ============ SURVEY ============ */
@@ -396,7 +398,7 @@ function renderSurvey(){
   let body,canNext;
   if(q.type==='city'){
     const city=(svAns.city||'').trim();canNext=!!city;
-    const chips=q.opts.map(([label])=>`<div class="sv-chip ${city===label?'sel':''}" data-city="${label}">${label}</div>`).join('');
+    const chips=SEED_CITIES.map(label=>`<div class="sv-chip ${city===label?'sel':''}" data-city="${esc(label)}">${esc(label)}</div>`).join('');
     body=`<input id="cityInput" class="sv-input" placeholder="Type any city…" value="${(svAns.city||'').replace(/"/g,'&quot;')}" autocomplete="off" autocapitalize="words"><div class="sv-chiprow">${chips}</div>`;
   } else {
     const opts=q.opts.map(([label,val,c])=>{const on=q.type==='multi'?sel.includes(val):sel===val;
@@ -429,7 +431,7 @@ async function buildProfile(){
   computeProfile();
   try{
     const r=await fetch('/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(svAns)});
-    if(r.ok){const data=await r.json();TRIP=(data&&data.days)?data.days:[];activeDay=1;}
+    if(r.ok){const data=await r.json();TRIP=(data&&data.days)?data.days:[];stayHotels=(data&&Array.isArray(data.hotels))?data.hotels:[];activeDay=1;}
   }catch(e){/* engine unreachable \u2014 keep the seeded sample itinerary */}
   saveState();
   showResult();
@@ -487,7 +489,7 @@ function renderTimeline(animate){
   if(!day){
     el('dayprog').innerHTML='';
     const c=esc(svAns.city||'this city');
-    el('timeline').innerHTML=`<div class="empty"><div class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z"/><circle cx="12" cy="11" r="2.3"/></svg></div><b>We couldn’t build ${c} yet</b><span>The demo has venue data for Chicago. Try <b style="color:var(--teal)">Chicago</b>, or add a Google Places key to plan any city.</span><button class="retake" id="emptyEdit" style="max-width:240px"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/></svg>Try another city</button></div>`;
+    el('timeline').innerHTML=`<div class="empty"><div class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z"/><circle cx="12" cy="11" r="2.3"/></svg></div><b>We couldn’t build ${c} yet</b><span>The demo covers <b style="color:var(--teal)">${esc(SEED_CITIES.join(', '))}</b>. Try one of those, or add a Google Places key to plan any city.</span><button class="retake" id="emptyEdit" style="max-width:240px"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/></svg>Try another city</button></div>`;
     const eb=el('timeline').querySelector('#emptyEdit');if(eb)eb.onclick=openSurvey;
     return;
   }
@@ -526,9 +528,14 @@ function findStop(name){for(const d of TRIP)for(const s of d.stops)if(s.name===n
 
 /* ============ STAY (HOTELS) ============ */
 function renderStay(){
-  let html=`<div class="ph-title">Where to stay</div><div class="ph-sub">Kid-friendly bases, all near your itinerary.</div>
+  const city=esc(svAns.city||'your city');
+  if(!stayHotels.length){
+    el('stayView').innerHTML=`<div class="ph-title">Where to stay</div><div class="ph-sub">Kid-friendly bases near your itinerary.</div><div class="empty"><div class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6"/></svg></div><b>Stays for ${city} are coming soon</b><span>We hand-pick family hotels per city. ${city} isn\u2019t in the demo yet \u2014 the itinerary still works.</span></div>`;
+    return;
+  }
+  let html=`<div class="ph-title">Where to stay</div><div class="ph-sub">Kid-friendly bases in ${city}, near your itinerary.</div>
     <div class="hintro"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6"/></svg><p>We favor <b>family brands</b> \u2014 suite-style rooms, free breakfast, pools, and kids-stay-free policies \u2014 so everyone has room to recharge. Book without leaving the app.</p></div>`;
-  html+=HOTELS.map(h=>{const ac=ACS[h.color];
+  html+=stayHotels.map(h=>{const ac=ACS[h.color]||ACS.teal;
     const tags=h.tags.map(([t,c])=>`<span class="tag"><span class="tk" style="background:${ACS[c].a}"></span>${t}</span>`).join('');
     return `<div class="hotel" style="--ac:${ac.a}">
       ${h.badge?`<div class="hbadge"><svg viewBox="0 0 24 24" fill="#06131f"><path d="M12 2l2.4 6.9H22l-6 4.5 2.3 7L12 16.9 5.7 20.4 8 13.4l-6-4.5h7.6z"/></svg>${h.badge}</div>`:''}
@@ -539,8 +546,8 @@ function renderStay(){
       <p class="hwhy">${h.why}</p>
       ${h.note?`<div class="hnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>${h.note}</div>`:''}
       <div class="hacts">
-        <a class="hbtn map" href="https://www.google.com/maps/search/?api=1&query=${enc(h.name)}&query_place_id=${h.pid}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.3"/></svg>Map</a>
-        <a class="hbtn book" href="https://www.google.com/travel/search?q=${enc(h.name+' Chicago')}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 7l1 13h16l1-13M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Check rates</a>
+        <a class="hbtn map" href="https://www.google.com/maps/search/?api=1&query=${enc(h.name+' '+(svAns.city||''))}${h.pid?`&query_place_id=${h.pid}`:''}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.3"/></svg>Map</a>
+        <a class="hbtn book" href="https://www.google.com/travel/search?q=${enc(h.name+' '+(svAns.city||''))}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 7l1 13h16l1-13M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Check rates</a>
       </div>
     </div>`;}).join('');
   el('stayView').innerHTML=html;
@@ -583,6 +590,7 @@ document.querySelectorAll('#tabbar .tab').forEach(t=>t.onclick=()=>switchTab(t.d
 
 /* ============ INIT ============ */
 if(loadState()){finishOnboard();}else{renderSurvey();}
+fetch('/api/cities').then(r=>r.json()).then(d=>{if(d&&Array.isArray(d.cities)&&d.cities.length){SEED_CITIES=d.cities;if(el('surveyView').classList.contains('on')&&svStep===0&&!(svAns.city&&String(svAns.city).trim()))renderSurvey();}}).catch(()=>{});
 setTimeout(()=>el('splash').classList.add('hide'),1750);
 if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
 let deferredPrompt=null;

@@ -1,0 +1,160 @@
+{
+  "city": "Washington DC",
+  "note": "Seed dataset for the TripIt itinerary engine. Ratings/review counts are illustrative seed values for the demo; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
+  "venues": [
+    {
+      "id": "dc-air-space", "name": "National Air and Space Museum", "icon": "boat", "color": "blue",
+      "area": "National Mall", "meta": "Free · rockets & planes · indoor", "price": "Free",
+      "rating": 4.7, "count": 62000, "category": "museum", "durationMins": 150,
+      "tags": ["stroller", "indoor", "free", "changing"], "napFriendly": false, "meal": false,
+      "why": "Rockets, jets, and the Moon — one of the most popular museums anywhere, and free.",
+      "hl": {
+        "stroller": "Wide galleries and elevators; fully stroller-friendly.",
+        "indoor": "All-indoor and huge — easy to escape heat or rain.",
+        "free": "Free entry (timed passes in peak season)."
+      }
+    },
+    {
+      "id": "dc-natural-history", "name": "National Museum of Natural History", "icon": "museum", "color": "blue",
+      "area": "National Mall", "meta": "Free · dinosaurs · indoor", "price": "Free",
+      "rating": 4.7, "count": 58000, "category": "museum", "durationMins": 150,
+      "tags": ["stroller", "indoor", "free", "changing"], "napFriendly": false, "meal": false,
+      "why": "Dinosaurs, the Hope Diamond, and a live butterfly pavilion — free and fully indoor.",
+      "hl": {
+        "stroller": "Elevators throughout; an easy push between halls.",
+        "indoor": "A reliable all-weather morning on the Mall.",
+        "free": "Free admission to the whole museum."
+      }
+    },
+    {
+      "id": "dc-zoo", "name": "Smithsonian's National Zoo", "icon": "paw", "color": "green",
+      "area": "Woodley Park", "meta": "Free · pandas", "price": "Free",
+      "rating": 4.6, "count": 41000, "category": "zoo", "durationMins": 120,
+      "tags": ["stroller", "outdoor", "free", "changing"], "napFriendly": false, "meal": false,
+      "why": "Free to enter, home to giant pandas and a great ape trail, with paved, stroller-easy paths.",
+      "hl": {
+        "stroller": "Paved main loop — note it's a gentle hill at the far end.",
+        "free": "Free admission; you only pay for parking.",
+        "outdoor": "Lots of open-air space between habitats."
+      }
+    },
+    {
+      "id": "dc-national-mall", "name": "National Mall", "icon": "star", "color": "purple",
+      "area": "National Mall", "meta": "Free · monuments", "price": "Free",
+      "rating": 4.8, "count": 96000, "category": "landmark", "durationMins": 90,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Wide-open lawns connecting the monuments — a flat, free stroller stroll past the icons.",
+      "hl": {
+        "stroller": "Long, level paths the length of the Mall.",
+        "naptimed": "An easy, scenic stroll for the nap window.",
+        "free": "All free — picnic on the grass between sights."
+      }
+    },
+    {
+      "id": "dc-american-history", "name": "National Museum of American History", "icon": "museum", "color": "amber",
+      "area": "National Mall", "meta": "Free · indoor", "price": "Free",
+      "rating": 4.7, "count": 26000, "category": "museum", "durationMins": 120,
+      "tags": ["stroller", "indoor", "free", "changing"], "napFriendly": false, "meal": false,
+      "why": "The original Star-Spangled Banner plus a hands-on Wonderplace for the youngest visitors.",
+      "hl": {
+        "stroller": "Spacious and step-free with elevators.",
+        "indoor": "Another free indoor option steps away on the Mall.",
+        "free": "Free entry, including the kids' Wonderplace."
+      }
+    },
+    {
+      "id": "dc-botanic-garden", "name": "United States Botanic Garden", "icon": "tree", "color": "green",
+      "area": "Capitol Hill", "meta": "Free · indoor jungle", "price": "Free",
+      "rating": 4.8, "count": 14000, "category": "park", "durationMins": 60,
+      "tags": ["stroller", "indoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "A free, warm indoor jungle at the foot of the Capitol — calm, green, and stroller-smooth.",
+      "hl": {
+        "stroller": "Flat indoor paths under glass.",
+        "indoor": "Warm and quiet — a lovely slow-down spot.",
+        "free": "Free to wander the conservatory."
+      }
+    },
+    {
+      "id": "dc-tidal-basin", "name": "Tidal Basin", "icon": "boat", "color": "teal",
+      "area": "West Potomac Park", "meta": "Free · paddle boats", "price": "Free",
+      "rating": 4.8, "count": 19000, "category": "water", "durationMins": 75,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "A flat waterside loop past the Jefferson Memorial — calm, scenic, and free (paddle boats optional).",
+      "hl": {
+        "stroller": "Level path right around the water.",
+        "naptimed": "The quiet basin loop is a dependable nap walk.",
+        "free": "Free to stroll; paddle boats are a small add-on."
+      }
+    },
+    {
+      "id": "dc-spy-museum", "name": "International Spy Museum", "icon": "star", "color": "purple",
+      "area": "L'Enfant Plaza", "meta": "$$$ · interactive · indoor", "price": "$$$",
+      "rating": 4.6, "count": 17000, "category": "museum", "durationMins": 120,
+      "tags": ["stroller", "indoor"], "napFriendly": false, "meal": false,
+      "why": "A hands-on spy adventure with missions and gadgets — great for older kids, fully indoor.",
+      "hl": {
+        "stroller": "Elevators between floors keep it stroller-friendly.",
+        "indoor": "A paid indoor option when you want a change from the Smithsonians."
+      }
+    },
+    {
+      "id": "dc-and-pizza", "name": "&pizza", "icon": "pizza", "color": "amber",
+      "area": "Penn Quarter", "meta": "$ · build-your-own", "price": "$",
+      "rating": 4.4, "count": 7000, "category": "food", "durationMins": 45,
+      "tags": ["kidmenu", "indoor"], "napFriendly": false, "meal": true,
+      "why": "Fast build-your-own pizzas — let kids pick their toppings and you're back on the Mall quickly.",
+      "hl": {
+        "kidmenu": "Kids design a simple cheese pie of their own.",
+        "indoor": "A quick indoor refuel near the museums."
+      }
+    },
+    {
+      "id": "dc-shake-shack", "name": "Shake Shack — Dupont Circle", "icon": "fork", "color": "green",
+      "area": "Dupont Circle", "meta": "$ · burgers", "price": "$",
+      "rating": 4.4, "count": 6000, "category": "food", "durationMins": 50,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "Burgers, a kids' menu, and high chairs — a dependable, low-stress lunch.",
+      "hl": {
+        "kidmenu": "Kid-sized burgers and shakes; high chairs ready.",
+        "indoor": "Easy indoor seating near the circle."
+      }
+    },
+    {
+      "id": "dc-old-ebbitt", "name": "Old Ebbitt Grill", "icon": "fork", "color": "amber",
+      "area": "Downtown", "meta": "$$ · historic tavern", "price": "$$",
+      "rating": 4.6, "count": 22000, "category": "food", "durationMins": 75,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "A historic tavern near the White House with a children's menu and roomy booths.",
+      "hl": {
+        "kidmenu": "A proper kids' menu and high chairs.",
+        "indoor": "Classic indoor booths for a sit-down midday."
+      }
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Embassy Suites by Hilton Washington DC Convention Center", "area": "Downtown",
+      "rating": 4.3, "count": 4200, "color": "blue", "price": "$$$", "badge": "Most room to spread out",
+      "tags": [["2-room suites", "blue"], ["Free hot breakfast", "amber"], ["Indoor pool", "green"], ["Near Metro", "purple"]],
+      "why": "Two-room suites, a made-to-order breakfast, and an indoor pool — a comfortable, walkable base near a Metro stop."
+    },
+    {
+      "name": "Hyatt Regency Washington on Capitol Hill", "area": "Capitol Hill",
+      "rating": 4.3, "count": 5600, "color": "purple", "price": "$$$", "badge": "Top family pick",
+      "tags": [["Walk to the Mall", "purple"], ["Indoor pool", "blue"], ["Spacious rooms", "green"], ["Near Union Station", "teal"]],
+      "why": "A short walk to the Capitol and the Mall, with an indoor pool and easy access to Union Station and the Metro."
+    },
+    {
+      "name": "Residence Inn Washington Downtown", "area": "Downtown", "rating": 4.4, "count": 2600,
+      "color": "green", "price": "$$",
+      "tags": [["Kitchen suites", "green"], ["Free breakfast", "amber"], ["Pool", "blue"], ["Kids stay free", "purple"]],
+      "why": "Suites with full kitchens and free breakfast — ideal for longer stays with little ones."
+    },
+    {
+      "name": "Marriott Marquis Washington DC", "area": "Downtown", "rating": 4.4, "count": 8800,
+      "color": "amber", "price": "$$$",
+      "tags": [["Connected to Convention Center", "amber"], ["On-site dining", "blue"], ["Big rooms", "green"]],
+      "why": "A large, modern hotel with plenty of on-site dining for nights you don't want to wander far."
+    }
+  ]
+}

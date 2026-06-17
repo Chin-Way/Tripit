@@ -1,0 +1,152 @@
+{
+  "city": "San Diego",
+  "note": "Seed dataset for the TripIt itinerary engine. Ratings/review counts are illustrative seed values for the demo; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
+  "venues": [
+    {
+      "id": "sd-zoo", "name": "San Diego Zoo", "icon": "paw", "color": "blue",
+      "area": "Balboa Park", "meta": "$$$ · world-famous", "price": "$$$",
+      "rating": 4.7, "count": 124000, "category": "zoo", "durationMins": 180,
+      "tags": ["stroller", "outdoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "One of the world's great zoos — pandas, a kids' zoo, and a guided bus to save little legs.",
+      "hl": {
+        "stroller": "Hilly but paved; the tour bus and moving walkways help with a stroller."
+      }
+    },
+    {
+      "id": "sd-balboa-park", "name": "Balboa Park", "icon": "tree", "color": "green",
+      "area": "Balboa Park", "meta": "Free · gardens & museums", "price": "Free",
+      "rating": 4.8, "count": 56000, "category": "park", "durationMins": 100,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Spanish-style courtyards, gardens, and fountains — flat, beautiful, and free to roam.",
+      "hl": {
+        "stroller": "Wide, level promenades between the gardens.",
+        "naptimed": "Shady courtyards make an easy stroller nap.",
+        "free": "Free to wander the grounds and gardens."
+      }
+    },
+    {
+      "id": "sd-birch-aquarium", "name": "Birch Aquarium at Scripps", "icon": "fish", "color": "blue",
+      "area": "La Jolla", "meta": "$$ · ocean views · indoor", "price": "$$",
+      "rating": 4.7, "count": 11000, "category": "museum", "durationMins": 120,
+      "tags": ["stroller", "indoor", "changing"], "napFriendly": false, "meal": false,
+      "why": "A hands-on tide pool and big kelp tanks with ocean views — compact, indoor, and stroller-easy.",
+      "hl": {
+        "stroller": "Step-free galleries and a ramped tide-pool plaza.",
+        "indoor": "Mostly indoor — a good midday option above the coast."
+      }
+    },
+    {
+      "id": "sd-uss-midway", "name": "USS Midway Museum", "icon": "boat", "color": "blue",
+      "area": "Downtown Embarcadero", "meta": "$$$ · aircraft carrier", "price": "$$$",
+      "rating": 4.8, "count": 49000, "category": "museum", "durationMins": 150,
+      "tags": ["stroller", "outdoor"], "napFriendly": false, "meal": false,
+      "why": "Climb aboard a real aircraft carrier with cockpits to sit in — a huge hit with kids.",
+      "hl": {
+        "stroller": "An elevator reaches the main decks (the catwalks have steps)."
+      }
+    },
+    {
+      "id": "sd-la-jolla-cove", "name": "La Jolla Cove", "icon": "boat", "color": "teal",
+      "area": "La Jolla", "meta": "Free · sea lions & tide pools", "price": "Free",
+      "rating": 4.8, "count": 33000, "category": "water", "durationMins": 90,
+      "tags": ["outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "Sea lions, seals, and tide pools along a flat clifftop path — a calm, free coastal stop.",
+      "hl": {
+        "naptimed": "The breezy clifftop walk is a reliable nap stroll.",
+        "free": "Free to watch the sea lions from the bluff."
+      }
+    },
+    {
+      "id": "sd-new-childrens-museum", "name": "The New Children's Museum", "icon": "play", "color": "amber",
+      "area": "Downtown", "meta": "$$ · ages 0–12 · indoor", "price": "$$",
+      "rating": 4.4, "count": 3000, "category": "play", "durationMins": 110,
+      "tags": ["stroller", "indoor", "changing", "highchair"], "napFriendly": false, "meal": false,
+      "why": "Three floors of hands-on art and play, including a dedicated toddler studio.",
+      "hl": {
+        "stroller": "Open, step-free studios with stroller parking.",
+        "indoor": "All-indoor making and climbing — a great backup."
+      }
+    },
+    {
+      "id": "sd-seaport-village", "name": "Seaport Village", "icon": "wheel", "color": "green",
+      "area": "Downtown Embarcadero", "meta": "Free · bayfront · carousel", "price": "Free",
+      "rating": 4.6, "count": 28000, "category": "landmark", "durationMins": 75,
+      "tags": ["stroller", "outdoor", "free", "naptimed"], "napFriendly": true, "meal": false,
+      "why": "A flat bayfront boardwalk with a vintage carousel and open lawns — free and easy.",
+      "hl": {
+        "stroller": "Smooth, level paths along the marina.",
+        "naptimed": "The waterfront stroll is an easy wind-down.",
+        "free": "Free to wander; the carousel is a small add-on."
+      }
+    },
+    {
+      "id": "sd-coronado-beach", "name": "Coronado Beach", "icon": "boat", "color": "blue",
+      "area": "Coronado", "meta": "Free · gentle surf", "price": "Free",
+      "rating": 4.8, "count": 21000, "category": "water", "durationMins": 90,
+      "tags": ["outdoor", "free", "changing"], "napFriendly": false, "meal": false,
+      "why": "Soft, wide sand and gentle shallows by the Hotel del — a classic family beach afternoon.",
+      "hl": {
+        "free": "Free, sprawling sand with restrooms on site."
+      }
+    },
+    {
+      "id": "sd-hodads", "name": "Hodad's", "icon": "fork", "color": "amber",
+      "area": "Ocean Beach", "meta": "$$ · famous burgers", "price": "$$",
+      "rating": 4.6, "count": 12000, "category": "food", "durationMins": 60,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "A beachy burger institution with a kids' menu and high chairs — laid-back and filling.",
+      "hl": {
+        "kidmenu": "Kid burgers and grilled cheese; high chairs ready.",
+        "indoor": "Roomy indoor booths for a midday break."
+      }
+    },
+    {
+      "id": "sd-old-town-cafe", "name": "Old Town Mexican Cafe", "icon": "fork", "color": "amber",
+      "area": "Old Town", "meta": "$$ · Mexican · fresh tortillas", "price": "$$",
+      "rating": 4.4, "count": 14000, "category": "food", "durationMins": 70,
+      "tags": ["kidmenu", "highchair", "indoor"], "napFriendly": false, "meal": true,
+      "why": "Tortillas made by hand in the window and a kids' menu — fun and tasty in historic Old Town.",
+      "hl": {
+        "kidmenu": "Quesadillas and tacos kids love; high chairs on hand.",
+        "indoor": "Lively indoor and patio seating."
+      }
+    },
+    {
+      "id": "sd-pizzeria-luigi", "name": "Pizzeria Luigi", "icon": "pizza", "color": "amber",
+      "area": "North Park", "meta": "$ · by the slice", "price": "$",
+      "rating": 4.5, "count": 5000, "category": "food", "durationMins": 45,
+      "tags": ["kidmenu", "indoor"], "napFriendly": false, "meal": true,
+      "why": "Big, simple slices kids actually finish — a quick, cheap refuel.",
+      "hl": {
+        "kidmenu": "Plain cheese slices please little eaters.",
+        "indoor": "A fast indoor stop between sights."
+      }
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Hotel del Coronado", "area": "Coronado · on the beach", "rating": 4.6, "count": 14000,
+      "color": "teal", "price": "$$$", "badge": "Top family pick",
+      "tags": [["On the beach", "teal"], ["Pools", "blue"], ["Kids' club", "green"], ["Historic", "purple"]],
+      "why": "The iconic beachfront resort — pools, a kids' club, and sand right outside. A splurge, but an unforgettable base."
+    },
+    {
+      "name": "Hyatt Regency Mission Bay", "area": "Mission Bay", "rating": 4.4, "count": 4800,
+      "color": "blue", "price": "$$$", "badge": "Most to do on site",
+      "tags": [["3 pools + slides", "blue"], ["Bayfront", "teal"], ["Bike rentals", "green"], ["Near SeaWorld", "purple"]],
+      "why": "Waterslides, three pools, and a bayfront setting near SeaWorld — the kids may never want to leave the hotel."
+    },
+    {
+      "name": "Paradise Point Resort", "area": "Mission Bay", "rating": 4.4, "count": 6200,
+      "color": "green", "price": "$$$",
+      "tags": [["Island bungalows", "green"], ["5 pools", "blue"], ["Beaches on site", "teal"], ["Kids stay free", "purple"]],
+      "why": "A 44-acre island of bungalows, pools, and calm bay beaches — spread-out and stroller-friendly."
+    },
+    {
+      "name": "Embassy Suites San Diego Bay Downtown", "area": "Downtown · Embarcadero",
+      "rating": 4.3, "count": 5100, "color": "amber", "price": "$$",
+      "tags": [["2-room suites", "amber"], ["Free hot breakfast", "green"], ["Walk to USS Midway", "blue"], ["Pool", "purple"]],
+      "why": "Two-room suites and free breakfast on the bay — walk to the USS Midway and Seaport Village."
+    }
+  ]
+}
