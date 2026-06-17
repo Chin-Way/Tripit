@@ -13,9 +13,10 @@
     "qr": "node scripts/qr.mjs"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.40.1"
+    "@anthropic-ai/sdk": "^0.40.1",
+    "@google/genai": "^2.8.0"
   },
-  "comment": "@anthropic-ai/sdk is only loaded at runtime when ANTHROPIC_API_KEY is set. The core server + rules engine run with no dependencies installed.",
+  "comment": "AI SDKs (@anthropic-ai/sdk, @google/genai) are imported lazily only when the matching API key is set. The core server + rules engine run with no dependencies installed.",
   "devDependencies": {
     "qrcode": "^1.5.4"
   }

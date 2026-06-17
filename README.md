@@ -24,28 +24,35 @@ Then open <http://localhost:3000>, take the survey, and you'll get a tailored it
 
 ### Turn on the AI engine (optional)
 
-1. Get a key at <https://console.anthropic.com> → **API Keys**.
-2. Copy `.env.example` to `.env` and paste your key into `ANTHROPIC_API_KEY`.
-3. Install the SDK and start:
-   ```bash
-   npm install
-   ANTHROPIC_API_KEY=sk-ant-... npm start
-   ```
-   (Or just `npm start` if your key is in `.env` and you load it — most hosts inject
-   env vars automatically.)
+TripIt supports two AI providers — **Claude** (default) or **Gemini** — chosen with
+the `AI_PROVIDER` env var. Either way, the rules engine is the fallback.
 
-With a key set, Claude (Sonnet 4.6 by default) writes the personalized plan; without
-one, the rules engine handles everything. Either way the survey produces a real,
-answer-driven itinerary.
+**Claude (Anthropic) — default, matches the pitch deck's cost model:**
+1. Get a key at <https://console.anthropic.com> → **API Keys**.
+2. Copy `.env.example` to `.env`, set `ANTHROPIC_API_KEY`.
+3. `npm install` then `npm start`.
+
+**Gemini (Google) — alternative:**
+1. Get a key at <https://aistudio.google.com/apikey>.
+2. In `.env`, set `GEMINI_API_KEY` and `AI_PROVIDER=gemini`.
+3. `npm install` then `npm start`.
+
+Switching is just the `AI_PROVIDER` env var — no code change. With no key set, the
+rules engine handles everything. Either way the survey produces a real, answer-driven
+itinerary.
+
+> **Heads up:** the pitch deck's AI-stack and unit-economics slides are built on
+> Claude Sonnet 4.6. If you ship on Gemini, update those numbers so the deck and the
+> product match.
 
 ---
 
 ## How it works
 
 ```
- Survey answers ──► POST /api/plan ──►  AI engine (Claude)  ──┐
- (kids, pace,                            └ falls back to ──►   ├──► itinerary JSON ──► UI
-  needs, loves)                            rules engine ───────┘
+ Survey answers ──► POST /api/plan ──►  AI engine (Claude or Gemini) ──┐
+ (kids, pace,                            └ falls back to ──►            ├──► itinerary JSON ──► UI
+  needs, loves)                            rules engine ────────────────┘
                                           ▲
                         curated venue data (data/chicago.json)
 ```
@@ -57,10 +64,13 @@ answer-driven itinerary.
 - **`lib/engine.js`** — the deterministic planner. Filters for the family's
   non-negotiables, scores by what they love, schedules around the 1:30–3:00 nap
   window, and keeps each day geographically tight. Always returns a valid plan.
-- **`lib/claude.js`** — the AI layer. Claude picks and orders stops from the vetted
-  shortlist and writes the "why this fits your family" copy. It only chooses from real
-  venues, and we rebuild each card from our data — so ratings/locations can't drift.
-- **`server.js`** — tiny Node server: serves `/public` and the `/api/plan` endpoint.
+- **`lib/claude.js`** / **`lib/gemini.js`** — the AI layer (Claude or Gemini). It picks
+  and orders stops from the vetted shortlist and writes the "why this fits your family"
+  copy. It only chooses from real venues, and we rebuild each card from our data — so
+  ratings/locations can't drift. Shared prompt/parse logic lives in **`lib/aiShared.js`**
+  so both providers stay in sync.
+- **`server.js`** — tiny Node server: serves `/public` and the `/api/plan` endpoint,
+  and routes to the AI provider chosen by `AI_PROVIDER`.
 - **`public/index.html`** — the app. The survey now calls `/api/plan`; Saved stops,
   check-offs, and the profile persist on the device.
 

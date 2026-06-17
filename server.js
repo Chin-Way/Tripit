@@ -20,6 +20,20 @@ const PORT = process.env.PORT || 3000;
 // Load the curated dataset once at startup.
 const data = JSON.parse(await readFile(path.join(__dirname, "data", "chicago.json"), "utf8"));
 
+// Choose the AI engine. AI_PROVIDER forces "claude" or "gemini"; "auto" (default)
+// uses whichever API key is set, preferring Claude. Returns null when no key is
+// available — the caller then uses the deterministic rules engine.
+function pickEngine() {
+  const provider = (process.env.AI_PROVIDER || "auto").toLowerCase();
+  const hasClaude = !!process.env.ANTHROPIC_API_KEY;
+  const hasGemini = !!process.env.GEMINI_API_KEY;
+  if ((provider === "claude" || provider === "auto") && hasClaude)
+    return { name: "Claude", module: "./lib/claude.js" };
+  if ((provider === "gemini" || provider === "auto") && hasGemini)
+    return { name: "Gemini", module: "./lib/gemini.js" };
+  return null;
+}
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -54,15 +68,15 @@ async function handlePlan(req, res) {
     });
   }
 
-  // Try the AI engine first (only does anything if a key is configured),
-  // and fall back to the deterministic plan on any problem.
+  // Pick an AI provider and fall back to the deterministic plan on any problem.
   let plan;
-  if (process.env.ANTHROPIC_API_KEY) {
+  const engine = pickEngine();
+  if (engine) {
     try {
-      const { aiPlan } = await import("./lib/claude.js");
-      plan = await aiPlan(answers, data);
+      const mod = await import(engine.module);
+      plan = await mod.aiPlan(answers, data);
     } catch (err) {
-      console.warn("[plan] AI engine failed, using rules engine:", err.message);
+      console.warn(`[plan] ${engine.name} engine failed, using rules engine:`, err.message);
     }
   }
   if (!plan) plan = generatePlan(answers, data);
@@ -101,8 +115,12 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  const mode = process.env.ANTHROPIC_API_KEY
-    ? `AI engine on (${process.env.CLAUDE_MODEL || "claude-sonnet-4-6"})`
-    : "rules engine (no ANTHROPIC_API_KEY set)";
+  const engine = pickEngine();
+  const model = engine
+    ? engine.name === "Gemini"
+      ? process.env.GEMINI_MODEL || "gemini-2.5-flash"
+      : process.env.CLAUDE_MODEL || "claude-sonnet-4-6"
+    : null;
+  const mode = engine ? `${engine.name} engine on (${model})` : "rules engine (no AI key set)";
   console.log(`TripIt running at http://localhost:${PORT}  —  ${mode}`);
 });
