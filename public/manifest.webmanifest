@@ -1,0 +1,13 @@
+{
+  "name": "TripIt — Family trips, planned around the nap",
+  "short_name": "TripIt",
+  "description": "Survey-driven, nap-aware family itineraries grounded in real venue data.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#06121f",
+  "theme_color": "#0a1a2f",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

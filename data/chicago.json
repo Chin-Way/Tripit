@@ -1,0 +1,280 @@
+{
+  "city": "Chicago",
+  "note": "Seed dataset for the TripIt itinerary engine. Ratings/review counts are real-ish Google figures captured for the prototype; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
+  "venues": [
+    {
+      "id": "lincoln-park-zoo",
+      "name": "Lincoln Park Zoo",
+      "icon": "paw", "color": "blue", "area": "Lincoln Park",
+      "meta": "Free · opens 8:00 AM", "price": "free",
+      "rating": 4.6, "count": 38498,
+      "category": "zoo", "open": "08:00", "close": "17:00", "durationMins": 120,
+      "tags": ["stroller", "outdoor", "free", "changing"],
+      "napFriendly": false, "meal": false,
+      "why": "Free admission and wide, paved loops — parents repeatedly note clean restrooms and easy stroller access.",
+      "hl": {
+        "stroller": "Families call out the wide paved loops and ramps — easy going even with a double stroller.",
+        "free": "Visitors love that walking in is free, so a short, low-key stop never feels wasted."
+      }
+    },
+    {
+      "id": "lou-malnatis",
+      "name": "Lou Malnati's Pizzeria",
+      "icon": "pizza", "color": "amber", "area": "River North",
+      "meta": "$$ · deep dish · River North", "price": "$$",
+      "rating": 4.4, "count": 12917,
+      "category": "food", "open": "11:00", "close": "22:00", "durationMins": 75,
+      "tags": ["kidmenu", "highchair", "indoor"],
+      "napFriendly": false, "meal": true,
+      "why": "Kids’ menu and high chairs on hand. Reserve the noon slot — reviewers mention a wait at peak.",
+      "hl": {
+        "kidmenu": "Parents mention high chairs are ready and the kids’ menu keeps little ones happy while the pie bakes.",
+        "indoor": "A warm indoor booth makes a good midday reset out of the weather."
+      }
+    },
+    {
+      "id": "navy-pier",
+      "name": "Navy Pier",
+      "icon": "wheel", "color": "green", "area": "Streeterville",
+      "meta": "Lakefront · Centennial Wheel", "price": "free",
+      "rating": 4.6, "count": 87609,
+      "category": "landmark", "open": "10:00", "close": "20:00", "durationMins": 120,
+      "tags": ["stroller", "naptimed", "outdoor"],
+      "napFriendly": true, "meal": false,
+      "why": "Smooth, flat boardwalk along the lake — the perfect stroller-nap window while you take in the views.",
+      "hl": {
+        "stroller": "Reviewers say the flat boardwalk is smooth and stroller-easy from end to end.",
+        "naptimed": "The long, calm lakefront stretch is where families say the stroller lulls kids right to sleep."
+      }
+    },
+    {
+      "id": "millennium-park",
+      "name": "Millennium Park",
+      "icon": "bean", "color": "purple", "area": "Loop",
+      "meta": "The Bean · free · open late", "price": "free",
+      "rating": 4.8, "count": 92327,
+      "category": "landmark", "open": "06:00", "close": "23:00", "durationMins": 60,
+      "tags": ["stroller", "outdoor", "free"],
+      "napFriendly": false, "meal": false,
+      "why": "Open and calmer by early evening; flat paths around Cloud Gate make for an easy stroller wind-down.",
+      "hl": {
+        "stroller": "Level, open paths around Cloud Gate make for simple stroller loops, families note.",
+        "free": "Free and open late — an easy, no-ticket sunset stop with the kids."
+      }
+    },
+    {
+      "id": "shedd-aquarium",
+      "name": "Shedd Aquarium",
+      "icon": "fish", "color": "blue", "area": "Museum Campus",
+      "meta": "$$$ · indoor · Museum Campus", "price": "$$$",
+      "rating": 4.5, "count": 32613,
+      "category": "museum", "open": "09:00", "close": "17:00", "durationMins": 150,
+      "tags": ["stroller", "indoor", "changing"],
+      "napFriendly": false, "meal": false,
+      "why": "All-indoor and stroller-friendly with changing tables — book the early entry to beat the midday crowd.",
+      "hl": {
+        "stroller": "Ramps and elevators throughout; visitors confirm it’s fully stroller-friendly.",
+        "indoor": "Being entirely indoors, families call it the perfect rainy-day plan."
+      }
+    },
+    {
+      "id": "maggie-daley-park",
+      "name": "Maggie Daley Park",
+      "icon": "play", "color": "green", "area": "Loop",
+      "meta": "Play garden · free · climbing", "price": "free",
+      "rating": 4.7, "count": 8560,
+      "category": "park", "open": "06:00", "close": "21:00", "durationMins": 90,
+      "tags": ["naptimed", "outdoor", "free"],
+      "napFriendly": true, "meal": false,
+      "why": "Enclosed play areas with one or two entrances make it easy to keep eyes on both kids after nap.",
+      "hl": {
+        "naptimed": "Shaded benches near the play garden make an easy pause for a stroller nap.",
+        "free": "A free play garden families say they come back to again and again."
+      }
+    },
+    {
+      "id": "field-museum",
+      "name": "Field Museum",
+      "icon": "museum", "color": "blue", "area": "Museum Campus",
+      "meta": "$$$ · dinosaurs · indoor", "price": "$$$",
+      "rating": 4.7, "count": 45210,
+      "category": "museum", "open": "09:00", "close": "17:00", "durationMins": 150,
+      "tags": ["stroller", "indoor", "changing"],
+      "napFriendly": false, "meal": false,
+      "why": "SUE the T. rex and a dedicated kids’ Crown Family PlayLab — fully indoor with elevators and changing tables.",
+      "hl": {
+        "stroller": "Wide galleries and elevators throughout make it an easy push, parents report.",
+        "indoor": "A go-to rainy-day pick — hours of indoor space when the weather turns."
+      }
+    },
+    {
+      "id": "msi",
+      "name": "Museum of Science & Industry",
+      "icon": "museum", "color": "purple", "area": "Hyde Park",
+      "meta": "$$$ · hands-on · indoor", "price": "$$$",
+      "rating": 4.8, "count": 30188,
+      "category": "museum", "open": "09:30", "close": "16:00", "durationMins": 180,
+      "tags": ["stroller", "indoor", "changing"],
+      "napFriendly": false, "meal": false,
+      "why": "Hands-on exhibits built for curious kids; vast and indoor, with a baby-care room families appreciate.",
+      "hl": {
+        "stroller": "Big open halls and ramps — reviewers say strollers go everywhere.",
+        "indoor": "Enormous indoor footprint; an easy full-morning escape from heat or rain."
+      }
+    },
+    {
+      "id": "lincoln-park-conservatory",
+      "name": "Lincoln Park Conservatory",
+      "icon": "tree", "color": "green", "area": "Lincoln Park",
+      "meta": "Free · indoor gardens", "price": "free",
+      "rating": 4.7, "count": 6042,
+      "category": "park", "open": "09:00", "close": "17:00", "durationMins": 45,
+      "tags": ["stroller", "indoor", "free", "changing"],
+      "napFriendly": true, "meal": false,
+      "why": "A free, warm indoor garden — a calm, stroller-smooth loop that doubles as a rainy-day backup next to the zoo.",
+      "hl": {
+        "stroller": "Flat, paved paths under glass — calm and fully stroller-friendly.",
+        "indoor": "Warm and green year-round; a quiet indoor option when little ones need to slow down.",
+        "free": "Free to walk in, so it’s an easy add-on right by Lincoln Park Zoo."
+      }
+    },
+    {
+      "id": "art-institute",
+      "name": "Art Institute of Chicago",
+      "icon": "star", "color": "amber", "area": "Loop",
+      "meta": "$$$ · Loop · family guides", "price": "$$$",
+      "rating": 4.8, "count": 71204,
+      "category": "museum", "open": "11:00", "close": "17:00", "durationMins": 120,
+      "tags": ["stroller", "indoor"],
+      "napFriendly": false, "meal": false,
+      "why": "World-class galleries with printable family hunts; strollers welcome and it’s steps from Millennium Park.",
+      "hl": {
+        "stroller": "Coat-check a bag, keep the stroller — elevators reach every level.",
+        "indoor": "A polished indoor option in the heart of the Loop for an art-loving afternoon."
+      }
+    },
+    {
+      "id": "childrens-museum",
+      "name": "Chicago Children's Museum",
+      "icon": "play", "color": "amber", "area": "Navy Pier",
+      "meta": "$$ · ages 0–10 · indoor", "price": "$$",
+      "rating": 4.5, "count": 3521,
+      "category": "play", "open": "10:00", "close": "17:00", "durationMins": 120,
+      "tags": ["stroller", "indoor", "changing", "highchair"],
+      "napFriendly": false, "meal": false,
+      "why": "Purpose-built for little kids — water play, a climbing schooner, and a toddler-only zone right on Navy Pier.",
+      "hl": {
+        "stroller": "Stroller parking inside and step-free play zones throughout.",
+        "indoor": "All-indoor and designed for under-5s — a reliable weather backup."
+      }
+    },
+    {
+      "id": "north-ave-beach",
+      "name": "North Avenue Beach",
+      "icon": "boat", "color": "blue", "area": "Lincoln Park",
+      "meta": "Free · lakefront · sand", "price": "free",
+      "rating": 4.7, "count": 15003,
+      "category": "water", "open": "06:00", "close": "21:00", "durationMins": 90,
+      "tags": ["outdoor", "free", "changing"],
+      "napFriendly": false, "meal": false,
+      "why": "Soft sand, gentle shallows, and restrooms on site — an easy splashy stop on a warm afternoon.",
+      "hl": {
+        "free": "Free lakefront sand and water — budget-friendly fun for a couple of hours."
+      }
+    },
+    {
+      "id": "riverwalk",
+      "name": "Chicago Riverwalk",
+      "icon": "boat", "color": "teal", "area": "Loop",
+      "meta": "Free · flat · river path", "price": "free",
+      "rating": 4.7, "count": 9408,
+      "category": "landmark", "open": "06:00", "close": "23:00", "durationMins": 60,
+      "tags": ["stroller", "outdoor", "free", "naptimed"],
+      "napFriendly": true, "meal": false,
+      "why": "A flat, car-free path along the river — a smooth stroller stretch with snack stops and skyline views.",
+      "hl": {
+        "stroller": "Step-free and wide the whole way — reviewers call it a dream stroller walk.",
+        "naptimed": "The steady, calm riverside push is a reliable nap-window stroll.",
+        "free": "No ticket needed — an easy, scenic add-on between Loop stops."
+      }
+    },
+    {
+      "id": "portillos",
+      "name": "Portillo's Hot Dogs",
+      "icon": "fork", "color": "amber", "area": "River North",
+      "meta": "$ · quick · family classic", "price": "$",
+      "rating": 4.6, "count": 14122,
+      "category": "food", "open": "10:30", "close": "22:00", "durationMins": 50,
+      "tags": ["kidmenu", "highchair", "indoor"],
+      "napFriendly": false, "meal": true,
+      "why": "Fast, cheap, and beloved by kids — order at the counter, grab a booth, and you’re back on the route quickly.",
+      "hl": {
+        "kidmenu": "Sliders, mac & cheese, and high chairs — an easy win with picky eaters.",
+        "indoor": "Roomy indoor booths make a low-stress midday refuel."
+      }
+    },
+    {
+      "id": "eataly",
+      "name": "Eataly Chicago",
+      "icon": "fork", "color": "amber", "area": "River North",
+      "meta": "$$ · pasta · Mag Mile", "price": "$$",
+      "rating": 4.5, "count": 18760,
+      "category": "food", "open": "10:00", "close": "22:00", "durationMins": 70,
+      "tags": ["kidmenu", "highchair", "indoor"],
+      "napFriendly": false, "meal": true,
+      "why": "Casual counters with simple pasta and pizza, high chairs, and room for a stroller beside the table.",
+      "hl": {
+        "kidmenu": "Plain pasta and pizza please little eaters; high chairs are on hand.",
+        "indoor": "A bright indoor food hall near Mag Mile — easy to pop in mid-afternoon."
+      }
+    },
+    {
+      "id": "garfield-conservatory",
+      "name": "Garfield Park Conservatory",
+      "icon": "tree", "color": "green", "area": "East Garfield Park",
+      "meta": "Free · indoor · Children's Garden", "price": "free",
+      "rating": 4.7, "count": 8094,
+      "category": "park", "open": "09:00", "close": "17:00", "durationMins": 75,
+      "tags": ["stroller", "indoor", "free", "changing"],
+      "napFriendly": true, "meal": false,
+      "why": "One of the country’s largest conservatories with a hands-on Children’s Garden — free, indoor, and calm.",
+      "hl": {
+        "stroller": "Smooth indoor paths and a ramped Children’s Garden built for little explorers.",
+        "indoor": "Lush and warm under glass — a serene rainy-day pick.",
+        "free": "Admission is free, making it an easy low-key morning."
+      }
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Loews Chicago Hotel", "area": "Streeterville · near Navy Pier",
+      "rating": 4.6, "count": 4205, "color": "teal", "price": "$$$",
+      "badge": "Top family pick", "pid": "ChIJkxZI_6ksDogR7OPMcT6N4Xs",
+      "tags": [["Loews Loves Kids", "green"], ["Pool", "blue"], ["Cribs", "purple"], ["Walk to Navy Pier", "teal"]],
+      "why": "The highest-rated of the bunch, with a dedicated “Loews Loves Kids” program, a pool, and a short walk to Navy Pier and the Riverwalk — day one of your itinerary is right outside."
+    },
+    {
+      "name": "Embassy Suites by Hilton Downtown Mag Mile", "area": "Streeterville · 511 N Columbus",
+      "rating": 4.2, "count": 4189, "color": "blue", "price": "$$",
+      "badge": "Most room to spread out", "pid": "ChIJN8JlQKosDogRaAdKzJqIRuE",
+      "tags": [["2-room suites", "blue"], ["Free hot breakfast", "amber"], ["Heated pool", "green"], ["Kids stay free", "purple"]],
+      "why": "Apartment-style two-room suites give everyone space to recharge, plus a made-to-order breakfast and a heated pool. Walkable to the Bean and Maggie Daley.",
+      "note": "Heads up: ~$65/day parking + a daily resort fee."
+    },
+    {
+      "name": "Sheraton Grand Chicago Riverwalk", "area": "On the Riverwalk · 301 E North Water",
+      "rating": 4.3, "count": 6899, "color": "green", "price": "$$$",
+      "pid": "ChIJI8hF76ksDogRoVilbrDda7o",
+      "tags": [["Riverwalk location", "green"], ["Pool terrace", "blue"], ["River-view rooms", "teal"], ["Walk to the Bean", "purple"]],
+      "why": "Right on the Riverwalk with a pool terrace and easy strolls to the Bean — a comfortable, well-located home base for first-time visitors."
+    },
+    {
+      "name": "Hyatt Regency Chicago", "area": "Riverfront · 151 E Wacker Dr",
+      "rating": 4.4, "count": 11768, "color": "purple", "price": "$$$",
+      "pid": "ChIJR3RYJKksDogR72dJV-gaDIg",
+      "tags": [["Spacious rooms", "purple"], ["Riverfront", "blue"], ["On-site dining", "amber"], ["Family favorite", "green"]],
+      "why": "Big, recently renovated rooms by the river that families say they return to trip after trip. Plenty of on-site dining for nights you don’t want to wander far.",
+      "note": "Heads up: ~$30/day destination fee."
+    }
+  ]
+}

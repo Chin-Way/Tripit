@@ -1,0 +1,18 @@
+{
+  "name": "tripit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TripIt — family trip planner. Survey-driven, nap-aware itineraries grounded in real venue data and personalized by Claude.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.1"
+  },
+  "comment": "@anthropic-ai/sdk is only loaded at runtime when ANTHROPIC_API_KEY is set. The core server + rules engine run with no dependencies installed."
+}
