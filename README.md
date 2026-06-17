@@ -75,15 +75,31 @@ with the `CLAUDE_MODEL` env var (e.g. `claude-opus-4-8` for the hardest planning
 
 ## Deploying (so a QR code can reach it)
 
-It's a standard Node web app. Any of these work:
+Goal: a public URL you can put behind a QR code. Easiest path (free, ~5 minutes):
 
-- **Render / Railway / Fly.io** — connect the repo, set `ANTHROPIC_API_KEY`, deploy.
-- **Vercel** — works as well; the `/api/plan` route can be moved to a serverless
-  function later if you adopt Next.js.
+**1. Deploy on Render**
+- Push this repo to GitHub (already done).
+- Go to <https://render.com> → **New** → **Blueprint** → pick this repo.
+  Render reads `render.yaml` and sets everything up.
+- (Optional) Paste your `ANTHROPIC_API_KEY` in the dashboard to turn on the AI
+  engine. Skip it and TripIt still works on the rules engine.
+- Render gives you a URL like `https://tripit.onrender.com`.
 
-Once it has a public URL, generate a QR code pointing at it. Because the app is a PWA,
-scanning it on a phone lets visitors **try it in the browser *and* "Add to Home
-Screen"** to install it like an app — one QR, both outcomes.
+> The blueprint deploys the `claude/ecstatic-cori-im2jpg` branch. Once you merge
+> to `main`, change `branch:` in `render.yaml` (or set it in the Render UI).
+> Other hosts work too — there's a `Dockerfile` for Railway / Fly.io / Cloud Run.
+
+**2. Make the QR code**
+```bash
+npm install            # one-time, so the QR tool is available
+npm run qr -- https://tripit.onrender.com
+```
+This prints a scannable QR in your terminal and saves `public/qr.png` (for
+slides/printing) and `public/qr.svg`. Drop it in your pitch deck or on a flyer.
+
+**Why one QR does both jobs:** TripIt is a PWA, so scanning it on a phone lets
+people **try it in the browser *and* "Add to Home Screen"** to install it like an
+app — the "visit the site" and "download the app" goals in one code.
 
 ---
 

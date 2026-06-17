@@ -5,3 +5,7 @@ node_modules/
 npm-debug.log*
 *.log
 .vercel
+
+# generated QR codes (run `npm run qr -- <your-url>` to make them)
+public/qr.png
+public/qr.svg

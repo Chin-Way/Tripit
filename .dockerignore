@@ -1,0 +1,8 @@
+node_modules
+.git
+.env
+.env.local
+*.log
+public/qr.png
+public/qr.svg
+.claude

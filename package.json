@@ -9,10 +9,14 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "qr": "node scripts/qr.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.40.1"
   },
-  "comment": "@anthropic-ai/sdk is only loaded at runtime when ANTHROPIC_API_KEY is set. The core server + rules engine run with no dependencies installed."
+  "comment": "@anthropic-ai/sdk is only loaded at runtime when ANTHROPIC_API_KEY is set. The core server + rules engine run with no dependencies installed.",
+  "devDependencies": {
+    "qrcode": "^1.5.4"
+  }
 }

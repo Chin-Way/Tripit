@@ -1,0 +1,26 @@
+# Render blueprint — deploys TripIt as a free web service.
+#
+# Steps:
+#   1. Push this repo to GitHub (it already is).
+#   2. Go to https://render.com  ->  New  ->  Blueprint  ->  pick this repo.
+#   3. (Optional) Paste your ANTHROPIC_API_KEY when prompted to turn on the AI
+#      engine. Skip it and TripIt still works on the rules engine.
+#   4. Render gives you a public URL like https://tripit.onrender.com.
+#      Then run:  npm run qr -- https://tripit.onrender.com
+#
+# Note: the free plan sleeps after ~15 min idle and wakes on the next visit
+# (first hit takes a few seconds). Fine for demos; upgrade for always-on.
+services:
+  - type: web
+    name: tripit
+    runtime: node
+    plan: free
+    branch: claude/ecstatic-cori-im2jpg
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false # set this secret in the Render dashboard (optional)
+      - key: CLAUDE_MODEL
+        value: claude-sonnet-4-6
