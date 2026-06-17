@@ -24,25 +24,37 @@ const PORT = process.env.PORT || 3000;
 // instead and cache it; otherwise this curated file is used.
 const seed = JSON.parse(await readFile(path.join(__dirname, "data", "chicago.json"), "utf8"));
 
+const SEED_CITY = seed.city || "Chicago";
 const PLACES_TTL_MS = 6 * 60 * 60 * 1000; // refresh live venues every 6 hours
-let dataCache = null; // { at, data }
+const dataCache = new Map(); // cityKey -> { at, data }
 
-// Returns the venue dataset for planning: live Google Places data when a key is
-// set (cached), otherwise the seed file. Falls back to seed on any error.
-async function getData() {
+function sanitizeCity(c) {
+  return typeof c === "string" ? c.replace(/\s+/g, " ").trim().slice(0, 80) : "";
+}
+
+// Returns the venue dataset for a city. With a Places key, fetches live data
+// (cached per city). Without a key, only the seed city is available — other
+// cities come back with no venues (the front-end shows a "try Chicago" state).
+async function getData(cityArg) {
+  const city = sanitizeCity(cityArg) || SEED_CITY;
+  const isSeedCity = city.toLowerCase() === SEED_CITY.toLowerCase();
   const key = process.env.GOOGLE_PLACES_API_KEY;
-  if (!key) return seed;
-  if (dataCache && Date.now() - dataCache.at < PLACES_TTL_MS) return dataCache.data;
+
+  if (!key) return isSeedCity ? seed : { city, venues: [], hotels: [] };
+
+  const ck = city.toLowerCase();
+  const hit = dataCache.get(ck);
+  if (hit && Date.now() - hit.at < PLACES_TTL_MS) return hit.data;
   try {
     const { getVenues } = await import("./lib/places.js");
-    const venues = await getVenues(seed.city || "Chicago", key);
-    const data = { city: seed.city || "Chicago", venues, hotels: seed.hotels, source: "places" };
-    dataCache = { at: Date.now(), data };
-    console.log(`[places] loaded ${venues.length} live venues for ${data.city}`);
+    const venues = await getVenues(city, key);
+    const data = { city, venues, hotels: isSeedCity ? seed.hotels : [], source: "places" };
+    dataCache.set(ck, { at: Date.now(), data });
+    console.log(`[places] loaded ${venues.length} live venues for ${city}`);
     return data;
   } catch (err) {
-    console.warn("[places] live fetch failed, using seed data:", err.message);
-    return seed;
+    console.warn(`[places] live fetch failed for ${city}:`, err.message);
+    return isSeedCity ? seed : { city, venues: [], hotels: [] };
   }
 }
 
@@ -94,7 +106,13 @@ async function handlePlan(req, res) {
     });
   }
 
-  const data = await getData(); // live Places data when configured, else seed
+  const data = await getData(answers.city); // live Places data for the city, else seed
+  if (!data.venues || !data.venues.length) {
+    // No data for this city (non-seed city without a Places key, or a fetch error).
+    return send(res, 200, JSON.stringify({ city: data.city, days: [], unavailable: true }), {
+      "Content-Type": MIME[".json"],
+    });
+  }
 
   // Pick an AI provider and fall back to the deterministic plan on any problem.
   let plan;
