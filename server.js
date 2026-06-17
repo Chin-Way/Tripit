@@ -11,14 +11,40 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
+import { loadEnv } from "./lib/env.js";
 import { generatePlan } from "./lib/engine.js";
+
+loadEnv(); // read a local .env file if present (host env vars still win)
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, "public");
 const PORT = process.env.PORT || 3000;
 
-// Load the curated dataset once at startup.
-const data = JSON.parse(await readFile(path.join(__dirname, "data", "chicago.json"), "utf8"));
+// Seed dataset (fallback). When GOOGLE_PLACES_API_KEY is set we fetch live data
+// instead and cache it; otherwise this curated file is used.
+const seed = JSON.parse(await readFile(path.join(__dirname, "data", "chicago.json"), "utf8"));
+
+const PLACES_TTL_MS = 6 * 60 * 60 * 1000; // refresh live venues every 6 hours
+let dataCache = null; // { at, data }
+
+// Returns the venue dataset for planning: live Google Places data when a key is
+// set (cached), otherwise the seed file. Falls back to seed on any error.
+async function getData() {
+  const key = process.env.GOOGLE_PLACES_API_KEY;
+  if (!key) return seed;
+  if (dataCache && Date.now() - dataCache.at < PLACES_TTL_MS) return dataCache.data;
+  try {
+    const { getVenues } = await import("./lib/places.js");
+    const venues = await getVenues(seed.city || "Chicago", key);
+    const data = { city: seed.city || "Chicago", venues, hotels: seed.hotels, source: "places" };
+    dataCache = { at: Date.now(), data };
+    console.log(`[places] loaded ${venues.length} live venues for ${data.city}`);
+    return data;
+  } catch (err) {
+    console.warn("[places] live fetch failed, using seed data:", err.message);
+    return seed;
+  }
+}
 
 // Choose the AI engine. AI_PROVIDER forces "claude" or "gemini"; "auto" (default)
 // uses whichever API key is set, preferring Claude. Returns null when no key is
@@ -67,6 +93,8 @@ async function handlePlan(req, res) {
       "Content-Type": MIME[".json"],
     });
   }
+
+  const data = await getData(); // live Places data when configured, else seed
 
   // Pick an AI provider and fall back to the deterministic plan on any problem.
   let plan;

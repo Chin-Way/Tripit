@@ -20,7 +20,19 @@ services:
     startCommand: npm start
     healthCheckPath: /
     envVars:
+      # Which AI provider: claude (default) | gemini | auto
+      - key: AI_PROVIDER
+        value: claude
+      # Claude (default) — set the secret in the dashboard
       - key: ANTHROPIC_API_KEY
-        sync: false # set this secret in the Render dashboard (optional)
+        sync: false
       - key: CLAUDE_MODEL
         value: claude-sonnet-4-6
+      # Gemini (alternative) — set AI_PROVIDER=gemini to use
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      # Google Places (live venue data) — optional; seed data used if unset
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false

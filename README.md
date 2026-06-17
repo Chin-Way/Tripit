@@ -45,6 +45,34 @@ itinerary.
 > Claude Sonnet 4.6. If you ship on Gemini, update those numbers so the deck and the
 > product match.
 
+### Where your keys go
+
+- **Locally:** copy `.env.example` to `.env` and fill in the values. The app loads
+  `.env` automatically when you `npm start` — no need to export anything.
+- **On Render (deployed):** your service → **Environment** tab → add each key/value.
+  The blueprint (`render.yaml`) already lists them so they appear ready to fill.
+
+### Verify your keys work
+
+```bash
+npm run check
+```
+Pings each service you've configured (Claude, Gemini, Google Places) and prints
+OK or the exact error — so you know your keys are live before you demo.
+
+### Live venue data (Google Places)
+
+Set `GOOGLE_PLACES_API_KEY` and TripIt pulls **real venues** (ratings, locations,
+opening info, and kid signals like "good for children" / "children's menu" /
+wheelchair access) from the Google Places API instead of the seed file. Results
+are cached per city (6h) to control cost; without the key, the curated seed data
+is used. Get a key in [Google Cloud Console](https://console.cloud.google.com):
+enable **Places API (New)** and **billing** (Google gives a recurring monthly credit).
+
+> Places supplies the *facts*. The deep family-logistics tags (nap-timing, changing
+> tables) are still partly derived in `lib/places.js` — that curation is TripIt's
+> value-add, and where a human-vetted overlay would live.
+
 ---
 
 ## How it works
@@ -54,13 +82,14 @@ itinerary.
  (kids, pace,                            └ falls back to ──►            ├──► itinerary JSON ──► UI
   needs, loves)                            rules engine ────────────────┘
                                           ▲
-                        curated venue data (data/chicago.json)
+                  venue data: Google Places (live) or data/chicago.json (seed)
 ```
 
-- **`data/chicago.json`** — the curated, *grounded* venue list (real ratings, hours,
-  stroller/nap/kid-menu attributes). This is what keeps TripIt honest — it never
-  invents hours or places. Replace these seed entries with the **Google Places API**
-  before launch.
+- **`lib/places.js`** — live venue data from the **Google Places API** (used when
+  `GOOGLE_PLACES_API_KEY` is set), mapped into TripIt's schema and cached per city.
+- **`data/chicago.json`** — the curated *seed* venue list (real ratings + family
+  attributes). Used as the fallback when no Places key is set, and as the source of
+  truth for grounding — TripIt never invents hours or places.
 - **`lib/engine.js`** — the deterministic planner. Filters for the family's
   non-negotiables, scores by what they love, schedules around the 1:30–3:00 nap
   window, and keeps each day geographically tight. Always returns a valid plan.
@@ -115,8 +144,11 @@ app — the "visit the site" and "download the app" goals in one code.
 
 ## What's next (roadmap)
 
-- [ ] Swap seed venue data for the **Google Places API** (live hours, photos, ratings).
-- [ ] Add more cities beyond Chicago (the engine is city-agnostic — it just needs data).
+- [x] Swap seed venue data for the **Google Places API** (live ratings, locations,
+      kid attributes) — set `GOOGLE_PLACES_API_KEY`. *Next: map opening hours and
+      photos; add a human-vetted overlay for nap-timing/changing tables.*
+- [ ] Add more cities beyond Chicago — add a city field to the survey (the Places
+      layer is already city-agnostic; it just takes a city string).
 - [ ] User accounts + saved trips in a database (currently saved on-device only).
 - [ ] Wire the **Stay** tab to the data layer / hotel booking affiliates.
 - [ ] Real PNG app icons (an SVG icon is included for now).
