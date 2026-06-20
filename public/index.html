@@ -385,11 +385,20 @@ let SEED_CITIES=['Chicago','New York','San Francisco','Washington DC','San Diego
 
 /* ---- persistence: keep the trip, Saved, check-offs & profile across reloads ---- */
 const STORE='tripit.v1';
-function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay}));}catch(e){}}
+const cityKey=c=>String(c==null?'':c).trim().toLowerCase();
+// tripCity records which city the saved TRIP/stayHotels were built for, so we can
+// refuse to restore a trip that doesn't belong to the saved survey city.
+function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay,tripCity:svAns.city}));}catch(e){}}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');if(!s)return false;
-  Object.assign(svAns,s.svAns||{});saved=s.saved||[];done=new Set(s.done||[]);profileData=s.profileData||null;
-  if(s.TRIP&&s.TRIP.length)TRIP=s.TRIP;if(Array.isArray(s.stayHotels))stayHotels=s.stayHotels;activeDay=s.activeDay||1;
-  return !!(profileData&&TRIP&&TRIP.length);}catch(e){return false;}}
+  Object.assign(svAns,s.svAns||{});saved=s.saved||[];done=new Set(s.done||[]);profileData=s.profileData||null;activeDay=s.activeDay||1;
+  // Only restore the saved trip if it was built for the saved city. This self-heals
+  // stale state from older builds where a failed plan could leave one city's label
+  // attached to another city's stops & hotels. Mismatched/legacy state -> re-survey.
+  const city=cityKey(s.svAns&&s.svAns.city);
+  const tripOK=!!city&&cityKey(s.tripCity)===city;
+  TRIP=(tripOK&&s.TRIP&&s.TRIP.length)?s.TRIP:[];
+  stayHotels=(tripOK&&Array.isArray(s.stayHotels))?s.stayHotels:[];
+  return !!(profileData&&tripOK&&TRIP.length);}catch(e){return false;}}
 
 /* ============ SURVEY ============ */
 function brandHead(sub){return `<div class="appbar"><div class="abL"><div class="ablogo"><b>T</b></div><div><div class="abtitle">TripIt</div><div class="absub">${sub}</div></div></div></div>`;}
@@ -431,8 +440,12 @@ async function buildProfile(){
   computeProfile();
   try{
     const r=await fetch('/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(svAns)});
-    if(r.ok){const data=await r.json();TRIP=(data&&data.days)?data.days:[];stayHotels=(data&&Array.isArray(data.hotels))?data.hotels:[];activeDay=1;}
-  }catch(e){/* engine unreachable \u2014 keep the seeded sample itinerary */}
+    const data=r.ok?await r.json():null;
+    if(data&&data.city)svAns.city=data.city; // use the server's canonical city name so the label matches the data
+    TRIP=(data&&Array.isArray(data.days))?data.days:[];
+    stayHotels=(data&&Array.isArray(data.hotels))?data.hotels:[];
+    activeDay=1;
+  }catch(e){/* engine unreachable \u2014 show the chosen city's empty state, never another city's sample */TRIP=[];stayHotels=[];activeDay=1;}
   saveState();
   showResult();
 }
@@ -456,7 +469,7 @@ function showResult(){
   el('surveyView').innerHTML=brandHead('Profile ready')+
     `<div class="res-badge"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Profile complete</div>${resultCardHTML(true)}`;
   el('surveyView').querySelector('.res-cta').onclick=finishOnboard;el('screen').scrollTop=0;}
-function sampleAnswers(){svAns.city='Chicago';svAns.kids=['b3','b1'];svAns.length='wknd';svAns.pace='bal';svAns.needs=['stroller','nap','kid'];svAns.loves=['zoo','park'];computeProfile();}
+function sampleAnswers(){svAns.city='Chicago';svAns.kids=['b3','b1'];svAns.length='wknd';svAns.pace='bal';svAns.needs=['stroller','nap','kid'];svAns.loves=['zoo','park'];TRIP=DAYS;stayHotels=HOTELS;activeDay=1;computeProfile();}
 
 /* ============ PLAN / ITINERARY ============ */
 function stars(r){let s='';for(let i=1;i<=5;i++){const f=r>=i,h=!f&&r>=i-.5;s+=`<svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.1 5.6.8-4 4 1 5.6L12 16l-5 2.6 1-5.6-4-4 5.6-.8z" fill="${f||h?'var(--gold)':'rgba(255,194,61,.22)'}" ${h?'opacity=".6"':''}/></svg>`;}return s;}
@@ -498,7 +511,7 @@ function renderTimeline(animate){
     const tags=s.tags.map(t=>`<span class="tag"><span class="tk" style="background:${ACS[TAGMETA[t].c].a}"></span>${TAGMETA[t].l}</span>`).join('');
     const rate=s.rating?`<div class="rate"><span class="stars">${stars(s.rating)}</span><span class="rnum">${s.rating.toFixed(1)}</span><span class="rcount">(${s.count.toLocaleString()})</span><span class="gbadge"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.6a4.8 4.8 0 0 1-2.1 3.1v2.6h3.4c2-1.8 3.1-4.5 3.1-7.5z"/><path fill="#34A853" d="M12 22c2.8 0 5.2-.9 6.9-2.5l-3.4-2.6c-.9.6-2.1 1-3.5 1-2.7 0-5-1.8-5.8-4.3H2.7v2.7A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.2 13.6a6 6 0 0 1 0-3.8V7.1H2.7a10 10 0 0 0 0 9z"/><path fill="#EA4335" d="M12 5.9c1.5 0 2.9.5 3.9 1.5l2.9-2.9A10 10 0 0 0 2.7 7.1l3.5 2.7C7 7.7 9.3 5.9 12 5.9z"/></svg>Google</span></div>`:`<div class="rate"><span class="rnum" style="color:var(--teal)">Smart pick</span><span class="rcount">3 options shortlisted</span></div>`;
     const tailoredCard=tf?`<div class="tailored" style="--tc:${ACS[tf.color].a}"><svg class="tq" viewBox="0 0 24 24" fill="${ACS[tf.color].a}"><path d="M7 7h4v4l-2 4H6l2-4H7zM15 7h4v4l-2 4h-3l2-4h-1z"/></svg><div class="tt"><b>${tf.label}</b> \u00b7 ${tf.text}</div></div>`:'';
-    const reviewBlk=s.rating?`<div class="why"><svg viewBox="0 0 24 24" fill="none" stroke="${tf?ACS[tf.color].a:'var(--teal)'}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>${tf?`<b style="color:${ACS[tf.color].a}">On ${tf.label.toLowerCase()}:</b> ${tf.text}`:s.why}</span></div><div class="bar"><div class="barfill" style="width:${(s.rating/5*100).toFixed(0)}%"></div></div><div class="dmeta"><span>${s.rating.toFixed(1)} / 5 \u00b7 ${s.count.toLocaleString()} Google reviews</span><span>Family-fit ${s.score}%</span></div><a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=${enc(s.name+' Chicago')}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.3"/></svg>Open in Google Maps</a>`:`<div class="why"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.5.4.5.8.5 1.1h6c0-.3 0-.7.5-1.1A6 6 0 0 0 12 3z"/></svg><span>${s.why}</span></div>`;
+    const reviewBlk=s.rating?`<div class="why"><svg viewBox="0 0 24 24" fill="none" stroke="${tf?ACS[tf.color].a:'var(--teal)'}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>${tf?`<b style="color:${ACS[tf.color].a}">On ${tf.label.toLowerCase()}:</b> ${tf.text}`:s.why}</span></div><div class="bar"><div class="barfill" style="width:${(s.rating/5*100).toFixed(0)}%"></div></div><div class="dmeta"><span>${s.rating.toFixed(1)} / 5 \u00b7 ${s.count.toLocaleString()} Google reviews</span><span>Family-fit ${s.score}%</span></div><a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=${enc(s.name+' '+(svAns.city||''))}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.3"/></svg>Open in Google Maps</a>`:`<div class="why"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.5.4.5.8.5 1.1h6c0-.3 0-.7.5-1.1A6 6 0 0 0 12 3z"/></svg><span>${s.why}</span></div>`;
     html+=`<div class="stop" data-tags="${s.tags.join(' ')}">
       <div class="rail"><div class="time">${s.time.replace(' ','<br>')}</div><button class="cnode ${isDone?'on':''}" data-name="${s.name}" style="--ac:${ac.a}">${CHECKW}</button><div class="line"></div></div>
       <div class="cwrap">
