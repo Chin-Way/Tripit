@@ -385,11 +385,20 @@ let SEED_CITIES=['Chicago','New York','San Francisco','Washington DC','San Diego
 
 /* ---- persistence: keep the trip, Saved, check-offs & profile across reloads ---- */
 const STORE='tripit.v1';
-function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay}));}catch(e){}}
+const cityKey=c=>String(c==null?'':c).trim().toLowerCase();
+// tripCity records which city the saved TRIP/stayHotels were built for, so we can
+// refuse to restore a trip that doesn't belong to the saved survey city.
+function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay,tripCity:svAns.city}));}catch(e){}}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');if(!s)return false;
-  Object.assign(svAns,s.svAns||{});saved=s.saved||[];done=new Set(s.done||[]);profileData=s.profileData||null;
-  if(s.TRIP&&s.TRIP.length)TRIP=s.TRIP;if(Array.isArray(s.stayHotels))stayHotels=s.stayHotels;activeDay=s.activeDay||1;
-  return !!(profileData&&TRIP&&TRIP.length);}catch(e){return false;}}
+  Object.assign(svAns,s.svAns||{});saved=s.saved||[];done=new Set(s.done||[]);profileData=s.profileData||null;activeDay=s.activeDay||1;
+  // Only restore the saved trip if it was built for the saved city. This self-heals
+  // stale state from older builds where a failed plan could leave one city's label
+  // attached to another city's stops & hotels. Mismatched/legacy state -> re-survey.
+  const city=cityKey(s.svAns&&s.svAns.city);
+  const tripOK=!!city&&cityKey(s.tripCity)===city;
+  TRIP=(tripOK&&s.TRIP&&s.TRIP.length)?s.TRIP:[];
+  stayHotels=(tripOK&&Array.isArray(s.stayHotels))?s.stayHotels:[];
+  return !!(profileData&&tripOK&&TRIP.length);}catch(e){return false;}}
 
 /* ============ SURVEY ============ */
 function brandHead(sub){return `<div class="appbar"><div class="abL"><div class="ablogo"><b>T</b></div><div><div class="abtitle">TripIt</div><div class="absub">${sub}</div></div></div></div>`;}
@@ -432,6 +441,7 @@ async function buildProfile(){
   try{
     const r=await fetch('/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(svAns)});
     const data=r.ok?await r.json():null;
+    if(data&&data.city)svAns.city=data.city; // use the server's canonical city name so the label matches the data
     TRIP=(data&&Array.isArray(data.days))?data.days:[];
     stayHotels=(data&&Array.isArray(data.hotels))?data.hotels:[];
     activeDay=1;
@@ -459,7 +469,7 @@ function showResult(){
   el('surveyView').innerHTML=brandHead('Profile ready')+
     `<div class="res-badge"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Profile complete</div>${resultCardHTML(true)}`;
   el('surveyView').querySelector('.res-cta').onclick=finishOnboard;el('screen').scrollTop=0;}
-function sampleAnswers(){svAns.city='Chicago';svAns.kids=['b3','b1'];svAns.length='wknd';svAns.pace='bal';svAns.needs=['stroller','nap','kid'];svAns.loves=['zoo','park'];computeProfile();}
+function sampleAnswers(){svAns.city='Chicago';svAns.kids=['b3','b1'];svAns.length='wknd';svAns.pace='bal';svAns.needs=['stroller','nap','kid'];svAns.loves=['zoo','park'];TRIP=DAYS;stayHotels=HOTELS;activeDay=1;computeProfile();}
 
 /* ============ PLAN / ITINERARY ============ */
 function stars(r){let s='';for(let i=1;i<=5;i++){const f=r>=i,h=!f&&r>=i-.5;s+=`<svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.1 5.6.8-4 4 1 5.6L12 16l-5 2.6 1-5.6-4-4 5.6-.8z" fill="${f||h?'var(--gold)':'rgba(255,194,61,.22)'}" ${h?'opacity=".6"':''}/></svg>`;}return s;}
