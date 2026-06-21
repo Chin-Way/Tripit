@@ -5,7 +5,7 @@
   "description": "TripIt — family trip planner. Survey-driven, nap-aware itineraries grounded in real venue data and personalized by Claude.",
   "type": "module",
   "engines": {
-    "node": ">=18"
+    "node": ">=22.5.0"
   },
   "scripts": {
     "start": "node server.js",
@@ -17,8 +17,11 @@
     "@anthropic-ai/sdk": "^0.40.1",
     "@google/genai": "^2.8.0"
   },
-  "comment": "AI SDKs (@anthropic-ai/sdk, @google/genai) are imported lazily only when the matching API key is set. The core server + rules engine run with no dependencies installed.",
+  "comment": "Heavy deps are imported lazily so the core server + rules engine still run with nothing installed. AI SDKs load only when their key is set. Persistence uses the built-in node:sqlite (Node >=22.5) by default and needs no install; set DATABASE_URL to use Postgres (optional 'pg' dependency). better-sqlite3 is auto-detected if you choose to install it.",
   "devDependencies": {
     "qrcode": "^1.5.4"
+  },
+  "optionalDependencies": {
+    "pg": "^8.22.0"
   }
 }
