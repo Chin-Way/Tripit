@@ -371,6 +371,37 @@
   #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
   [data-theme="light"] #toast{background:#3a2c20;color:#fff}
 
+  /* ---- trip groups & discussion ---- */
+  .grpactions{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+  .joinrow{display:flex;gap:8px}
+  .joinrow input{flex:1;padding:11px;border-radius:11px;border:1.5px solid var(--line2);background:var(--card);color:var(--ink);font-size:13px;min-height:46px}
+  .joinrow input:focus{outline:none;border-color:var(--teal)}
+  .joinrow button{padding:0 16px;border-radius:11px;font-weight:700;color:var(--teal);border:1px solid rgba(55,214,224,.4);min-height:46px}
+  .grpcard{display:flex;align-items:center;gap:11px;border-radius:14px;padding:12px;margin-bottom:9px;background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);cursor:pointer;min-height:48px}
+  .grpic{width:40px;height:40px;border-radius:11px;flex:none;display:grid;place-items:center;font-weight:800;color:#06131f;background:linear-gradient(150deg,var(--teal),var(--purple));font-family:"Plus Jakarta Sans"}
+  .grptt{flex:1;min-width:0}.grptt b{font-family:"Plus Jakarta Sans";font-size:14px}.grptt span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+  .grpback{font-size:12.5px;font-weight:700;color:var(--teal);padding:6px 2px;cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:4px}
+  .grpmembers{display:flex;align-items:center;gap:0;margin:6px 0 12px}
+  .mpic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#06131f;background:conic-gradient(from 200deg,var(--purple),var(--teal),var(--blue));border:2px solid var(--card);margin-left:-6px;overflow:hidden}
+  .mpic:first-child{margin-left:0}.mpic img{width:100%;height:100%;object-fit:cover}
+  .mpic.sm{width:30px;height:30px;flex:none;margin:0;border:none}
+  .mcount{font-size:11px;color:var(--muted);margin-left:10px}
+  .grptrip{display:flex;align-items:center;gap:10px;border-radius:13px;padding:12px;margin-bottom:14px;background:linear-gradient(135deg,rgba(55,214,224,.12),rgba(157,126,234,.12));border:1px solid var(--line2)}
+  [data-theme="light"] .grptrip{background:linear-gradient(135deg,rgba(12,139,152,.13),rgba(115,85,196,.12))}
+  .grptrip b{font-family:"Plus Jakarta Sans";font-size:13.5px}.grptrip span{display:block;font-size:11px;color:var(--muted);margin-top:2px}.grptrip>div{flex:1;min-width:0}
+  .discuss{display:flex;flex-direction:column;gap:11px;margin-bottom:14px}
+  .msg{display:flex;gap:9px}
+  .msg.reply{margin-left:32px}
+  .mbody{flex:1;min-width:0;background:rgba(120,140,170,.08);border:1px solid var(--line);border-radius:13px;padding:9px 11px}
+  .mhead{display:flex;align-items:baseline;gap:7px}.mhead b{font-family:"Plus Jakarta Sans";font-size:12.5px}.mhead span{font-size:9.5px;color:var(--muted2)}
+  .mtext{font-size:12.5px;color:var(--ink);line-height:1.45;margin-top:3px;overflow-wrap:anywhere}
+  .mfoot{display:flex;gap:14px;margin-top:6px}.mfoot button{font-size:10.5px;color:var(--muted2);font-weight:600}.mfoot .danger{color:#e0708a}
+  .composer{display:flex;gap:8px;align-items:center;position:sticky;bottom:0;padding:8px 0 10px;background:linear-gradient(180deg,transparent,var(--bg1) 35%)}
+  .composer input{flex:1;padding:12px 15px;border-radius:22px;border:1.5px solid var(--line2);background:var(--card);color:var(--ink);font-size:13px;min-height:46px}
+  .composer input:focus{outline:none;border-color:var(--teal)}
+  .composer button{width:46px;height:46px;border-radius:50%;flex:none;background:linear-gradient(150deg,var(--teal),var(--teal2));color:#06131f;display:grid;place-items:center}
+  .composer button svg{width:18px;height:18px}
+
   /* ---- accessibility: visible keyboard focus + comfortable tap targets ---- */
   :focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:10px}
   .tab{min-height:48px}
@@ -398,6 +429,7 @@
       <div id="planView" class="view pad-tab"></div>
       <div id="stayView" class="view pad-tab"></div>
       <div id="savedView" class="view pad-tab"></div>
+      <div id="groupView" class="view pad-tab"></div>
       <div id="profileView" class="view pad-tab"></div>
     </div>
 
@@ -405,6 +437,7 @@
       <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><span>Plan</span></button>
       <button class="tab" data-tab="stay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 14h18M6 10V8a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2M3 21v-3M21 21v-3"/></svg><span>Stay</span></button>
       <button class="tab" data-tab="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6c0 5.2-8.8 10.4-8.8 10.4S3.2 13.8 3.2 8.6A4.6 4.6 0 0 1 12 6.8a4.6 4.6 0 0 1 8.8 1.8z"/></svg><span>Saved</span></button>
+      <button class="tab" data-tab="group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 3-5.6 6.5-5.6s6.5 2 6.5 5.6"/><path d="M16 5.3a3 3 0 0 1 0 5.4M17.5 14.6c2.3.5 4 2 4 5.4"/></svg><span>Group</span></button>
       <button class="tab" data-tab="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span>Profile</span></button>
     </nav>
 
@@ -943,12 +976,110 @@ function openShareSheet(d){
   });
 }
 
+/* ============ TRIP GROUPS ============ */
+let currentGroupId=null, replyTo=null;
+const SEND_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="#06131f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-7-7 16-2-7z"/></svg>';
+async function apiGet(u){try{const r=await fetch(u);return r.ok?await r.json():null;}catch(e){return null;}}
+const fmtTime=t=>{try{return new Date(t).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}catch(e){return '';}};
+const parseInviteToken=s=>{s=String(s||'').trim();const m=s.match(/[?&]group=([^&]+)/);return m?decodeURIComponent(m[1]):s;};
+
+async function renderGroups(){
+  const v=el('groupView');
+  if(!authState.user){
+    v.innerHTML=`<div class="ph-title">Trip groups</div><div class="ph-sub">Plan together with other families.</div>
+      <div class="empty"><div class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 3-5.6 6.5-5.6s6.5 2 6.5 5.6"/><path d="M16 5.3a3 3 0 0 1 0 5.4M17.5 14.6c2.3.5 4 2 4 5.4"/></svg></div><b>Plan together</b><span>Sign in to start a group around your trip, invite other families with a link, and chat in one place.</span><button class="retake" id="grpSignin" style="max-width:220px"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>Sign in</button></div>`;
+    const b=v.querySelector('#grpSignin');if(b)b.onclick=()=>switchTab('profile');
+    return;
+  }
+  if(currentGroupId)return renderGroupDetail(currentGroupId);
+  v.innerHTML=`<div class="ph-title">Trip groups</div><div class="ph-sub">Plan together with other families.</div>
+    <div class="grpactions"><button class="savebtn" id="grpCreate"><svg viewBox="0 0 24 24" fill="none" stroke="#06131f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Start a group for this trip</button>
+      <div class="joinrow"><input id="grpJoin" placeholder="Paste an invite link or code" aria-label="Invite link or code"><button id="grpJoinBtn">Join</button></div></div>
+    <div id="grpList"><div class="revempty">Loading your groups…</div></div>`;
+  v.querySelector('#grpCreate').onclick=createGroupForTrip;
+  v.querySelector('#grpJoinBtn').onclick=joinGroupFromInput;
+  v.querySelector('#grpJoin').onkeydown=e=>{if(e.key==='Enter')joinGroupFromInput();};
+  const data=await apiGet('/api/groups');const box=v.querySelector('#grpList');if(!box)return;
+  const groups=(data&&data.groups)||[];
+  box.innerHTML=groups.length?groups.map(g=>`<div class="grpcard" data-id="${esc(g.id)}" tabindex="0" role="button"><div class="grpic">${esc((g.name||'?').slice(0,1).toUpperCase())}</div><div class="grptt"><b>${esc(g.name)}</b><span>${g.tripCity?esc(g.tripCity)+' · ':''}${g.memberCount} member${g.memberCount===1?'':'s'} · ${esc(g.role)}</span></div><span class="chev">›</span></div>`).join(''):`<div class="revempty">No groups yet. Start one for your trip, or join with an invite link a friend sent you.</div>`;
+  box.querySelectorAll('.grpcard').forEach(c=>c.onclick=()=>{currentGroupId=c.dataset.id;renderGroups();});
+}
+async function createGroupForTrip(){
+  if(!authState.user){toast('Sign in first');return switchTab('profile');}
+  let tripId=null;
+  try{const tr=await fetch('/api/trips',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({city:svAns.city,title:(svAns.city?svAns.city+' trip':'My trip'),survey:svAns,plan:{days:TRIP,hotels:stayHotels},visibility:'private'})});if(tr.ok)tripId=(await tr.json()).id;}catch(e){}
+  try{const r=await fetch('/api/groups',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:(svAns.city?svAns.city+' families':'Our trip group'),tripId})});
+    if(r.ok){currentGroupId=(await r.json()).id;toast('Group created — invite your people ✦');renderGroups();}else toast('Could not create group');
+  }catch(e){toast('Could not create group');}
+}
+function joinGroupFromInput(){const i=el('grpJoin');const t=parseInviteToken(i&&i.value);if(!t){toast('Paste an invite link');return;}joinGroup(t);}
+async function joinGroup(token){
+  try{const r=await fetch('/api/groups/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});
+    if(r.ok){currentGroupId=(await r.json()).groupId;toast('Joined the group ✓');renderGroups();return true;}
+    toast(r.status===401?'Sign in to join':'Invite not found');
+  }catch(e){toast('Could not join');}
+  return false;
+}
+async function renderGroupDetail(id){
+  const v=el('groupView');
+  v.innerHTML=`<div class="grpback" id="grpBack">‹ All groups</div><div class="sv-build" style="padding:40px 16px"><div class="spinner"></div></div>`;
+  v.querySelector('#grpBack').onclick=()=>{currentGroupId=null;replyTo=null;renderGroups();};
+  const data=await apiGet('/api/groups/'+enc(id));
+  if(!data||!data.group){v.innerHTML=`<div class="grpback" id="gb2">‹ All groups</div><div class="revempty">Couldn’t load this group.</div>`;v.querySelector('#gb2').onclick=()=>{currentGroupId=null;renderGroups();};return;}
+  const g=data.group;
+  const pics=g.members.slice(0,6).map(m=>`<span class="mpic" title="${esc(m.name)}">${m.avatar?`<img src="${esc(m.avatar)}" alt="">`:esc((m.name||'?').slice(0,1).toUpperCase())}</span>`).join('');
+  const trip=g.trip?`<div class="grptrip"><div><b>${esc(g.trip.city||'Trip')}</b><span>${(g.trip.plan&&Array.isArray(g.trip.plan.days)?g.trip.plan.days.length:0)}-day plan · shared with the group</span></div><button class="linkbtn" id="grpViewTrip">View trip</button></div>`:'';
+  v.innerHTML=`<div class="grpback" id="grpBack">‹ All groups</div>
+    <div class="ph-title" style="margin-top:2px">${esc(g.name)}</div>
+    <div class="grpmembers">${pics}<span class="mcount">${g.members.length} member${g.members.length===1?'':'s'}</span><button class="revwrite" id="grpInvite" style="margin-left:auto"><svg viewBox="0 0 24 24" width="12" height="12" style="vertical-align:-1px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5h6M19 2v6M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM3 21c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/></svg> Invite</button></div>
+    ${trip}
+    <div class="discuss" id="discuss"><div class="revempty">Loading…</div></div>
+    <div class="composer"><input id="msgInput" placeholder="Message your group…" maxlength="2000" aria-label="Message"><button id="msgSend" aria-label="Send message">${SEND_ICON}</button></div>`;
+  v.querySelector('#grpBack').onclick=()=>{currentGroupId=null;replyTo=null;renderGroups();};
+  v.querySelector('#grpInvite').onclick=()=>inviteToGroup(g);
+  if(g.trip){const vt=v.querySelector('#grpViewTrip');if(vt)vt.onclick=()=>viewGroupTrip(g.trip);}
+  v.querySelector('#msgSend').onclick=()=>sendGroupMessage(id);
+  const mi=v.querySelector('#msgInput');
+  mi.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendGroupMessage(id);}else if(e.key==='Escape'){replyTo=null;mi.placeholder='Message your group…';}};
+  loadGroupMessages(id);
+}
+function inviteToGroup(g){const url=location.origin+'/?group='+enc(g.inviteToken);openShareOrNative({title:'Join our TripIt group',text:`Join “${g.name}” on TripIt so we can plan our trip together.`,url});}
+function viewGroupTrip(trip){Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;TRIP=(trip.plan&&Array.isArray(trip.plan.days))?trip.plan.days:[];stayHotels=(trip.plan&&Array.isArray(trip.plan.hotels))?trip.plan.hotels:[];activeDay=1;computeProfile();switchTab('plan');toast('Viewing the group’s trip');}
+async function loadGroupMessages(id){
+  const box=el('discuss');if(!box)return;
+  const data=await apiGet('/api/groups/'+enc(id)+'/messages');
+  const msgs=(data&&data.messages)||[];
+  const top=msgs.filter(m=>!m.parentId), byParent={};
+  msgs.filter(m=>m.parentId).forEach(m=>{(byParent[m.parentId]=byParent[m.parentId]||[]).push(m);});
+  if(!top.length){box.innerHTML=`<div class="revempty">No messages yet — say hi 👋</div>`;return;}
+  box.innerHTML=top.map(m=>msgHTML(m,false)+(byParent[m.id]||[]).map(r=>msgHTML(r,true)).join('')).join('');
+  box.querySelectorAll('[data-reply]').forEach(b=>b.onclick=()=>{replyTo=b.dataset.reply;const mi=el('msgInput');if(mi){mi.focus();mi.placeholder='Replying… (Esc to cancel)';}});
+  box.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>deleteGroupMsg(id,b.dataset.del));
+}
+function msgHTML(m,reply){
+  const pic=m.avatar?`<span class="mpic sm"><img src="${esc(m.avatar)}" alt=""></span>`:`<span class="mpic sm">${esc((m.author||'?').slice(0,1).toUpperCase())}</span>`;
+  return `<div class="msg ${reply?'reply':''}">${pic}<div class="mbody"><div class="mhead"><b>${esc(m.author)}</b><span>${esc(fmtTime(m.createdAt))}</span></div><div class="mtext">${esc(m.body)}</div><div class="mfoot">${reply?'':`<button data-reply="${esc(m.id)}">Reply</button>`}${m.canDelete?`<button data-del="${esc(m.id)}" class="danger">Delete</button>`:''}</div></div></div>`;
+}
+async function sendGroupMessage(id){
+  const inp=el('msgInput');if(!inp)return;const body=inp.value.trim();if(!body)return;
+  inp.disabled=true;
+  try{const r=await fetch('/api/groups/'+enc(id)+'/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({body,parentId:replyTo})});
+    if(r.ok){inp.value='';replyTo=null;inp.placeholder='Message your group…';await loadGroupMessages(id);}
+    else{const d=await r.json().catch(()=>({}));toast(d.error||'Could not send');}
+  }catch(e){toast('Could not send');}
+  inp.disabled=false;inp.focus();
+}
+async function deleteGroupMsg(id,mid){
+  if(!confirm('Delete this message?'))return;
+  try{const r=await fetch('/api/groups/'+enc(id)+'/messages/'+enc(mid)+'/delete',{method:'POST'});if(r.ok)loadGroupMessages(id);else toast('Could not delete');}catch(e){toast('Could not delete');}
+}
+
 /* ============ NAV / SHELL ============ */
-function showView(v){['surveyView','planView','stayView','savedView','profileView'].forEach(id=>el(id).classList.toggle('on',id===v+'View'));el('screen').scrollTop=0;}
+function showView(v){['surveyView','planView','stayView','savedView','groupView','profileView'].forEach(id=>el(id).classList.toggle('on',id===v+'View'));el('screen').scrollTop=0;}
 function setTabbar(on){el('tabbar').classList.toggle('on',on);}
 function updateBadge(){document.querySelectorAll('#tabbar .tab').forEach(t=>{if(t.dataset.tab==='saved'){let b=t.querySelector('.badge');if(saved.length){if(!b){b=document.createElement('span');b.className='badge';t.appendChild(b);}b.textContent=saved.length;}else if(b)b.remove();}});}
 function switchTab(tab){currentTab=tab;document.querySelectorAll('#tabbar .tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===tab));
-  if(tab==='plan'){showView('plan');renderPlan(true);}else if(tab==='stay'){showView('stay');renderStay();}else if(tab==='saved'){showView('saved');renderSaved();}else{showView('profile');renderProfile();}}
+  if(tab==='plan'){showView('plan');renderPlan(true);}else if(tab==='stay'){showView('stay');renderStay();}else if(tab==='saved'){showView('saved');renderSaved();}else if(tab==='group'){showView('group');renderGroups();}else{showView('profile');renderProfile();}}
 function finishOnboard(){setTabbar(true);switchTab('plan');saveState();}
 function openSurvey(){svStep=0;setTabbar(false);showView('survey');renderSurvey();}
 document.querySelectorAll('#tabbar .tab').forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));
@@ -968,7 +1099,16 @@ const _params=new URLSearchParams(location.search);
 const _cleanUrl=()=>{try{history.replaceState({},'',location.pathname);}catch(e){}};
 if(_params.get('signedin')){toast('Signed in ✓');_cleanUrl();}
 if(_params.get('autherror')){toast('Sign-in didn’t complete — please try again.');_cleanUrl();}
-loadAuth().then(()=>{if(currentTab==='profile'&&el('profileView').classList.contains('on'))renderProfile();});
+const _grp=_params.get('group');
+if(_grp){try{localStorage.setItem('tripit.pendingGroup',_grp);}catch(e){}_cleanUrl();}
+loadAuth().then(()=>{
+  if(currentTab==='profile'&&el('profileView').classList.contains('on'))renderProfile();
+  let pg=null;try{pg=localStorage.getItem('tripit.pendingGroup');}catch(e){}
+  if(pg&&el('tabbar').classList.contains('on')){
+    if(authState.user){try{localStorage.removeItem('tripit.pendingGroup');}catch(e){}currentGroupId=null;switchTab('group');joinGroup(pg);}
+    else{switchTab('group');toast('Sign in to join the group');}
+  }
+});
 
 const _shared=_params.get('trip');
 if(_shared){_cleanUrl();loadSharedTrip(_shared).then(ok=>{if(!ok){if(loadState())finishOnboard();else renderSurvey();}});}
