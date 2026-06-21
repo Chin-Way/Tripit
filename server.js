@@ -20,6 +20,7 @@ import path from "node:path";
 import { loadEnv } from "./lib/env.js";
 import { generatePlan } from "./lib/engine.js";
 import { getDb } from "./lib/db/index.js";
+import { annotateData } from "./lib/feedback.js";
 import { MIME, send, sendJson, readJson, query } from "./lib/http.js";
 import * as authApi from "./lib/api/auth.js";
 import * as tripsApi from "./lib/api/trips.js";
@@ -104,6 +105,14 @@ async function handlePlan(req, res) {
   const data = await getData(answers.city);
   if (!data.venues || !data.venues.length) {
     return sendJson(res, 200, { city: data.city, days: [], hotels: data.hotels || [], unavailable: true });
+  }
+
+  // P4: fold consented community review signals into ranking + AI grounding.
+  try {
+    const db = await getDb();
+    if (db) await annotateData(db, data);
+  } catch (err) {
+    console.warn("[feedback] signal annotation skipped:", err.message);
   }
 
   let plan;
