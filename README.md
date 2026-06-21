@@ -169,6 +169,29 @@ trips get a read-only public link (`/?trip=<token>`). *Programmatic* posting via
 official TikTok/Instagram APIs needs app review and business accounts — that's an
 approval-gated phase 2; everything here works today via Web Share.
 
+### Trip groups & discussion
+
+The **Group** tab lets several families plan together: start a group around a saved
+trip, share a `/?group=<token>` invite link, see the members and a shared trip view,
+and chat in a threaded discussion. Access is gated by group membership; the same
+family-friendly filter applies to messages, and authors (or the group owner) can delete.
+
+### The AI feedback loop (consented)
+
+Reviews where a family ticked **"use my review to improve TripIt"** become a structured
+signal (this is *not* in-app fine-tuning of a foundation model). For each city we
+aggregate consented, visible reviews per venue into an average + volume, shrink it by
+confidence, and feed it back two ways:
+
+- **Ranking:** `lib/engine.js` adds a bounded `familyBoost` so well-reviewed venues rank
+  a little higher (and poorly-reviewed ones lower) in both the rules and AI plans.
+- **Prompt grounding:** `lib/aiShared.js` appends a short "family signals" block to the
+  AI prompt (RAG-style) so the model gently prefers community favorites.
+
+It's best-effort — with no datastore the signal is empty and planning is unchanged. For a
+future curated fine-tuning set, `npm run export:feedback` writes the consented reviews to
+JSONL (`feedback-export.jsonl`, git-ignored — it contains user content; curate before use).
+
 ### Privacy & child safety
 
 - **Consent:** the "use my review to improve TripIt" checkbox is **opt-in (off by
@@ -180,8 +203,9 @@ approval-gated phase 2; everything here works today via Web Share.
   to support it.
 - **Secrets** stay in env vars (`.env` locally, the dashboard in prod), never in the repo.
 
-See `docs/PLAN.md` for the full architecture and the phased roadmap (groups/discussion
-and the AI feedback loop are the next phases).
+See `docs/PLAN.md` for the full architecture. Phases P1–P4 (auth + persistence, reviews +
+sharing, groups, and the consented AI feedback loop) are implemented; native social-API
+posting remains the approval-gated next step.
 
 ---
 
@@ -237,8 +261,8 @@ app — the "visit the site" and "download the app" goals in one code.
       read-only shared-trip links.
 - [x] **Trip groups & discussion** (P3) — start a group around a trip, invite other
       families with a link, a shared trip view, and threaded comments (member-gated).
-- [ ] **AI feedback loop** (P4) — feed consented reviews into engine ranking + ground the
-      AI prompt, with a curated dataset export. *Consent is captured now.*
+- [x] **AI feedback loop** (P4) — consented reviews nudge the engine's ranking and ground
+      the AI prompt (RAG-style); `npm run export:feedback` exports a curated dataset.
 - [ ] Native IG/TikTok/Facebook API posting (approval-gated; Web Share works today).
 - [ ] Wire the **Stay** tab to the data layer / hotel booking affiliates.
 - [ ] Real PNG app icons (an SVG icon is included for now).
