@@ -24,6 +24,7 @@ import { MIME, send, sendJson, readJson, query } from "./lib/http.js";
 import * as authApi from "./lib/api/auth.js";
 import * as tripsApi from "./lib/api/trips.js";
 import * as reviewsApi from "./lib/api/reviews.js";
+import * as groupsApi from "./lib/api/groups.js";
 
 loadEnv(); // read a local .env file if present (host env vars still win)
 
@@ -175,6 +176,18 @@ async function route(req, res) {
     const body = await readJson(req).catch(() => ({}));
     if (seg[3] === "report") return reviewsApi.report(req, res, id, body);
     if (seg[3] === "moderate") return reviewsApi.moderate(req, res, id, body);
+  }
+
+  // --- trip groups & discussion ---
+  if (seg[0] === "api" && seg[1] === "groups") {
+    if (p === "/api/groups" && m === "POST") return groupsApi.create(req, res, await readJson(req));
+    if (p === "/api/groups" && m === "GET") return groupsApi.list(req, res);
+    if (seg[2] === "join" && m === "POST") return groupsApi.join(req, res, await readJson(req).catch(() => ({})));
+    if (seg[2] === "invite" && seg.length === 4 && m === "GET") return groupsApi.preview(req, res, seg[3]);
+    if (seg.length === 4 && seg[3] === "messages" && m === "GET") return groupsApi.messages(req, res, seg[2]);
+    if (seg.length === 4 && seg[3] === "messages" && m === "POST") return groupsApi.postMsg(req, res, seg[2], await readJson(req).catch(() => ({})));
+    if (seg.length === 6 && seg[3] === "messages" && seg[5] === "delete" && m === "POST") return groupsApi.delMsg(req, res, seg[2], seg[4]);
+    if (seg.length === 3 && m === "GET") return groupsApi.detail(req, res, seg[2]);
   }
 
   // --- static / SPA shell ---
