@@ -12,6 +12,9 @@ data/*.db-wal
 data/*.db-shm
 tripit.db*
 
+# exported feedback dataset (contains user content; curate before sharing)
+feedback-export*.jsonl
+
 # generated QR codes (run `npm run qr -- <your-url>` to make them)
 public/qr.png
 public/qr.svg

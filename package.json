@@ -11,7 +11,8 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "qr": "node scripts/qr.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "export:feedback": "node scripts/export-feedback.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.40.1",
