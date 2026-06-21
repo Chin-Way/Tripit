@@ -51,6 +51,16 @@
   [data-theme="light"] .sv-chip,[data-theme="light"] .sv-opt,[data-theme="light"] .srow .si,
   [data-theme="light"] .empty .ei{background:rgba(120,92,64,.06)}
   [data-theme="light"] .progtrack,[data-theme="light"] .bar{background:rgba(120,92,64,.14)}
+  /* re-color text that the dark theme hard-codes light, so it stays legible on cream */
+  [data-theme="light"] .sv-opt,[data-theme="light"] .sv-opt.sel,[data-theme="light"] .sv-chip,
+  [data-theme="light"] .tag,[data-theme="light"] .pf,[data-theme="light"] .res-chip,
+  [data-theme="light"] .res-name,[data-theme="light"] .res-desc,[data-theme="light"] .sv-build b,
+  [data-theme="light"] .why,[data-theme="light"] .why span,[data-theme="light"] .hintro p,
+  [data-theme="light"] .hintro b,[data-theme="light"] .hwhy,[data-theme="light"] .tailored .tt,
+  [data-theme="light"] .napband b{color:var(--ink)}
+  /* deepen the tinted panels a touch so they read as cards on cream */
+  [data-theme="light"] .res-card{background:linear-gradient(150deg,rgba(12,139,152,.16),rgba(115,85,196,.13))}
+  [data-theme="light"] .profile{background:linear-gradient(135deg,rgba(12,139,152,.14),rgba(115,85,196,.12))}
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html,body{height:100%}
   body{font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:var(--ink);
