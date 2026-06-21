@@ -112,6 +112,79 @@ with the `CLAUDE_MODEL` env var (e.g. `claude-opus-4-8` for the hardest planning
 
 ---
 
+## Accounts, reviews & social (all optional)
+
+TripIt now has an optional backend for accounts, saved trips, family reviews, and
+sharing. **None of it is required** — with nothing configured the app behaves exactly
+as before: guest mode, on-device storage, the offline PWA shell, and `/api/plan` all
+keep working. The new pieces light up only when you configure them, mirroring how the
+AI engine activates when a key is present. Run `npm run check` to see what's on.
+
+### Datastore (persistence)
+
+- **Default:** the built-in `node:sqlite` (Node ≥ 22.5) at `data/tripit.db` — zero
+  install, perfect for a single instance or local dev.
+- **Postgres:** set `DATABASE_URL` and the optional `pg` driver is used instead. Use
+  this for a real deployment — **Render's free web disk is ephemeral**, so a SQLite
+  file there is wiped on each redeploy. (You can also `npm i better-sqlite3` to use the
+  native SQLite driver; it's auto-detected.)
+
+The schema (users, sessions, trips, reviews, reports, and group/message tables for the
+next phase) is created automatically on first boot. If the store can't be opened, the
+server logs a warning and simply runs in guest mode.
+
+### Social login
+
+Sign-in uses standard OAuth, hand-rolled with Node's `crypto` (no auth dependencies).
+Each provider activates only when **both** its id and secret are set, and its button
+appears in the app automatically:
+
+| Provider | Env vars | Redirect / return URL |
+|---|---|---|
+| Google | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | `<PUBLIC_BASE_URL>/api/auth/google/callback` |
+| Facebook | `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET` | `<PUBLIC_BASE_URL>/api/auth/facebook/callback` |
+| Apple | `APPLE_CLIENT_ID`, `APPLE_TEAM_ID`, `APPLE_KEY_ID`, `APPLE_PRIVATE_KEY` | `<PUBLIC_BASE_URL>/api/auth/apple/callback` |
+
+Also set `SESSION_SECRET` (signs the OAuth state cookie) and `PUBLIC_BASE_URL` (used to
+build redirect URIs). Sessions are server-side, revocable tokens in an HttpOnly,
+SameSite=Lax, Secure cookie.
+
+> **Why not Instagram / TikTok login?** Instagram Basic Display was deprecated and both
+> platforms target business/creator accounts — there's no reliable general-purpose
+> consumer login. So they're treated as **share targets**, not sign-in.
+
+### Reviews, testimonies & moderation
+
+Families can review a venue, a hotel, or a whole trip (1–5 stars, text, optional photo).
+Photos are downscaled in the browser and stored size-capped, so there's no filesystem
+dependency. Moderation is built in for a kids' product: a family-friendly keyword filter
+on submit, an open **report/flag** path that auto-hides content past a threshold, and
+admin **hide/remove/restore** for anyone listed in `ADMIN_EMAILS`.
+
+### Sharing
+
+One tap shares a trip via the **Web Share API** (works on mobile for IG/TikTok/FB/etc.),
+with a fallback sheet for WhatsApp, Facebook, X, email, and copy-link on desktop. Saved
+trips get a read-only public link (`/?trip=<token>`). *Programmatic* posting via the
+official TikTok/Instagram APIs needs app review and business accounts — that's an
+approval-gated phase 2; everything here works today via Web Share.
+
+### Privacy & child safety
+
+- **Consent:** the "use my review to improve TripIt" checkbox is **opt-in (off by
+  default)** and stored per review. Reviews can be deleted.
+- **Children's data:** accounts are for parents/adults. TripIt stores only kids' **age
+  bands** (e.g. "2–3 yrs") — never names or other children's PII — which keeps it on the
+  right side of COPPA's spirit. Full COPPA/GDPR compliance (e.g. a formal privacy policy,
+  data-subject requests) is out of scope for this prototype but the data model is built
+  to support it.
+- **Secrets** stay in env vars (`.env` locally, the dashboard in prod), never in the repo.
+
+See `docs/PLAN.md` for the full architecture and the phased roadmap (groups/discussion
+and the AI feedback loop are the next phases).
+
+---
+
 ## Deploying (so a QR code can reach it)
 
 Goal: a public URL you can put behind a QR code. Easiest path (free, ~5 minutes):
@@ -155,7 +228,18 @@ app — the "visit the site" and "download the app" goals in one code.
       is set. The survey chips come from `GET /api/cities`.
 - [x] **City-aware Stay tab** — hotels come from each city's data; cities without
       hotel data show a "coming soon" state.
-- [ ] User accounts + saved trips in a database (currently saved on-device only).
+- [x] **User accounts + saved trips in a database** — optional SQLite/Postgres backend
+      with Google/Facebook/Apple sign-in (guest mode still works). See *Accounts,
+      reviews & social* above.
+- [x] **Family reviews & testimonies** with photos, moderation, and an opt-in consent
+      flag, tied to venues, hotels, or a whole trip.
+- [x] **One-tap sharing** via the Web Share API with per-platform fallbacks and
+      read-only shared-trip links.
+- [ ] **Trip groups & discussion** (P3) — invite multiple families, shared view, threaded
+      comments. *Data model is already in place.*
+- [ ] **AI feedback loop** (P4) — feed consented reviews into engine ranking + ground the
+      AI prompt, with a curated dataset export. *Consent is captured now.*
+- [ ] Native IG/TikTok/Facebook API posting (approval-gated; Web Share works today).
 - [ ] Wire the **Stay** tab to the data layer / hotel booking affiliates.
 - [ ] Real PNG app icons (an SVG icon is included for now).
 - [ ] Free-trial paywall + subscription ($9.99/mo per the deck) via Stripe / RevenueCat.
