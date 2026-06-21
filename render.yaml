@@ -36,3 +36,40 @@ services:
       # Google Places (live venue data) — optional; seed data used if unset
       - key: GOOGLE_PLACES_API_KEY
         sync: false
+
+      # --- Accounts, persistence & social (all optional) ---------------------
+      # With none of these set, TripIt runs in guest mode exactly as before.
+      #
+      # Datastore: the built-in SQLite is used by default, but Render's free web
+      # disk is ephemeral (wiped on redeploy). For durable accounts/reviews,
+      # add a Render Postgres instance and wire its connection string here:
+      #   - key: DATABASE_URL
+      #     fromDatabase: { name: tripit-db, property: connectionString }
+      - key: DATABASE_URL
+        sync: false
+      # Signs the OAuth state cookie — generate a long random value.
+      - key: SESSION_SECRET
+        sync: false
+      # Public origin for OAuth redirect URIs, e.g. https://tripit.onrender.com
+      - key: PUBLIC_BASE_URL
+        sync: false
+      # Comma-separated emails allowed to moderate reviews.
+      - key: ADMIN_EMAILS
+        sync: false
+      # Social login — each provider activates when its id + secret are set.
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: FACEBOOK_CLIENT_ID
+        sync: false
+      - key: FACEBOOK_CLIENT_SECRET
+        sync: false
+      - key: APPLE_CLIENT_ID
+        sync: false
+      - key: APPLE_TEAM_ID
+        sync: false
+      - key: APPLE_KEY_ID
+        sync: false
+      - key: APPLE_PRIVATE_KEY
+        sync: false

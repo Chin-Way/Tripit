@@ -75,6 +75,29 @@ async function checkPlaces() {
   }
 }
 
+async function checkDatabase() {
+  try {
+    const { getDb } = await import("../lib/db/index.js");
+    const db = await getDb();
+    if (!db) return bad("Datastore not available (could not open a store)");
+    const usingPg = !!process.env.DATABASE_URL;
+    ok(`Datastore works (${db.dialect})${usingPg ? "" : " — local file; set DATABASE_URL for Postgres"}`);
+  } catch (err) {
+    bad(`Datastore failed: ${err.message}`);
+  }
+}
+
+async function checkAuth() {
+  const { configuredProviders } = await import("../lib/auth/oauth.js");
+  const providers = configuredProviders();
+  if (!providers.length) skip("Social login (no OAuth provider configured) — guest mode only");
+  else ok(`Social login: ${providers.map((p) => p.label).join(", ")}`);
+  if (!process.env.SESSION_SECRET) skip("SESSION_SECRET not set — using an ephemeral secret (set it in prod)");
+  else ok("SESSION_SECRET set");
+  if (!process.env.PUBLIC_BASE_URL) skip("PUBLIC_BASE_URL not set — redirect URIs inferred from the request host");
+  else ok(`PUBLIC_BASE_URL = ${process.env.PUBLIC_BASE_URL}`);
+}
+
 function activeProvider() {
   const p = (process.env.AI_PROVIDER || "auto").toLowerCase();
   const c = !!process.env.ANTHROPIC_API_KEY;
@@ -90,5 +113,8 @@ await checkClaude();
 await checkGemini();
 console.log("\nVenue data:");
 await checkPlaces();
+console.log("\nAccounts & persistence:");
+await checkDatabase();
+await checkAuth();
 console.log(`\n/api/plan will use: \x1b[36m${activeProvider()}\x1b[0m`);
 console.log("(set AI_PROVIDER=claude|gemini to choose; data uses Places when its key is set)\n");
