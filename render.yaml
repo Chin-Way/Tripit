@@ -37,26 +37,32 @@ services:
       - key: GOOGLE_PLACES_API_KEY
         sync: false
 
-      # --- Accounts, persistence & social (all optional) ---------------------
-      # With none of these set, TripIt runs in guest mode exactly as before.
-      #
-      # Datastore: the built-in SQLite is used by default, but Render's free web
-      # disk is ephemeral (wiped on redeploy). For durable accounts/reviews,
-      # add a Render Postgres instance and wire its connection string here:
-      #   - key: DATABASE_URL
-      #     fromDatabase: { name: tripit-db, property: connectionString }
+      # --- Accounts, persistence & social -----------------------------------
+      # Datastore: auto-provisioned Postgres (see the `databases:` block below),
+      # wired in automatically here. Without it the app falls back to SQLite,
+      # which is wiped on each redeploy on the free web tier.
       - key: DATABASE_URL
-        sync: false
-      # Signs the OAuth state cookie — generate a long random value.
+        fromDatabase:
+          name: tripit-db
+          property: connectionString
+      # Signs the OAuth state cookie — Render generates a random value for you.
       - key: SESSION_SECRET
-        sync: false
-      # Public origin for OAuth redirect URIs, e.g. https://tripit.onrender.com
+        generateValue: true
+      # DEMO sign-in for the pitch: makes the Google/Facebook/Apple buttons work
+      # as SIMULATED logins (real demo accounts + sessions, so reviews and groups
+      # work) with no OAuth setup and no cost. Set to 0 (or remove) for the real
+      # product once you've configured real providers below. See docs/DEPLOY.md.
+      - key: DEMO_AUTH
+        value: "1"
+      # Public origin for OAuth redirect URIs (optional — inferred from the
+      # Render URL when unset). Set it for real OAuth, e.g. https://tripit.onrender.com
       - key: PUBLIC_BASE_URL
         sync: false
       # Comma-separated emails allowed to moderate reviews.
       - key: ADMIN_EMAILS
         sync: false
-      # Social login — each provider activates when its id + secret are set.
+      # Real social login — each provider activates when its id + secret are set,
+      # taking over from the demo button automatically.
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET
@@ -73,3 +79,9 @@ services:
         sync: false
       - key: APPLE_PRIVATE_KEY
         sync: false
+
+# Auto-provisioned Postgres for accounts/reviews/groups. Render's FREE database
+# expires ~30 days after creation — upgrade the plan to keep it beyond that.
+databases:
+  - name: tripit-db
+    plan: free

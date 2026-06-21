@@ -13,7 +13,36 @@ sign-in button appears only once **both** its id and secret are set.
 
 ---
 
+## Fastest path — demo / pitch (no OAuth, no cost)
+
+The `render.yaml` Blueprint already automates the hard parts, so a shareholder-ready
+demo needs **no provider setup and no secrets**:
+
+1. Render → **New → Blueprint** → pick this repo → **Apply**. The Blueprint:
+   - **auto-creates the `tripit-db` Postgres** and wires `DATABASE_URL`,
+   - **auto-generates `SESSION_SECRET`**, and
+   - sets **`DEMO_AUTH=1`**.
+2. Open the app → **Profile** → tap **Continue with Apple / Google / Facebook**. These
+   are **simulated** logins: each creates a real demo account + session, so reviews and
+   groups work fully — but no real OAuth, no Apple Developer fee, nothing to configure.
+   (A small "Preview mode — sign-in is simulated" note is shown.)
+3. To demo a **group with multiple families**, sign in as a *different* provider in a
+   second browser/incognito window (each provider = a distinct demo family), then use the
+   group's **Invite** link to join.
+
+That's the whole demo. The steps below are only for wiring **real** sign-in later — set
+any real provider and its button automatically switches from simulated to real. Turn the
+simulation off for production by setting `DEMO_AUTH=0` (or removing it).
+
+> Cost: Render web + Postgres are free (the free DB expires ~30 days after creation, then
+> ~\$7/mo to keep). Google/Facebook login are free. Apple is the only paid one (\$99/yr
+> Apple Developer) — and the demo skips it entirely.
+
+---
+
 ## Step 1 — Add a database (so data survives redeploys)
+
+*(Skip if you used the Blueprint above — the database is already created and wired.)*
 
 Render's free web disk is ephemeral, so use Postgres for real persistence.
 
