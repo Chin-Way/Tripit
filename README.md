@@ -235,8 +235,8 @@ app — the "visit the site" and "download the app" goals in one code.
       flag, tied to venues, hotels, or a whole trip.
 - [x] **One-tap sharing** via the Web Share API with per-platform fallbacks and
       read-only shared-trip links.
-- [ ] **Trip groups & discussion** (P3) — invite multiple families, shared view, threaded
-      comments. *Data model is already in place.*
+- [x] **Trip groups & discussion** (P3) — start a group around a trip, invite other
+      families with a link, a shared trip view, and threaded comments (member-gated).
 - [ ] **AI feedback loop** (P4) — feed consented reviews into engine ranking + ground the
       AI prompt, with a curated dataset export. *Consent is captured now.*
 - [ ] Native IG/TikTok/Facebook API posting (approval-gated; Web Share works today).
