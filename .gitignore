@@ -6,6 +6,12 @@ npm-debug.log*
 *.log
 .vercel
 
+# local SQLite datastore (created at runtime; use Postgres in production)
+data/*.db
+data/*.db-wal
+data/*.db-shm
+tripit.db*
+
 # generated QR codes (run `npm run qr -- <your-url>` to make them)
 public/qr.png
 public/qr.svg
