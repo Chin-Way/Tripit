@@ -176,6 +176,31 @@ trip, share a `/?group=<token>` invite link, see the members and a shared trip v
 and chat in a threaded discussion. Access is gated by group membership; the same
 family-friendly filter applies to messages, and authors (or the group owner) can delete.
 
+### Transportation & bookings (door-to-door)
+
+Every itinerary now carries **transport for each leg** — between stops, hotel↔stop, and
+airport↔hotel. Each leg shows **rideshare / transit / walk / drive** with a time and cost
+estimate and a one-tap **Book ride** / **Buy ticket**; a **No-walking mode** toggle
+schedules a ride or transit for every hop (even short ones) and shows a per-day transport
+summary (total time + cost). The **Booked** tab is a full **Reservations** view — flights,
+hotel, rides, and restaurant tables, each with a confirmation code and time — plus a
+one-tap **"Book this trip"** that books the whole plan end-to-end.
+
+- **Simulated, demo-safe.** Bookings are simulated end-to-end (confirmation codes + saved
+  reservations), clearly labeled "Demo", with **no payment**. Gated by `DEMO_BOOKINGS`
+  (default on) — the booking analog of `DEMO_AUTH`. Estimates are deterministic
+  (`lib/transport.js`): haversine distances where coordinates are known (Google Places, or
+  the `lib/geo.js` seed overlay), a neighborhood heuristic otherwise — no key, no network.
+- **Real, free deep links** so every button goes somewhere today: Uber universal links
+  (pickup/dropoff lat/lng), Google Maps transit/driving directions, Google Flights, and
+  OpenTable search.
+- **Real provider APIs are an approval-gated phase 2** (like native social posting): swap
+  `simulateBooking()` in `lib/bookings.js` for a provider call behind that provider's env
+  key (placeholders in `render.yaml` / `.env.example`), and set `DEMO_BOOKINGS=0`.
+
+Guests' reservations live on-device (localStorage); signed-in users with a datastore
+persist them (the `bookings` table) so the Booked view follows them across devices.
+
 ### The AI feedback loop (consented)
 
 Reviews where a family ticked **"use my review to improve TripIt"** become a structured
@@ -203,9 +228,10 @@ JSONL (`feedback-export.jsonl`, git-ignored — it contains user content; curate
   to support it.
 - **Secrets** stay in env vars (`.env` locally, the dashboard in prod), never in the repo.
 
-See `docs/PLAN.md` for the full architecture. Phases P1–P4 (auth + persistence, reviews +
-sharing, groups, and the consented AI feedback loop) are implemented; native social-API
-posting remains the approval-gated next step.
+See `docs/PLAN.md` for the full architecture. Phases P1–P5 (auth + persistence, reviews +
+sharing, groups, the consented AI feedback loop, and door-to-door transport + simulated
+bookings) are implemented; native social-API posting and real booking-provider APIs remain
+the approval-gated next steps.
 
 ---
 
@@ -263,7 +289,12 @@ app — the "visit the site" and "download the app" goals in one code.
       families with a link, a shared trip view, and threaded comments (member-gated).
 - [x] **AI feedback loop** (P4) — consented reviews nudge the engine's ranking and ground
       the AI prompt (RAG-style); `npm run export:feedback` exports a curated dataset.
+- [x] **Door-to-door transport & bookings** (P5) — per-leg rideshare/transit/walk/drive
+      with time + cost, No-walking mode, and a **Booked** Reservations view (flights, hotel,
+      rides, tables with confirmation codes). Simulated via `DEMO_BOOKINGS`; real deep links
+      to Google Flights/Maps, Uber & OpenTable work today.
+- [ ] **Real booking-provider APIs** (approval-gated phase 2) — Uber / airlines / OpenTable /
+      hotels; swap `simulateBooking()` in `lib/bookings.js`, set `DEMO_BOOKINGS=0`.
 - [ ] Native IG/TikTok/Facebook API posting (approval-gated; Web Share works today).
-- [ ] Wire the **Stay** tab to the data layer / hotel booking affiliates.
 - [ ] Real PNG app icons (an SVG icon is included for now).
 - [ ] Free-trial paywall + subscription ($9.99/mo per the deck) via Stripe / RevenueCat.
