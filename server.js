@@ -27,6 +27,7 @@ import * as authApi from "./lib/api/auth.js";
 import * as tripsApi from "./lib/api/trips.js";
 import * as reviewsApi from "./lib/api/reviews.js";
 import * as groupsApi from "./lib/api/groups.js";
+import * as bookingsApi from "./lib/api/bookings.js";
 
 loadEnv(); // read a local .env file if present (host env vars still win)
 
@@ -197,6 +198,13 @@ async function route(req, res) {
     if (seg[3] === "report") return reviewsApi.report(req, res, id, body);
     if (seg[3] === "moderate") return reviewsApi.moderate(req, res, id, body);
   }
+
+  // --- bookings (simulated reservations) ---
+  if (p === "/api/bookings/config" && m === "GET") return bookingsApi.config(req, res);
+  if (p === "/api/bookings" && m === "POST") return bookingsApi.create(req, res, await readJson(req).catch(() => ({})));
+  if (p === "/api/bookings" && m === "GET") return bookingsApi.list(req, res);
+  if (seg[0] === "api" && seg[1] === "bookings" && seg.length === 4 && seg[3] === "cancel" && m === "POST")
+    return bookingsApi.cancel(req, res, seg[2]);
 
   // --- trip groups & discussion ---
   if (seg[0] === "api" && seg[1] === "groups") {
