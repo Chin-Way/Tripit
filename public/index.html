@@ -402,6 +402,80 @@
   .composer button{width:46px;height:46px;border-radius:50%;flex:none;background:linear-gradient(150deg,var(--teal),var(--teal2));color:#06131f;display:grid;place-items:center}
   .composer button svg{width:18px;height:18px}
 
+  /* ---- transport legs (between stops) ---- */
+  .leg{margin:-2px 0 11px 6px;border-radius:12px;padding:8px 10px;background:rgba(8,18,33,.5);border:1px solid var(--line)}
+  .leg-row{display:flex;align-items:center;gap:9px}
+  .leg-ic{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;color:var(--teal);background:rgba(55,214,224,.12);border:1px solid rgba(55,214,224,.25)}
+  .leg-ic svg{width:17px;height:17px}
+  .leg-info{flex:1;min-width:0}
+  .leg-info b{font-family:"Plus Jakarta Sans";font-size:12px;font-weight:700;display:block;line-height:1.2}
+  .leg-info span{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .leg-dir{width:32px;height:32px;border-radius:9px;flex:none;display:grid;place-items:center;color:var(--muted);border:1px solid var(--line)}
+  .leg-dir svg{width:14px;height:14px}
+  .leg-book{flex:none;font-size:11px;font-weight:700;color:#06131f;background:linear-gradient(150deg,var(--teal),var(--teal2));border-radius:9px;padding:8px 12px;min-height:34px}
+  .leg-book.done{background:rgba(52,199,123,.16);color:#7ce8b0;border:1px solid rgba(52,199,123,.4);font-weight:800}
+  .leg-alts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .leg-alt{font-size:10px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;padding:5px 8px;display:flex;align-items:center;gap:5px;min-height:30px}
+  .leg-alt svg{width:12px;height:12px;opacity:.85}
+  .leg-alt.on{color:#06131f;border-color:transparent;background:linear-gradient(150deg,var(--teal),var(--teal2))}
+  .leg-alt .ac{opacity:.85}
+  .leg-nap{font-size:10px;color:var(--purple);font-weight:600;margin-top:7px;display:flex;align-items:center;gap:5px}.leg-nap svg{width:12px;height:12px}
+  [data-theme="light"] .leg{background:rgba(120,92,64,.06)}
+  [data-theme="light"] .leg-alt{background:rgba(120,92,64,.06);color:var(--ink)}
+
+  /* ---- day transport summary + no-walking toggle ---- */
+  .daysum{border-radius:13px;padding:11px 13px;margin:0 0 14px;background:linear-gradient(135deg,rgba(74,163,240,.12),rgba(157,126,234,.1));border:1px solid var(--line2)}
+  .daysum-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .daysum-top b{font-family:"Plus Jakarta Sans";font-size:12.5px;font-weight:700;flex:1}
+  .daysum-top svg{width:16px;height:16px;color:var(--blue)}
+  .daysum-stats{display:flex;gap:18px}
+  .daysum-stat b{font-family:"Plus Jakarta Sans";font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;display:block}
+  .daysum-stat span{font-size:10px;color:var(--muted)}
+  [data-theme="light"] .daysum{background:linear-gradient(135deg,rgba(47,127,206,.12),rgba(115,85,196,.1))}
+  .nowalk{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+  .nowalk span{font-size:11px;font-weight:700;color:var(--ink)}
+  .switch{width:40px;height:23px;border-radius:23px;background:rgba(150,178,210,.3);position:relative;transition:.2s;flex:none}
+  .switch::after{content:"";position:absolute;top:2.5px;left:2.5px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+  .switch.on{background:linear-gradient(150deg,var(--teal),var(--teal2))}
+  .switch.on::after{transform:translateX(17px)}
+
+  /* ---- meal / hotel booking buttons ---- */
+  .actbook{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:#06131f;background:linear-gradient(150deg,var(--amber),#c9702f);border-radius:10px;padding:9px 13px;min-height:40px;margin-top:11px}
+  .actbook svg{width:14px;height:14px}
+  .actbook.done{background:rgba(52,199,123,.16);color:#7ce8b0;border:1px solid rgba(52,199,123,.4)}
+  .hbtn.book2{flex:1;color:#06131f;background:linear-gradient(150deg,var(--amber),#c9702f)}
+  .hbtn.book2.done{background:rgba(52,199,123,.16);color:#7ce8b0;border:1px solid rgba(52,199,123,.4)}
+
+  /* ---- reservations (Booked tab) ---- */
+  .resbanner{display:flex;gap:9px;align-items:flex-start;border-radius:12px;padding:10px 12px;margin:2px 0 12px;background:rgba(235,150,76,.12);border:1px solid rgba(235,150,76,.3)}
+  .resbanner svg{width:16px;height:16px;flex:none;margin-top:1px;color:var(--amber)}
+  .resbanner p{font-size:11px;color:var(--ink);line-height:1.45}
+  .bookall{width:100%;font-family:"Plus Jakarta Sans";font-weight:800;font-size:14px;color:#06131f;background:linear-gradient(150deg,var(--teal),var(--teal2));border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 11px 26px -8px rgba(55,214,224,.7);margin-bottom:6px;min-height:52px}
+  .bookall:active{transform:scale(.99)}.bookall svg{width:18px;height:18px}.bookall:disabled{opacity:.6}
+  .ressec{margin-top:17px}
+  .ressec-h{display:flex;align-items:center;gap:7px;font-family:"Plus Jakarta Sans";font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+  .ressec-h svg{width:14px;height:14px}
+  .resv{display:flex;align-items:center;gap:11px;border-radius:14px;padding:11px 12px;margin-bottom:9px;background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);position:relative;overflow:hidden}
+  .resv::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--ac)}
+  .resv .rtile{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;color:#fff;background:linear-gradient(150deg,var(--ac),var(--ac2))}
+  .resv .rtile svg{width:20px;height:20px}
+  .resv .rmain{flex:1;min-width:0}
+  .resv .rmain b{font-family:"Plus Jakarta Sans";font-size:13px;font-weight:700;display:block;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .resv .rmain .rs{font-size:10.5px;color:var(--muted);margin-top:2px;display:block}
+  .resv .rconf{font-size:9.5px;font-weight:800;letter-spacing:.06em;color:var(--teal);margin-top:3px;display:inline-block}
+  .resv .rright{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:none}
+  .resv .rcost{font-family:"Plus Jakarta Sans";font-size:12.5px;font-weight:800;font-variant-numeric:tabular-nums}
+  .resv .rx{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:var(--muted2);border:1px solid var(--line);background:rgba(8,18,33,.4)}
+  .resv .rx svg{width:12px;height:12px}
+  .resv.cancelled{opacity:.5}.resv.cancelled .rmain b{text-decoration:line-through}
+  .restotal{display:flex;align-items:center;justify-content:space-between;border-radius:13px;padding:13px;margin-top:8px;background:rgba(8,18,33,.55);border:1px solid var(--line)}
+  .restotal b{font-family:"Plus Jakarta Sans";font-size:13px}.restotal .s{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .restotal .tot{font-family:"Plus Jakarta Sans";font-size:20px;font-weight:800;color:var(--teal);font-variant-numeric:tabular-nums}
+  .origin-row{display:flex;gap:8px;margin-bottom:11px}
+  .origin-row input{flex:1;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line2);background:var(--card);color:var(--ink);font-size:13px;min-height:44px}
+  .origin-row input:focus{outline:none;border-color:var(--teal)}
+  [data-theme="light"] .resv .rx,[data-theme="light"] .restotal{background:rgba(120,92,64,.06)}
+
   /* ---- accessibility: visible keyboard focus + comfortable tap targets ---- */
   :focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:10px}
   .tab{min-height:48px}
@@ -428,6 +502,7 @@
       <div id="surveyView" class="view on"></div>
       <div id="planView" class="view pad-tab"></div>
       <div id="stayView" class="view pad-tab"></div>
+      <div id="reservationsView" class="view pad-tab"></div>
       <div id="savedView" class="view pad-tab"></div>
       <div id="groupView" class="view pad-tab"></div>
       <div id="profileView" class="view pad-tab"></div>
@@ -436,6 +511,7 @@
     <nav id="tabbar">
       <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><span>Plan</span></button>
       <button class="tab" data-tab="stay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 14h18M6 10V8a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2M3 21v-3M21 21v-3"/></svg><span>Stay</span></button>
+      <button class="tab" data-tab="reservations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1.4a1.6 1.6 0 0 0 0 3.2V15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1.4a1.6 1.6 0 0 0 0-3.2z"/><path d="M14 7v10" stroke-dasharray="2.5 2.5"/></svg><span>Booked</span></button>
       <button class="tab" data-tab="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6c0 5.2-8.8 10.4-8.8 10.4S3.2 13.8 3.2 8.6A4.6 4.6 0 0 1 12 6.8a4.6 4.6 0 0 1 8.8 1.8z"/></svg><span>Saved</span></button>
       <button class="tab" data-tab="group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 3-5.6 6.5-5.6s6.5 2 6.5 5.6"/><path d="M16 5.3a3 3 0 0 1 0 5.4M17.5 14.6c2.3.5 4 2 4 5.4"/></svg><span>Group</span></button>
       <button class="tab" data-tab="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span>Profile</span></button>
@@ -550,6 +626,13 @@ let svStep=0; const svAns={}; SURVEY.forEach(s=>svAns[s.id]= s.type==='multi'?[]
 let activeDay=1, activeFilters=new Set(), saved=[], done=new Set(), profileData=null, currentTab='plan';
 let TRIP=DAYS;  // the live itinerary — seeded with the sample until the engine returns a tailored one
 let stayHotels=HOTELS;  // the city's hotels for the Stay tab (defaults to the Chicago sample)
+// --- transport + bookings (the "Booked" tab) ---
+let noWalk=false;        // No-walking mode: schedule a ride/transit for every hop
+let legMode={};          // per-leg mode overrides, keyed e.g. "d1s0" / "d1start" / "arrival"
+let bookings=[];         // simulated reservations (flights, hotel, rides, tables)
+let tripMeta=null;       // { airport, baseHotel, arrival, departure } from the plan
+let currentTripId=null;  // server trip id when saved (so bookings attach to it)
+let flightOrigin='';     // editable "flying from" for the arrival/return flights
 let SEED_CITIES=['Chicago','New York','San Francisco','Washington DC','San Diego']; // cities the demo covers without a Places key
 
 /* ---- persistence: keep the trip, Saved, check-offs & profile across reloads ---- */
@@ -557,9 +640,10 @@ const STORE='tripit.v1';
 const cityKey=c=>String(c==null?'':c).trim().toLowerCase();
 // tripCity records which city the saved TRIP/stayHotels were built for, so we can
 // refuse to restore a trip that doesn't belong to the saved survey city.
-function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay,tripCity:svAns.city}));}catch(e){}}
+function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay,tripCity:svAns.city,noWalk,legMode,bookings,tripMeta,flightOrigin}));}catch(e){}}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');if(!s)return false;
   Object.assign(svAns,s.svAns||{});saved=s.saved||[];done=new Set(s.done||[]);profileData=s.profileData||null;activeDay=s.activeDay||1;
+  noWalk=!!s.noWalk;flightOrigin=s.flightOrigin||'';
   // Only restore the saved trip if it was built for the saved city. This self-heals
   // stale state from older builds where a failed plan could leave one city's label
   // attached to another city's stops & hotels. Mismatched/legacy state -> re-survey.
@@ -567,6 +651,10 @@ function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null')
   const tripOK=!!city&&cityKey(s.tripCity)===city;
   TRIP=(tripOK&&s.TRIP&&s.TRIP.length)?s.TRIP:[];
   stayHotels=(tripOK&&Array.isArray(s.stayHotels))?s.stayHotels:[];
+  // Bookings, leg choices & transport meta belong to this trip — drop if it changed.
+  bookings=(tripOK&&Array.isArray(s.bookings))?s.bookings:[];
+  legMode=(tripOK&&s.legMode&&typeof s.legMode==='object')?s.legMode:{};
+  tripMeta=(tripOK&&s.tripMeta)?s.tripMeta:null;
   return !!(profileData&&tripOK&&TRIP.length);}catch(e){return false;}}
 
 /* ============ SURVEY ============ */
@@ -613,8 +701,10 @@ async function buildProfile(){
     if(data&&data.city)svAns.city=data.city; // use the server's canonical city name so the label matches the data
     TRIP=(data&&Array.isArray(data.days))?data.days:[];
     stayHotels=(data&&Array.isArray(data.hotels))?data.hotels:[];
+    tripMeta=data?{airport:data.airport||null,baseHotel:data.baseHotel||null,arrival:data.arrival||null,departure:data.departure||null}:null;
+    bookings=[];legMode={};currentTripId=null; // a fresh plan starts with no reservations
     activeDay=1;
-  }catch(e){/* engine unreachable \u2014 show the chosen city's empty state, never another city's sample */TRIP=[];stayHotels=[];activeDay=1;}
+  }catch(e){/* engine unreachable \u2014 show the chosen city's empty state, never another city's sample */TRIP=[];stayHotels=[];tripMeta=null;bookings=[];legMode={};activeDay=1;}
   saveState();
   showResult();
 }
@@ -653,7 +743,7 @@ function renderPlan(animate){
   el('planView').innerHTML=
     `<div class="appbar"><div class="abL"><div class="ablogo"><b>T</b></div><div><div class="abtitle">TripIt</div><div class="absub">${tripSub()}</div></div></div><button class="avatar" id="shareTripBtn" aria-label="Share this trip" style="background:linear-gradient(150deg,var(--teal),var(--teal2))"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#06131f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button></div>
     <div class="profile"><div class="ptop"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round"><circle cx="9" cy="10" r="2.1"/><path d="M9 14c.7-2 3.3-2 4 0"/><path d="M15 7l1.3 1.3M19 5l-1 1"/></svg><b>This day is built for your family</b><span class="edit" id="editChip">Edit</span></div><div class="pflags">${profileFlags()}</div></div>
-    <div class="daytabs" id="daytabs"></div><div class="filtrow" id="filtrow"></div><div id="dayprog"></div><div class="tl" id="timeline"></div>
+    <div class="daytabs" id="daytabs"></div><div class="filtrow" id="filtrow"></div><div id="dayprog"></div><div id="daysum"></div><div class="tl" id="timeline"></div>
     <div class="foot">Real ratings via Google \u00b7 routes, nap timing &amp; check-offs by TripIt</div>`;
   buildTabs();buildFilters();renderTimeline(animate);
   el('editChip').onclick=openSurvey;
@@ -671,13 +761,14 @@ function renderTimeline(animate){
   const day=TRIP.find(d=>d.id===activeDay);
   if(!day){
     el('dayprog').innerHTML='';
+    const dsum=el('daysum');if(dsum)dsum.innerHTML='';
     const c=esc(svAns.city||'this city');
     el('timeline').innerHTML=`<div class="empty"><div class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z"/><circle cx="12" cy="11" r="2.3"/></svg></div><b>We couldn’t build ${c} yet</b><span>The demo covers <b style="color:var(--teal)">${esc(SEED_CITIES.join(', '))}</b>. Try one of those, or add a Google Places key to plan any city.</span><button class="retake" id="emptyEdit" style="max-width:240px"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/></svg>Try another city</button></div>`;
     const eb=el('timeline').querySelector('#emptyEdit');if(eb)eb.onclick=openSurvey;
     return;
   }
   renderProgress();let html='';
-  day.stops.forEach((s)=>{const ac=ACS[s.color];const isDone=done.has(s.name),isSav=saved.includes(s.name);const tf=tailoredFor(s);
+  day.stops.forEach((s,i)=>{const ac=ACS[s.color];const isDone=done.has(s.name),isSav=saved.includes(s.name);const tf=tailoredFor(s);
     const tags=s.tags.map(t=>`<span class="tag"><span class="tk" style="background:${ACS[TAGMETA[t].c].a}"></span>${TAGMETA[t].l}</span>`).join('');
     const rate=s.rating?`<div class="rate"><span class="stars">${stars(s.rating)}</span><span class="rnum">${s.rating.toFixed(1)}</span><span class="rcount">(${s.count.toLocaleString()})</span><span class="gbadge"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.6a4.8 4.8 0 0 1-2.1 3.1v2.6h3.4c2-1.8 3.1-4.5 3.1-7.5z"/><path fill="#34A853" d="M12 22c2.8 0 5.2-.9 6.9-2.5l-3.4-2.6c-.9.6-2.1 1-3.5 1-2.7 0-5-1.8-5.8-4.3H2.7v2.7A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.2 13.6a6 6 0 0 1 0-3.8V7.1H2.7a10 10 0 0 0 0 9z"/><path fill="#EA4335" d="M12 5.9c1.5 0 2.9.5 3.9 1.5l2.9-2.9A10 10 0 0 0 2.7 7.1l3.5 2.7C7 7.7 9.3 5.9 12 5.9z"/></svg>Google</span></div>`:`<div class="rate"><span class="rnum" style="color:var(--teal)">Smart pick</span><span class="rcount">3 options shortlisted</span></div>`;
     const tailoredCard=tf?`<div class="tailored" style="--tc:${ACS[tf.color].a}"><svg class="tq" viewBox="0 0 24 24" fill="${ACS[tf.color].a}"><path d="M7 7h4v4l-2 4H6l2-4H7zM15 7h4v4l-2 4h-3l2-4h-1z"/></svg><div class="tt"><b>${tf.label}</b> \u00b7 ${tf.text}</div></div>`:'';
@@ -693,16 +784,22 @@ function renderTimeline(animate){
           <div class="tags">${tags}</div>
         </div>
         ${s.nap?`<div class="napband"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="1.9" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z"/></svg><b>Nap window protected</b><span>1:30 – 3:00 PM</span></div>`:''}
-        <div class="detail"><div class="dcard">${reviewBlk}</div>${reviewsSectionHTML(venueSubject(s.name))}</div>
-        ${s.hop?`<div class="hop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v6l-2.5 4M12 11l3 2M9 9l-1 4"/></svg>${s.hop}</div>`:''}
+        <div class="detail"><div class="dcard">${reviewBlk}${s.meal?mealReserveHTML(s,day.id):''}</div>${reviewsSectionHTML(venueSubject(s.name))}</div>
+        ${s.leg?legChipHTML({leg:s.leg,key:'d'+day.id+'s'+i,next:day.stops[i+1],dayId:day.id},{napNote:!!s.nap}):(s.hop?`<div class="hop">${HOP_ICON}${s.hop}</div>`:'')}
       </div></div>`;
   });
-  el('timeline').innerHTML=html;
+  const startChip=day.startLeg?legChipHTML({leg:day.startLeg,key:'d'+day.id+'start',next:day.stops[0],dayId:day.id},{ctx:'From your hotel'}):'';
+  const endChip=day.endLeg?legChipHTML({leg:day.endLeg,key:'d'+day.id+'end',next:null,dayId:day.id},{ctx:'Back to your hotel'}):'';
+  el('timeline').innerHTML=startChip+html+endChip;
   el('timeline').querySelectorAll('.card').forEach(c=>c.onclick=e=>{if(e.target.closest('.heart'))return;const d=c.closest('.cwrap').querySelector('.detail');d.classList.toggle('open');if(d.classList.contains('open')){const sec=d.querySelector('.revsec');if(sec)loadReviews(sec);}});
   el('timeline').querySelectorAll('.heart').forEach(h=>h.onclick=e=>{e.stopPropagation();toggleSave(h.dataset.name);});
   el('timeline').querySelectorAll('.cnode').forEach(n=>n.onclick=e=>{e.stopPropagation();toggleDone(n.dataset.name);});
+  el('timeline').querySelectorAll('.leg-alt').forEach(b=>b.onclick=()=>{legMode[b.dataset.key]=b.dataset.mode;saveState();renderTimeline(false);});
+  el('timeline').querySelectorAll('[data-book]').forEach(b=>b.onclick=()=>bookLegByKey(b.dataset.book));
+  el('timeline').querySelectorAll('[data-reserve]').forEach(b=>b.onclick=()=>{const day2=TRIP.find(d=>d.id===+b.dataset.day);const st=day2&&(day2.stops||[]).find(x=>x.name===b.dataset.reserve);if(st)reserveMeal(st,+b.dataset.day);});
   if(animate)el('timeline').querySelectorAll('.stop').forEach((st,i)=>{st.style.opacity=0;st.style.transform='translateY(10px)';setTimeout(()=>{st.style.transition='.4s';st.style.opacity=1;st.style.transform='none';},50+i*70);});
   applyFilters();
+  renderDaySummary();
 }
 function applyFilters(){const tl=el('timeline');if(!tl)return;tl.querySelectorAll('.stop').forEach(st=>{const card=st.querySelector('.card');if(!activeFilters.size){card.classList.remove('dim','match');return;}const tags=st.dataset.tags.split(' ');const hit=[...activeFilters].some(f=>tags.includes(f));card.classList.toggle('match',hit);card.classList.toggle('dim',!hit);});}
 function toggleDone(name){done.has(name)?done.delete(name):done.add(name);saveState();renderTimeline(false);}
@@ -732,6 +829,7 @@ function renderStay(){
         <a class="hbtn map" href="https://www.google.com/maps/search/?api=1&query=${enc(h.name+' '+(svAns.city||''))}${h.pid?`&query_place_id=${h.pid}`:''}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 7 10 7 10z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.3"/></svg>Map</a>
         <a class="hbtn book" href="https://www.google.com/travel/search?q=${enc(h.name+' '+(svAns.city||''))}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 7l1 13h16l1-13M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Check rates</a>
       </div>
+      ${hotelBookHTML(h)}
       <button class="revwrite hrevtoggle" data-hotel="${esc(h.name)}" style="margin-top:12px;width:100%;min-height:40px">Reviews & tips from families</button>
       <div class="hotelrev"></div>
     </div>`;}).join('');
@@ -742,6 +840,7 @@ function renderStay(){
     box.innerHTML=reviewsSectionHTML(hotelSubject(b.dataset.hotel));
     loadReviews(box.querySelector('.revsec'));
   });
+  el('stayView').querySelectorAll('[data-bookhotel]').forEach(b=>b.onclick=()=>{const h=stayHotels.find(x=>x.name===b.dataset.bookhotel);if(h)bookHotelObj(h);});
 }
 
 /* ============ SAVED ============ */
@@ -806,10 +905,10 @@ async function signOut(){try{await fetch('/api/auth/logout',{method:'POST'});}ca
 
 async function saveTripToAccount(visibility){
   if(!authState.user){toast('Sign in to save your trip');return null;}
-  const body={city:svAns.city,title:(svAns.city?svAns.city+' family trip':'My trip'),survey:svAns,plan:{days:TRIP,hotels:stayHotels},visibility:visibility||'private'};
+  const body={city:svAns.city,title:(svAns.city?svAns.city+' family trip':'My trip'),survey:svAns,plan:{days:TRIP,hotels:stayHotels,meta:tripMeta},visibility:visibility||'private'};
   try{
     const r=await fetch('/api/trips',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(r.ok){toast('Trip saved to your account ✓');return await r.json();}
+    if(r.ok){toast('Trip saved to your account ✓');const j=await r.json();if(j&&j.id)currentTripId=j.id;return j;}
     toast(r.status===401?'Please sign in first':'Could not save trip');
   }catch(e){toast('Could not save trip');}
   return null;
@@ -978,6 +1077,195 @@ function openShareSheet(d){
   });
 }
 
+/* ============ TRANSPORT & BOOKINGS (the "Booked" tab) ============ */
+const MICON={
+ ride:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.6-4.2A2 2 0 0 1 8.5 5.5h7a2 2 0 0 1 1.9 1.3L19 11"/><path d="M4 16v-2.4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2V16"/><circle cx="7.5" cy="16.6" r="1.6"/><circle cx="16.5" cy="16.6" r="1.6"/><path d="M9.2 16.8h5.6"/></svg>',
+ transit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="13" rx="2.5"/><path d="M5 12h14M9.5 3.5v8.5M14.5 3.5v8.5"/><path d="M7.5 16.5l-1.5 3M16.5 16.5l1.5 3"/></svg>',
+ walk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4.3" r="1.6"/><path d="M13 7.6l-2.3 4.2L8.4 21M13 7.6l2.6 2 2.4 1M10.7 11.8L8.4 21"/></svg>',
+ drive:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.3"/><path d="M12 3.5v6.2M5 8.2l5 3M19 8.2l-5 3M6.6 18.2l3-4.1M17.4 18.2l-3-4.1"/></svg>',
+ flight:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.4 4a1.6 1.6 0 0 1 3.2 0v5l7 4.2V15l-7-2v3.6l2.2 1.6v1.4l-3.8-1.1L8.2 19.6v-1.4L10.4 16.6V13l-7 2v-1.8l7-4.2z"/></svg>',
+ hotel:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 14h18M6 10V8a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2M3 21v-3M21 21v-3"/></svg>',
+ restaurant:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 12v9M16.5 3c-1.4 0-2.5 2-2.5 5s1.1 4 2.5 4v9"/></svg>'};
+const DIR_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+const X_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const CAL_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>';
+const HOP_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v6l-2.5 4M12 11l3 2M9 9l-1 4"/></svg>';
+const SPARK_ICON='<svg viewBox="0 0 24 24" fill="#06131f"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/><path d="M19 14l.9 2.6L22 17.5l-2.1.9L19 21l-.9-2.6L16 17.5l2.1-.9z"/></svg>';
+const KINDMETA={flight:{ac:'blue',icon:'flight',label:'Flight'},hotel:{ac:'teal',icon:'hotel',label:'Stay'},restaurant:{ac:'amber',icon:'restaurant',label:'Table'},ride:{ac:'purple',icon:'ride',label:'Rideshare'},transit:{ac:'green',icon:'transit',label:'Transit'},car:{ac:'blue',icon:'drive',label:'Drive'}};
+
+const money=c=>{c=Math.round(c||0);return '$'+(c%100===0?c/100:(c/100).toFixed(2));};
+const travelers=()=>Math.max(1,(svAns.kids?svAns.kids.length:0)+2);
+const tripNights=()=>Math.max(1,TRIP.length);
+const hotelNightlyCents=h=>({1:14000,2:22000,3:38000,4:52000}[String(h&&h.price||'$$').length]||22000);
+function seededInt(s){let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))>>>0;return (h%1000)/1000;}
+function parseClock(t){const m=String(t||'').match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);if(!m)return null;let h=+m[1]%12;if(/pm/i.test(m[3]))h+=12;return h*60+(+m[2]);}
+function fmtClock(mins){if(mins==null||isNaN(mins))return '';mins=((Math.round(mins)%1440)+1440)%1440;let h=Math.floor(mins/60),mm=mins%60,ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(mm).padStart(2,'0')+' '+ap;}
+
+/* ---- leg selection + per-day collection ---- */
+function legSelected(leg,key){if(!leg)return null;const ov=legMode[key];if(ov&&leg.modes[ov])return ov;return noWalk?(leg.pickNoWalk||'ride'):(leg.pick||'ride');}
+function dayLegs(day){const out=[];const id=day.id,st=day.stops||[];
+  if(day.startLeg)out.push({key:'d'+id+'start',leg:day.startLeg,next:st[0],dayId:id,ctx:'From your hotel'});
+  st.forEach((s,i)=>{if(s.leg&&st[i+1])out.push({key:'d'+id+'s'+i,leg:s.leg,next:st[i+1],dayId:id});});
+  if(day.endLeg)out.push({key:'d'+id+'end',leg:day.endLeg,next:null,dayId:id,ctx:'Back to your hotel'});
+  return out;}
+function resolveLeg(key){
+  if(key==='arrival')return tripMeta&&tripMeta.arrival?{leg:tripMeta.arrival,key,dayId:null,next:null}:null;
+  if(key==='departure')return tripMeta&&tripMeta.departure?{leg:tripMeta.departure,key,dayId:null,next:null}:null;
+  const m=key.match(/^d(\d+)(start|end|s(\d+))$/);if(!m)return null;
+  const day=TRIP.find(d=>String(d.id)===m[1]);if(!day)return null;const st=day.stops||[];
+  if(m[2]==='start')return {leg:day.startLeg,key,dayId:day.id,next:st[0],ctx:'From your hotel'};
+  if(m[2]==='end')return {leg:day.endLeg,key,dayId:day.id,next:null,ctx:'Back to your hotel'};
+  const i=+m[3];return {leg:st[i]&&st[i].leg,key,dayId:day.id,next:st[i+1]};}
+function legPickupLabel(item){if(!item.next)return '';const mt=legSelected(item.leg,item.key);const at=parseClock(item.next.time);if(at==null)return '';return 'Pickup '+fmtClock(at-item.leg.modes[mt].mins);}
+
+/* ---- transport chip rendered between stops ---- */
+function legChipHTML(item,opts){opts=opts||{};const leg=item.leg,key=item.key;if(!leg)return '';
+  const mt=legSelected(leg,key),mode=leg.modes[mt];const booked=findLegBooking(key);
+  const alts=['ride','transit','walk','drive'].filter(t=>leg.modes[t]&&t!==mt&&!(noWalk&&t==='walk'));
+  const altHTML=alts.map(t=>{const m=leg.modes[t];return `<button class="leg-alt" data-key="${key}" data-mode="${t}">${MICON[t]}${esc(m.label)} <span class="ac">${t==='walk'?m.mins+'m':esc(m.cost)}</span></button>`;}).join('');
+  const pickup=legPickupLabel(item);
+  const dir=`<a class="leg-dir" href="${esc(mode.deepLink)}" target="_blank" rel="noopener" aria-label="Directions for ${esc(mode.label)}">${DIR_ICON}</a>`;
+  const action=booked
+    ? `<a class="leg-book done" href="${esc((booked.detail&&booked.detail.deepLink)||mode.deepLink)}" target="_blank" rel="noopener">✓ ${esc(booked.confirmation)}</a>`
+    : mode.bookable
+      ? `<button class="leg-book" data-book="${key}">${mode.type==='transit'?'Buy ticket':'Book ride'}</button>`
+      : '';
+  const sub=`${mode.mins} min · ${mode.type==='walk'?'Free':esc(mode.cost)}${pickup?` · ${pickup}`:''}`;
+  return `<div class="leg" data-legkey="${key}">
+    <div class="leg-row"><span class="leg-ic">${MICON[mode.type]}</span>
+      <div class="leg-info"><b>${esc(mode.label)}${opts.ctx?` · ${esc(opts.ctx)}`:''}</b><span>${sub}</span></div>
+      ${dir}${action}</div>
+    ${altHTML?`<div class="leg-alts">${altHTML}</div>`:''}
+    ${opts.napNote?`<div class="leg-nap">${HOP_ICON}Scheduled after the nap window</div>`:''}
+  </div>`;}
+
+function mealReserveHTML(stop,dayId){const b=findBooking('restaurant',stop.name);
+  return b?`<a class="actbook done" href="${esc((b.detail&&b.detail.deepLink)||'https://www.opentable.com')}" target="_blank" rel="noopener">${MICON.restaurant}Table reserved · ${esc(b.confirmation)}</a>`
+    :`<button class="actbook" data-reserve="${esc(stop.name)}" data-day="${dayId}">${MICON.restaurant}Reserve a table (demo)</button>`;}
+function hotelBookHTML(h){const b=findBooking('hotel',h.name);
+  return b?`<a class="hbtn book2 done" style="margin-top:9px;width:100%" href="${esc((b.detail&&b.detail.deepLink)||'https://www.google.com/travel')}" target="_blank" rel="noopener">${MICON.hotel}Stay booked · ${esc(b.confirmation)}</a>`
+    :`<button class="hbtn book2" data-bookhotel="${esc(h.name)}" style="margin-top:9px;width:100%">${MICON.hotel}Book this stay (demo)</button>`;}
+
+/* ---- per-day transport summary + no-walking toggle ---- */
+function daySummary(day){const legs=dayLegs(day);let mins=0,cents=0,rides=0,tr=0,walks=0;
+  for(const it of legs){const mt=legSelected(it.leg,it.key),m=it.leg.modes[mt];mins+=m.mins;cents+=m.costCents;if(mt==='ride')rides++;else if(mt==='transit')tr++;else if(mt==='walk')walks++;}
+  return {mins,cents,rides,transit:tr,walks,count:legs.length};}
+function renderDaySummary(){const box=el('daysum');if(!box)return;const day=TRIP.find(d=>d.id===activeDay);
+  if(!day||!dayLegs(day).length){box.innerHTML='';return;}
+  const s=daySummary(day);
+  box.innerHTML=`<div class="daysum"><div class="daysum-top">${MICON.ride.replace('<svg','<svg style="color:var(--blue)"')}<b>Getting around ${esc(day.label)}</b>
+    <label class="nowalk"><span>No-walking</span><span class="switch ${noWalk?'on':''}" id="nowalkSw" role="switch" aria-checked="${noWalk}" tabindex="0"></span></label></div>
+    <div class="daysum-stats"><div class="daysum-stat"><b>${s.mins} min</b><span>on the move</span></div><div class="daysum-stat"><b>${money(s.cents)}</b><span>est. transport</span></div><div class="daysum-stat"><b>${s.count}</b><span>legs planned</span></div></div></div>`;
+  const sw=el('nowalkSw');if(sw){sw.onclick=toggleNoWalk;sw.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleNoWalk();}};}}
+function toggleNoWalk(){noWalk=!noWalk;saveState();renderTimeline(false);toast(noWalk?'No-walking mode on — a ride or transit for every hop':'No-walking mode off');}
+
+/* ---- booking helpers ---- */
+function findLegBooking(key){return bookings.find(b=>b.status!=='cancelled'&&b.detail&&b.detail.legKey===key);}
+function findBooking(kind,name){return bookings.find(b=>b.status!=='cancelled'&&b.kind===kind&&((b.detail&&b.detail.name===name)||b.title===name));}
+function localBooking(p){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<6;i++)s+=A[Math.floor(Math.random()*A.length)];
+  const pre={flight:'TF',hotel:'HZ',restaurant:'OT',ride:'UB',transit:'TR',car:'CR'}[p.kind]||'TF';
+  return {id:null,kind:p.kind,title:p.title||null,subtitle:p.subtitle||null,city:p.city||null,time:p.time||null,dayId:Number.isInteger(p.dayId)?p.dayId:null,confirmation:pre+'-'+s,status:'confirmed',costCents:Math.max(0,Math.round(p.costCents||0)),currency:'USD',detail:p.detail||{},demo:true,persisted:false};}
+async function postBooking(p){
+  try{const r=await fetch('/api/bookings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...p,tripId:currentTripId||null})});
+    if(r.ok){const j=await r.json();if(j&&j.booking)return j.booking;}}catch(e){}
+  return localBooking(p); // offline / failed — synthesize so the demo never dead-ends
+}
+function addBooking(b){if(!b)return;if(b.confirmation&&bookings.some(x=>x.confirmation===b.confirmation))return;bookings.push(b);saveState();}
+async function bookLeg(item,opts){opts=opts||{};const leg=item.leg,key=item.key;if(!leg)return null;
+  const mt=legSelected(leg,key),mode=leg.modes[mt];
+  if(!mode.bookable){window.open(mode.deepLink,'_blank','noopener');return null;}
+  if(findLegBooking(key)){if(!opts.silent)toast('Already booked');return null;}
+  const b=await postBooking({kind:mode.type,title:leg.from+' → '+leg.to,subtitle:mode.label+(mode.provider?' · '+mode.provider:'')+' · '+mode.mins+' min',city:svAns.city,time:legPickupLabel(item)||opts.time||'',dayId:item.dayId??null,costCents:mode.costCents,detail:{legKey:key,mode:mt,deepLink:mode.deepLink}});
+  addBooking(b);
+  if(!opts.silent){toast((mode.type==='transit'?'Ticket bought':'Ride booked')+' · '+b.confirmation);updateBookedBadge();if(currentTab==='plan')renderTimeline(false);}
+  return b;}
+function bookLegByKey(key){const it=resolveLeg(key);if(it)bookLeg(it,{});}
+async function reserveMeal(stop,dayId,opts){opts=opts||{};if(findBooking('restaurant',stop.name)){if(!opts.silent)toast('Table already reserved');return null;}
+  const link='https://www.opentable.com/s?term='+enc(stop.name+' '+(svAns.city||''))+'&covers='+travelers();
+  const b=await postBooking({kind:'restaurant',title:stop.name,subtitle:'Table for '+travelers()+(stop.time?' · '+stop.time:''),city:svAns.city,time:stop.time||'',dayId,costCents:0,detail:{name:stop.name,deepLink:link}});
+  addBooking(b);
+  if(!opts.silent){toast('Table reserved · '+b.confirmation);updateBookedBadge();if(currentTab==='plan')renderTimeline(false);}
+  return b;}
+async function bookHotelObj(h,opts){opts=opts||{};if(!h)return null;if(findBooking('hotel',h.name)){if(!opts.silent)toast('Stay already booked');return null;}
+  const nights=tripNights(),link='https://www.google.com/travel/search?q='+enc(h.name+' '+(svAns.city||''));
+  const b=await postBooking({kind:'hotel',title:h.name,subtitle:nights+' night'+(nights===1?'':'s')+(h.area?' · '+h.area:''),city:svAns.city,time:'Check-in · Day 1',costCents:hotelNightlyCents(h)*nights,detail:{name:h.name,deepLink:link}});
+  addBooking(b);
+  if(!opts.silent){toast('Stay booked · '+b.confirmation);updateBookedBadge();if(currentTab==='stay')renderStay();}
+  return b;}
+function flightLinkURL(from,to){return 'https://www.google.com/travel/flights?q='+enc('Flights from '+from+' to '+to);}
+async function bookFlight(dir,opts){opts=opts||{};const city=svAns.city||'your city';const ap=tripMeta&&tripMeta.airport;
+  const title=dir==='arrival'?'Flight to '+city:'Flight home';
+  if(findBooking('flight',title)){if(!opts.silent)toast('Flight already booked');return null;}
+  const origin=flightOrigin||'Home',code=ap?ap.code:city;
+  const link=dir==='arrival'?flightLinkURL(origin,city):flightLinkURL(city,origin);
+  const pp=12000+Math.round(seededInt(city+dir)*4500);
+  const b=await postBooking({kind:'flight',title,subtitle:(dir==='arrival'?origin+' → '+code:code+' → '+origin)+' · '+travelers()+' travelers',city:svAns.city,time:dir==='arrival'?'Arrival · before Day 1':'Departure · after Day '+TRIP.length,costCents:pp*travelers(),detail:{dir,deepLink:link}});
+  addBooking(b);
+  if(!opts.silent){toast((dir==='arrival'?'Arrival':'Return')+' flight booked · '+b.confirmation);updateBookedBadge();}
+  return b;}
+async function bookWholeTrip(){
+  const btn=el('bookAllBtn');if(btn)btn.disabled=true;
+  toast('Booking your trip end-to-end…');
+  const jobs=[];const city=svAns.city||'your city';
+  if(!findBooking('flight','Flight to '+city))jobs.push(bookFlight('arrival',{silent:true}));
+  if(!findBooking('flight','Flight home'))jobs.push(bookFlight('departure',{silent:true}));
+  if(stayHotels[0]&&!findBooking('hotel',stayHotels[0].name))jobs.push(bookHotelObj(stayHotels[0],{silent:true}));
+  for(const day of TRIP){
+    for(const it of dayLegs(day)){const mt=legSelected(it.leg,it.key);if(it.leg.modes[mt].bookable&&!findLegBooking(it.key))jobs.push(bookLeg(it,{silent:true}));}
+    for(const s of (day.stops||[])){if(s.meal&&!findBooking('restaurant',s.name))jobs.push(reserveMeal(s,day.id,{silent:true}));}
+  }
+  try{await Promise.all(jobs);}catch(e){}
+  saveState();updateBookedBadge();
+  toast(jobs.length?'Trip booked end-to-end ✓':'Everything’s already booked ✓');
+  renderReservations();
+}
+
+/* ---- Reservations (Booked) view ---- */
+function resvCardHTML(b){const k=KINDMETA[b.kind]||KINDMETA.ride,ac=ACS[k.ac]||ACS.teal;const cancelled=b.status==='cancelled';
+  const link=b.detail&&b.detail.deepLink;
+  return `<div class="resv ${cancelled?'cancelled':''}" style="--ac:${ac.a};--ac2:${ac.b}"><div class="rtile">${MICON[k.icon]}</div>
+    <div class="rmain"><b>${esc(b.title||k.label)}</b>${b.subtitle?`<span class="rs">${esc(b.subtitle)}</span>`:''}${b.time?`<span class="rs">${esc(b.time)}</span>`:''}<span class="rconf">${esc(b.confirmation)}${b.demo?' · DEMO':''}</span></div>
+    <div class="rright">${b.costCents?`<span class="rcost">${money(b.costCents)}</span>`:''}${link&&!cancelled?`<a class="rx" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Open booking">${DIR_ICON}</a>`:''}${!cancelled?`<button class="rx" data-cancel="${esc(b.confirmation)}" aria-label="Cancel reservation">${X_ICON}</button>`:''}</div></div>`;}
+function renderReservations(){
+  const v=el('reservationsView'),city=esc(svAns.city||'your trip');
+  if(!TRIP.length){
+    v.innerHTML=`<div class="ph-title">Reservations</div><div class="ph-sub">Your trip, booked end-to-end.</div>
+      <div class="empty"><div class="ei">${MICON.flight}</div><b>No trip to book yet</b><span>Build a plan first — then book flights, your hotel, every ride, and restaurant tables in one tap.</span><button class="retake" id="resGo" style="max-width:200px">Plan a trip</button></div>`;
+    const g=v.querySelector('#resGo');if(g)g.onclick=()=>switchTab('plan');return;}
+  const active=bookings.filter(b=>b.status!=='cancelled');
+  const total=active.reduce((a,b)=>a+(b.costCents||0),0);
+  const flights=active.filter(b=>b.kind==='flight'),hotelB=active.filter(b=>b.kind==='hotel');
+  const originRow=`<div class="origin-row"><input id="flightOrigin" placeholder="Flying from… (e.g. Boston)" value="${esc(flightOrigin)}" autocomplete="off" autocapitalize="words"></div>`;
+  let daysHTML='';
+  for(const day of TRIP){
+    const ds=active.filter(b=>b.dayId===day.id&&b.kind!=='flight'&&b.kind!=='hotel').sort((a,b)=>((parseClock(a.time)??9999)-(parseClock(b.time)??9999)));
+    if(ds.length)daysHTML+=`<div class="ressec"><div class="ressec-h">${CAL_ICON}${esc(day.label)}</div>${ds.map(resvCardHTML).join('')}</div>`;
+  }
+  v.innerHTML=`<div class="ph-title">Reservations</div><div class="ph-sub">${city} — booked &amp; scheduled, door-to-door.</div>
+    <div class="resbanner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><p><b>Demo bookings.</b> Confirmation codes &amp; prices are simulated for this preview — no payment is taken. Every button opens the real Google Flights, Maps, OpenTable &amp; hotel pages.</p></div>
+    <button class="bookall" id="bookAllBtn">${SPARK_ICON}${active.length?'Finish booking the trip':'Book this trip — flights, hotel, rides &amp; tables'}</button>
+    <div class="ressec"><div class="ressec-h">${MICON.flight}Flights</div>${originRow}${flights.length?flights.map(resvCardHTML).join(''):'<div class="revempty">Add where you’re flying from, then book your arrival &amp; return.</div>'}</div>
+    <div class="ressec"><div class="ressec-h">${MICON.hotel}Stay</div>${hotelB.length?hotelB.map(resvCardHTML).join(''):'<div class="revempty">No stay booked yet — tap “Book this trip” or book from the Stay tab.</div>'}</div>
+    ${daysHTML}
+    ${active.length?`<div class="restotal"><div><b>${active.length} reservation${active.length===1?'':'s'}</b><div class="s">All confirmed — flights, hotel, rides &amp; tables</div></div><div class="tot">${money(total)}</div></div>
+    <button class="retake" id="shareRes" style="margin-top:12px"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share this booked plan</button>`:''}`;
+  const ba=el('bookAllBtn');if(ba)ba.onclick=bookWholeTrip;
+  const fo=v.querySelector('#flightOrigin');if(fo)fo.onchange=()=>{flightOrigin=fo.value.trim();saveState();};
+  v.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>cancelBookingByConf(b.dataset.cancel));
+  const sr=v.querySelector('#shareRes');if(sr)sr.onclick=shareReservations;
+}
+async function cancelBookingByConf(conf){const b=bookings.find(x=>x.confirmation===conf);if(!b)return;if(!confirm('Cancel this reservation?'))return;
+  if(b.persisted&&b.id){try{await fetch('/api/bookings/'+enc(b.id)+'/cancel',{method:'POST'});}catch(e){}}
+  bookings=bookings.filter(x=>x.confirmation!==conf);saveState();updateBookedBadge();renderReservations();if(currentTab==='plan')renderTimeline(false);toast('Reservation cancelled');}
+function shareReservations(){const active=bookings.filter(b=>b.status!=='cancelled');const total=active.reduce((a,b)=>a+(b.costCents||0),0);
+  openShareOrNative({title:'Our '+(svAns.city||'family')+' trip is booked',text:active.length+' reservations on TripIt — flights, hotel, rides & tables, ~'+money(total)+' all in. Planned around the nap. ✦',url:location.origin+'/'});}
+async function loadBookings(){if(!authState.user)return;
+  try{const r=await fetch('/api/bookings'+(currentTripId?'?tripId='+enc(currentTripId):''));if(!r.ok)return;const d=await r.json();
+    if(Array.isArray(d.bookings)){let changed=false;for(const b of d.bookings){if(b.confirmation&&!bookings.some(x=>x.confirmation===b.confirmation)){bookings.push(b);changed=true;}}if(changed){saveState();updateBookedBadge();if(currentTab==='reservations')renderReservations();}}}catch(e){}}
+function updateBookedBadge(){const n=bookings.filter(b=>b.status!=='cancelled').length;
+  document.querySelectorAll('#tabbar .tab').forEach(t=>{if(t.dataset.tab==='reservations'){let b=t.querySelector('.badge');
+    if(n){if(!b){b=document.createElement('span');b.className='badge';b.style.background='var(--teal)';b.style.color='#06131f';t.appendChild(b);}b.textContent=n;}else if(b)b.remove();}});}
+
 /* ============ TRIP GROUPS ============ */
 let currentGroupId=null, replyTo=null;
 const SEND_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="#06131f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-7-7 16-2-7z"/></svg>';
@@ -1009,7 +1297,7 @@ async function renderGroups(){
 async function createGroupForTrip(){
   if(!authState.user){toast('Sign in first');return switchTab('profile');}
   let tripId=null;
-  try{const tr=await fetch('/api/trips',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({city:svAns.city,title:(svAns.city?svAns.city+' trip':'My trip'),survey:svAns,plan:{days:TRIP,hotels:stayHotels},visibility:'private'})});if(tr.ok)tripId=(await tr.json()).id;}catch(e){}
+  try{const tr=await fetch('/api/trips',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({city:svAns.city,title:(svAns.city?svAns.city+' trip':'My trip'),survey:svAns,plan:{days:TRIP,hotels:stayHotels,meta:tripMeta},visibility:'private'})});if(tr.ok){tripId=(await tr.json()).id;currentTripId=tripId;}}catch(e){}
   try{const r=await fetch('/api/groups',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:(svAns.city?svAns.city+' families':'Our trip group'),tripId})});
     if(r.ok){currentGroupId=(await r.json()).id;toast('Group created — invite your people ✦');renderGroups();}else toast('Could not create group');
   }catch(e){toast('Could not create group');}
@@ -1046,7 +1334,7 @@ async function renderGroupDetail(id){
   loadGroupMessages(id);
 }
 function inviteToGroup(g){const url=location.origin+'/?group='+enc(g.inviteToken);openShareOrNative({title:'Join our TripIt group',text:`Join “${g.name}” on TripIt so we can plan our trip together.`,url});}
-function viewGroupTrip(trip){Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;TRIP=(trip.plan&&Array.isArray(trip.plan.days))?trip.plan.days:[];stayHotels=(trip.plan&&Array.isArray(trip.plan.hotels))?trip.plan.hotels:[];activeDay=1;computeProfile();switchTab('plan');toast('Viewing the group’s trip');}
+function viewGroupTrip(trip){Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;TRIP=(trip.plan&&Array.isArray(trip.plan.days))?trip.plan.days:[];stayHotels=(trip.plan&&Array.isArray(trip.plan.hotels))?trip.plan.hotels:[];tripMeta=(trip.plan&&trip.plan.meta)||null;bookings=[];legMode={};currentTripId=null;activeDay=1;computeProfile();switchTab('plan');toast('Viewing the group’s trip');}
 async function loadGroupMessages(id){
   const box=el('discuss');if(!box)return;
   const data=await apiGet('/api/groups/'+enc(id)+'/messages');
@@ -1077,12 +1365,12 @@ async function deleteGroupMsg(id,mid){
 }
 
 /* ============ NAV / SHELL ============ */
-function showView(v){['surveyView','planView','stayView','savedView','groupView','profileView'].forEach(id=>el(id).classList.toggle('on',id===v+'View'));el('screen').scrollTop=0;}
+function showView(v){['surveyView','planView','stayView','reservationsView','savedView','groupView','profileView'].forEach(id=>el(id).classList.toggle('on',id===v+'View'));el('screen').scrollTop=0;}
 function setTabbar(on){el('tabbar').classList.toggle('on',on);}
 function updateBadge(){document.querySelectorAll('#tabbar .tab').forEach(t=>{if(t.dataset.tab==='saved'){let b=t.querySelector('.badge');if(saved.length){if(!b){b=document.createElement('span');b.className='badge';t.appendChild(b);}b.textContent=saved.length;}else if(b)b.remove();}});}
 function switchTab(tab){currentTab=tab;document.querySelectorAll('#tabbar .tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===tab));
-  if(tab==='plan'){showView('plan');renderPlan(true);}else if(tab==='stay'){showView('stay');renderStay();}else if(tab==='saved'){showView('saved');renderSaved();}else if(tab==='group'){showView('group');renderGroups();}else{showView('profile');renderProfile();}}
-function finishOnboard(){setTabbar(true);switchTab('plan');saveState();}
+  if(tab==='plan'){showView('plan');renderPlan(true);}else if(tab==='stay'){showView('stay');renderStay();}else if(tab==='reservations'){showView('reservations');renderReservations();loadBookings();}else if(tab==='saved'){showView('saved');renderSaved();}else if(tab==='group'){showView('group');renderGroups();}else{showView('profile');renderProfile();}}
+function finishOnboard(){setTabbar(true);updateBadge();updateBookedBadge();switchTab('plan');saveState();}
 function openSurvey(){svStep=0;setTabbar(false);showView('survey');renderSurvey();}
 document.querySelectorAll('#tabbar .tab').forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));
 
@@ -1091,6 +1379,7 @@ async function loadSharedTrip(token){
   try{const r=await fetch('/api/shared/'+enc(token));if(!r.ok)return false;const {trip}=await r.json();if(!trip)return false;
     Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;
     const plan=trip.plan||{};TRIP=Array.isArray(plan.days)?plan.days:[];stayHotels=Array.isArray(plan.hotels)?plan.hotels:[];
+    tripMeta=plan.meta||null;bookings=[];legMode={};currentTripId=null;
     activeDay=1;computeProfile();finishOnboard();toast('Viewing a shared family trip ✦');return true;
   }catch(e){return false;}
 }
@@ -1105,6 +1394,7 @@ const _grp=_params.get('group');
 if(_grp){try{localStorage.setItem('tripit.pendingGroup',_grp);}catch(e){}_cleanUrl();}
 loadAuth().then(()=>{
   if(currentTab==='profile'&&el('profileView').classList.contains('on'))renderProfile();
+  loadBookings(); // pull any account-saved reservations into the Booked tab
   let pg=null;try{pg=localStorage.getItem('tripit.pendingGroup');}catch(e){}
   if(pg&&el('tabbar').classList.contains('on')){
     if(authState.user){try{localStorage.removeItem('tripit.pendingGroup');}catch(e){}currentGroupId=null;switchTab('group');joinGroup(pg);}
