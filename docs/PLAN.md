@@ -94,7 +94,10 @@ Postgres. Placeholders are written `?` and rewritten to `$1..$n` for Postgres.
   phase 2:** the seam is `simulateBooking()` in `lib/bookings.js` (swap for a provider
   call behind that provider's env key), with `sync:false` placeholders in
   `render.yaml` / `.env.example`. Free deep links work today with no key; no real
-  payment is ever taken.
+  payment is ever taken. Reservations can also be added to **Apple Wallet** — an
+  in-app pass + "Add to Apple Wallet" (simulated, `DEMO_WALLET` default on; see
+  `lib/wallet.js`); real installable `.pkpass` signing is the same approval-gated
+  seam, behind an Apple Pass Type ID cert (`APPLE_PASS_*`).
 
 ## Privacy & child safety
 

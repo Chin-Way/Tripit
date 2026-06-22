@@ -61,6 +61,11 @@ services:
       # Set to 0 (and wire the providers below) for real bookings. See docs/PLAN.md.
       - key: DEMO_BOOKINGS
         value: "1"
+      # DEMO Apple Wallet: reservations get an in-app Wallet pass + "Add to Apple
+      # Wallet" (simulated, labeled demo). Real installable .pkpass passes need an
+      # Apple Pass Type ID cert (APPLE_PASS_* below) — approval-gated phase 2.
+      - key: DEMO_WALLET
+        value: "1"
       # Public origin for OAuth redirect URIs (optional — inferred from the
       # Render URL when unset). Set it for real OAuth, e.g. https://tripit.onrender.com
       - key: PUBLIC_BASE_URL
@@ -100,6 +105,15 @@ services:
       - key: FLIGHTS_API_KEY
         sync: false
       - key: HOTELS_API_KEY
+        sync: false
+      # Apple Wallet Pass Type ID cert (real .pkpass signing; phase 2). Set these
+      # + the existing APPLE_TEAM_ID + DEMO_WALLET=0 to issue installable passes.
+      # Never commit the cert.
+      - key: APPLE_PASS_TYPE_ID
+        sync: false
+      - key: APPLE_PASS_CERT
+        sync: false
+      - key: APPLE_PASS_KEY
         sync: false
 
 # Auto-provisioned Postgres for accounts/reviews/groups. Render's FREE database

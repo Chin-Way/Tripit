@@ -476,6 +476,30 @@
   .origin-row input:focus{outline:none;border-color:var(--teal)}
   [data-theme="light"] .resv .rx,[data-theme="light"] .restotal{background:rgba(120,92,64,.06)}
 
+  /* ---- Apple Wallet ---- */
+  .resv .ractions{display:flex;gap:6px;align-items:center}
+  .rx.wallet.on{color:#1f9c5c;border-color:rgba(52,199,123,.5);background:rgba(52,199,123,.12)}
+  .awallet{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#000;color:#fff;border-radius:9px;padding:9px 14px;font-family:"Plus Jakarta Sans";font-weight:600;font-size:13px;min-height:42px;border:1px solid #000}
+  .awallet svg{width:18px;height:18px;fill:#fff;stroke:#fff}
+  .awallet.big{width:100%;font-size:14.5px;min-height:50px;border-radius:13px;margin:0 0 16px}
+  .awallet.added{background:rgba(52,199,123,.16);color:#1f9c5c;border-color:rgba(52,199,123,.42)}
+  .awallet.added svg{fill:#1f9c5c;stroke:#1f9c5c}
+  .wpass{border-radius:15px;overflow:hidden;background:#fff;color:#1a1a1a;box-shadow:0 14px 36px -12px rgba(0,0,0,.5);max-width:330px;margin:0 auto}
+  .wpass-head{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;background:linear-gradient(150deg,var(--ac),var(--ac2));color:#fff}
+  .wpass-org{display:flex;align-items:center;gap:7px;font-family:"Plus Jakarta Sans";font-weight:800;font-size:13.5px}
+  .wpass-org svg{width:16px;height:16px;stroke:#fff;fill:none}
+  .wpass-kind{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;opacity:.92}
+  .wpass-hero{padding:14px 15px 2px;font-family:"Plus Jakarta Sans";font-weight:800;font-size:19px;color:#162335;line-height:1.15}
+  .wpass-sub{padding:1px 15px 0;font-size:11px;color:#8a93a3;font-weight:600}
+  .wpass-fields{display:flex;gap:22px;padding:12px 15px 14px}
+  .wpass-f span{display:block;font-size:8.5px;font-weight:800;letter-spacing:.08em;color:#9aa3b2;text-transform:uppercase;margin-bottom:2px}
+  .wpass-f b{font-family:"Plus Jakarta Sans";font-size:13.5px;color:#1a2740}
+  .wpass-bc{padding:13px 15px 16px;border-top:1px dashed #d9dee7;text-align:center;background:#fafbfc}
+  .wpass-bc .bars{display:flex;gap:1.5px;height:48px;align-items:stretch;justify-content:center;margin-bottom:7px}
+  .wpass-bc .bars i{background:#15233a;display:block;border-radius:.5px}
+  .wpass-bc span{font-size:10.5px;font-weight:700;letter-spacing:.18em;color:#3a4250;font-variant-numeric:tabular-nums}
+  .passnote{font-size:10.5px;color:var(--muted);text-align:center;margin-top:10px}
+
   /* ---- accessibility: visible keyboard focus + comfortable tap targets ---- */
   :focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:10px}
   .tab{min-height:48px}
@@ -633,6 +657,8 @@ let bookings=[];         // simulated reservations (flights, hotel, rides, table
 let tripMeta=null;       // { airport, baseHotel, arrival, departure } from the plan
 let currentTripId=null;  // server trip id when saved (so bookings attach to it)
 let flightOrigin='';     // editable "flying from" for the arrival/return flights
+let walletAdded=[];      // confirmation codes the family added to Apple Wallet
+let walletCfg={enabled:true,demo:true,real:false}; // from /api/wallet/config
 let SEED_CITIES=['Chicago','New York','San Francisco','Washington DC','San Diego']; // cities the demo covers without a Places key
 
 /* ---- persistence: keep the trip, Saved, check-offs & profile across reloads ---- */
@@ -640,7 +666,7 @@ const STORE='tripit.v1';
 const cityKey=c=>String(c==null?'':c).trim().toLowerCase();
 // tripCity records which city the saved TRIP/stayHotels were built for, so we can
 // refuse to restore a trip that doesn't belong to the saved survey city.
-function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay,tripCity:svAns.city,noWalk,legMode,bookings,tripMeta,flightOrigin}));}catch(e){}}
+function saveState(){try{localStorage.setItem(STORE,JSON.stringify({svAns,saved,done:[...done],profileData,TRIP,stayHotels,activeDay,tripCity:svAns.city,noWalk,legMode,bookings,tripMeta,flightOrigin,walletAdded}));}catch(e){}}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null');if(!s)return false;
   Object.assign(svAns,s.svAns||{});saved=s.saved||[];done=new Set(s.done||[]);profileData=s.profileData||null;activeDay=s.activeDay||1;
   noWalk=!!s.noWalk;flightOrigin=s.flightOrigin||'';
@@ -655,6 +681,7 @@ function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null')
   bookings=(tripOK&&Array.isArray(s.bookings))?s.bookings:[];
   legMode=(tripOK&&s.legMode&&typeof s.legMode==='object')?s.legMode:{};
   tripMeta=(tripOK&&s.tripMeta)?s.tripMeta:null;
+  walletAdded=(tripOK&&Array.isArray(s.walletAdded))?s.walletAdded:[];
   return !!(profileData&&tripOK&&TRIP.length);}catch(e){return false;}}
 
 /* ============ SURVEY ============ */
@@ -702,9 +729,9 @@ async function buildProfile(){
     TRIP=(data&&Array.isArray(data.days))?data.days:[];
     stayHotels=(data&&Array.isArray(data.hotels))?data.hotels:[];
     tripMeta=data?{airport:data.airport||null,baseHotel:data.baseHotel||null,arrival:data.arrival||null,departure:data.departure||null}:null;
-    bookings=[];legMode={};currentTripId=null; // a fresh plan starts with no reservations
+    bookings=[];legMode={};walletAdded=[];currentTripId=null; // a fresh plan starts with no reservations
     activeDay=1;
-  }catch(e){/* engine unreachable \u2014 show the chosen city's empty state, never another city's sample */TRIP=[];stayHotels=[];tripMeta=null;bookings=[];legMode={};activeDay=1;}
+  }catch(e){/* engine unreachable \u2014 show the chosen city's empty state, never another city's sample */TRIP=[];stayHotels=[];tripMeta=null;bookings=[];legMode={};walletAdded=[];activeDay=1;}
   saveState();
   showResult();
 }
@@ -1222,10 +1249,13 @@ async function bookWholeTrip(){
 
 /* ---- Reservations (Booked) view ---- */
 function resvCardHTML(b){const k=KINDMETA[b.kind]||KINDMETA.ride,ac=ACS[k.ac]||ACS.teal;const cancelled=b.status==='cancelled';
-  const link=b.detail&&b.detail.deepLink;
+  const link=b.detail&&b.detail.deepLink;const inWallet=walletHas(b.confirmation);
+  const walletBtn=(!cancelled&&walletCfg.enabled)?`<button class="rx wallet ${inWallet?'on':''}" data-pass="${esc(b.confirmation)}" aria-label="${inWallet?'In Apple Wallet':'Add to Apple Wallet'}">${inWallet?WCHECK:WALLET_GLYPH}</button>`:'';
+  const linkBtn=link&&!cancelled?`<a class="rx" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Open booking">${DIR_ICON}</a>`:'';
+  const cancelBtn=!cancelled?`<button class="rx" data-cancel="${esc(b.confirmation)}" aria-label="Cancel reservation">${X_ICON}</button>`:'';
   return `<div class="resv ${cancelled?'cancelled':''}" style="--ac:${ac.a};--ac2:${ac.b}"><div class="rtile">${MICON[k.icon]}</div>
     <div class="rmain"><b>${esc(b.title||k.label)}</b>${b.subtitle?`<span class="rs">${esc(b.subtitle)}</span>`:''}${b.time?`<span class="rs">${esc(b.time)}</span>`:''}<span class="rconf">${esc(b.confirmation)}${b.demo?' · DEMO':''}</span></div>
-    <div class="rright">${b.costCents?`<span class="rcost">${money(b.costCents)}</span>`:''}${link&&!cancelled?`<a class="rx" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Open booking">${DIR_ICON}</a>`:''}${!cancelled?`<button class="rx" data-cancel="${esc(b.confirmation)}" aria-label="Cancel reservation">${X_ICON}</button>`:''}</div></div>`;}
+    <div class="rright">${b.costCents?`<span class="rcost">${money(b.costCents)}</span>`:''}<div class="ractions">${walletBtn}${linkBtn}${cancelBtn}</div></div></div>`;}
 function renderReservations(){
   const v=el('reservationsView'),city=esc(svAns.city||'your trip');
   if(!TRIP.length){
@@ -1234,6 +1264,7 @@ function renderReservations(){
     const g=v.querySelector('#resGo');if(g)g.onclick=()=>switchTab('plan');return;}
   const active=bookings.filter(b=>b.status!=='cancelled');
   const total=active.reduce((a,b)=>a+(b.costCents||0),0);
+  const allInWallet=active.length>0&&active.every(b=>walletHas(b.confirmation));
   const flights=active.filter(b=>b.kind==='flight'),hotelB=active.filter(b=>b.kind==='hotel');
   const originRow=`<div class="origin-row"><input id="flightOrigin" placeholder="Flying from… (e.g. Boston)" value="${esc(flightOrigin)}" autocomplete="off" autocapitalize="words"></div>`;
   let daysHTML='';
@@ -1244,14 +1275,17 @@ function renderReservations(){
   v.innerHTML=`<div class="ph-title">Reservations</div><div class="ph-sub">${city} — booked &amp; scheduled, door-to-door.</div>
     <div class="resbanner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><p><b>Demo bookings.</b> Confirmation codes &amp; prices are simulated for this preview — no payment is taken. Every button opens the real Google Flights, Maps, OpenTable &amp; hotel pages.</p></div>
     <button class="bookall" id="bookAllBtn">${SPARK_ICON}${active.length?'Finish booking the trip':'Book this trip — flights, hotel, rides &amp; tables'}</button>
+    ${active.length&&walletCfg.enabled?`<button class="awallet big ${allInWallet?'added':''}" id="walletAllBtn">${allInWallet?WCHECK+'<span>All passes in Apple Wallet</span>':APPLE_GLYPH+'<span>Add all to Apple Wallet</span>'}</button>`:''}
     <div class="ressec"><div class="ressec-h">${MICON.flight}Flights</div>${originRow}${flights.length?flights.map(resvCardHTML).join(''):'<div class="revempty">Add where you’re flying from, then book your arrival &amp; return.</div>'}</div>
     <div class="ressec"><div class="ressec-h">${MICON.hotel}Stay</div>${hotelB.length?hotelB.map(resvCardHTML).join(''):'<div class="revempty">No stay booked yet — tap “Book this trip” or book from the Stay tab.</div>'}</div>
     ${daysHTML}
     ${active.length?`<div class="restotal"><div><b>${active.length} reservation${active.length===1?'':'s'}</b><div class="s">All confirmed — flights, hotel, rides &amp; tables</div></div><div class="tot">${money(total)}</div></div>
     <button class="retake" id="shareRes" style="margin-top:12px"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share this booked plan</button>`:''}`;
   const ba=el('bookAllBtn');if(ba)ba.onclick=bookWholeTrip;
+  const wa=el('walletAllBtn');if(wa)wa.onclick=addAllToWallet;
   const fo=v.querySelector('#flightOrigin');if(fo)fo.onchange=()=>{flightOrigin=fo.value.trim();saveState();};
   v.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>cancelBookingByConf(b.dataset.cancel));
+  v.querySelectorAll('[data-pass]').forEach(b=>b.onclick=()=>openPassSheet(b.dataset.pass));
   const sr=v.querySelector('#shareRes');if(sr)sr.onclick=shareReservations;
 }
 async function cancelBookingByConf(conf){const b=bookings.find(x=>x.confirmation===conf);if(!b)return;if(!confirm('Cancel this reservation?'))return;
@@ -1265,6 +1299,44 @@ async function loadBookings(){if(!authState.user)return;
 function updateBookedBadge(){const n=bookings.filter(b=>b.status!=='cancelled').length;
   document.querySelectorAll('#tabbar .tab').forEach(t=>{if(t.dataset.tab==='reservations'){let b=t.querySelector('.badge');
     if(n){if(!b){b=document.createElement('span');b.className='badge';b.style.background='var(--teal)';b.style.color='#06131f';t.appendChild(b);}b.textContent=n;}else if(b)b.remove();}});}
+
+/* ---- Apple Wallet passes (simulated; real .pkpass is approval-gated) ---- */
+const APPLE_GLYPH='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.5 2.2 2.6 2.2 1 0 1.4-.7 2.7-.7 1.2 0 1.6.7 2.7.6 1.1 0 1.8-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4 0 0-2.1-.8-2.1-3.2zM14.3 6.3c.6-.7 1-1.7.9-2.7-.8 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6.9.1 1.8-.5 2.5-1.2z"/></svg>';
+const WALLET_GLYPH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18M16 14.5h2.2"/></svg>';
+const WCHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+const walletHas=conf=>walletAdded.includes(conf);
+async function loadWalletConfig(){try{const r=await fetch('/api/wallet/config');if(r.ok){walletCfg=await r.json();if(currentTab==='reservations')renderReservations();}}catch(e){}}
+function passDescriptorLocal(b){const k=KINDMETA[b.kind]||KINDMETA.ride;
+  return {org:'TripIt',kindLabel:k.label,accent:k.ac,hero:b.title||k.label,sub:b.city||'',
+    fields:[b.subtitle?{label:'DETAILS',value:String(b.subtitle).split('·')[0].trim()}:null,b.time?{label:'WHEN',value:b.time}:null].filter(Boolean),
+    barcode:b.confirmation||'TF-DEMO',demo:true};}
+function passBarcode(seed){let h=0;const s=String(seed||'TF');for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;let bars='';
+  for(let i=0;i<46;i++){h=(h*1103515245+12345)>>>0;const w=1+(h%4);const faint=((h>>5)&3)===0;bars+=`<i style="width:${w}px;${faint?'opacity:.18':''}"></i>`;}return bars;}
+function renderPass(d){const ac=ACS[d.accent]||ACS.blue;
+  return `<div class="wpass" style="--ac:${ac.a};--ac2:${ac.b}">
+    <div class="wpass-head"><span class="wpass-org">${WALLET_GLYPH}${esc(d.org||'TripIt')}</span><span class="wpass-kind">${esc(d.kindLabel||'')}</span></div>
+    <div class="wpass-hero">${esc(d.hero||'')}</div>${d.sub?`<div class="wpass-sub">${esc(d.sub)}</div>`:''}
+    <div class="wpass-fields">${(d.fields||[]).map(f=>`<div class="wpass-f"><span>${esc(f.label)}</span><b>${esc(f.value)}</b></div>`).join('')}</div>
+    <div class="wpass-bc"><div class="bars">${passBarcode(d.barcode)}</div><span>${esc(d.barcode||'')}</span></div></div>`;}
+function openPassSheet(conf){const b=bookings.find(x=>x.confirmation===conf);if(!b)return;
+  const sheet=el('sheet');
+  sheet.innerHTML=`<div class="sheetcard"><h4>Apple Wallet pass</h4><p>Demo pass — the confirmation is simulated.</p><div id="passSlot"><div class="revempty">Building your pass…</div></div><button class="sheetclose">Close</button></div>`;
+  sheet.classList.add('on');
+  sheet.querySelector('.sheetclose').onclick=()=>sheet.classList.remove('on');
+  sheet.onclick=e=>{if(e.target===sheet)sheet.classList.remove('on');};
+  fetch('/api/wallet/pass',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)})
+    .then(r=>r.ok?r.json():null).then(j=>paintPass((j&&j.pass)||passDescriptorLocal(b),b)).catch(()=>paintPass(passDescriptorLocal(b),b));}
+function paintPass(d,b){const slot=el('passSlot');if(!slot)return;const added=walletHas(b.confirmation);
+  slot.innerHTML=renderPass(d)+(added
+    ?`<div class="awallet added" style="width:100%;margin-top:14px">${WCHECK}<span>Added to Apple Wallet</span></div>`
+    :`<button class="awallet" id="addPassBtn" style="width:100%;margin-top:14px">${APPLE_GLYPH}<span>Add to Apple Wallet</span></button>`)
+    +`<div class="passnote">${added?'This pass is in your Apple Wallet.':'Tap to add this pass to Apple Wallet.'}</div>`;
+  const ab=el('addPassBtn');if(ab)ab.onclick=()=>{addToWallet(b.confirmation);el('sheet').classList.remove('on');};}
+function addToWallet(conf,opts){opts=opts||{};if(!conf||walletAdded.includes(conf))return;walletAdded.push(conf);saveState();
+  if(!opts.silent){toast('Added to Apple Wallet ✓');if(currentTab==='reservations')renderReservations();}}
+function addAllToWallet(){const active=bookings.filter(b=>b.status!=='cancelled');let n=0;
+  active.forEach(b=>{if(!walletAdded.includes(b.confirmation)){walletAdded.push(b.confirmation);n++;}});
+  saveState();toast(n?(n+' pass'+(n===1?'':'es')+' added to Apple Wallet ✓'):'All passes already in Apple Wallet');renderReservations();}
 
 /* ============ TRIP GROUPS ============ */
 let currentGroupId=null, replyTo=null;
@@ -1334,7 +1406,7 @@ async function renderGroupDetail(id){
   loadGroupMessages(id);
 }
 function inviteToGroup(g){const url=location.origin+'/?group='+enc(g.inviteToken);openShareOrNative({title:'Join our TripIt group',text:`Join “${g.name}” on TripIt so we can plan our trip together.`,url});}
-function viewGroupTrip(trip){Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;TRIP=(trip.plan&&Array.isArray(trip.plan.days))?trip.plan.days:[];stayHotels=(trip.plan&&Array.isArray(trip.plan.hotels))?trip.plan.hotels:[];tripMeta=(trip.plan&&trip.plan.meta)||null;bookings=[];legMode={};currentTripId=null;activeDay=1;computeProfile();switchTab('plan');toast('Viewing the group’s trip');}
+function viewGroupTrip(trip){Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;TRIP=(trip.plan&&Array.isArray(trip.plan.days))?trip.plan.days:[];stayHotels=(trip.plan&&Array.isArray(trip.plan.hotels))?trip.plan.hotels:[];tripMeta=(trip.plan&&trip.plan.meta)||null;bookings=[];legMode={};walletAdded=[];currentTripId=null;activeDay=1;computeProfile();switchTab('plan');toast('Viewing the group’s trip');}
 async function loadGroupMessages(id){
   const box=el('discuss');if(!box)return;
   const data=await apiGet('/api/groups/'+enc(id)+'/messages');
@@ -1379,7 +1451,7 @@ async function loadSharedTrip(token){
   try{const r=await fetch('/api/shared/'+enc(token));if(!r.ok)return false;const {trip}=await r.json();if(!trip)return false;
     Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;
     const plan=trip.plan||{};TRIP=Array.isArray(plan.days)?plan.days:[];stayHotels=Array.isArray(plan.hotels)?plan.hotels:[];
-    tripMeta=plan.meta||null;bookings=[];legMode={};currentTripId=null;
+    tripMeta=plan.meta||null;bookings=[];legMode={};walletAdded=[];currentTripId=null;
     activeDay=1;computeProfile();finishOnboard();toast('Viewing a shared family trip ✦');return true;
   }catch(e){return false;}
 }
@@ -1405,6 +1477,7 @@ loadAuth().then(()=>{
 const _shared=_params.get('trip');
 if(_shared){_cleanUrl();loadSharedTrip(_shared).then(ok=>{if(!ok){if(loadState())finishOnboard();else renderSurvey();}});}
 else if(loadState()){finishOnboard();}else{renderSurvey();}
+loadWalletConfig();
 fetch('/api/cities').then(r=>r.json()).then(d=>{if(d&&Array.isArray(d.cities)&&d.cities.length){SEED_CITIES=d.cities;if(el('surveyView').classList.contains('on')&&svStep===0&&!(svAns.city&&String(svAns.city).trim()))renderSurvey();}}).catch(()=>{});
 setTimeout(()=>el('splash').classList.add('hide'),1750);
 if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}

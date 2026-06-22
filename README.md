@@ -194,6 +194,11 @@ one-tap **"Book this trip"** that books the whole plan end-to-end.
 - **Real, free deep links** so every button goes somewhere today: Uber universal links
   (pickup/dropoff lat/lng), Google Maps transit/driving directions, Google Flights, and
   OpenTable search.
+- **Add to Apple Wallet** — each reservation renders an in-app Wallet pass (boarding-pass
+  style with a barcode of the confirmation), with an *Add to Apple Wallet* button and an
+  *Add all* shortcut. Simulated and labeled demo (`DEMO_WALLET`, default on); real
+  installable `.pkpass` passes need an Apple Pass Type ID cert (`APPLE_PASS_*`) and are the
+  approval-gated phase 2 (`lib/wallet.js`).
 - **Real provider APIs are an approval-gated phase 2** (like native social posting): swap
   `simulateBooking()` in `lib/bookings.js` for a provider call behind that provider's env
   key (placeholders in `render.yaml` / `.env.example`), and set `DEMO_BOOKINGS=0`.

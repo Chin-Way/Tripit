@@ -28,6 +28,7 @@ import * as tripsApi from "./lib/api/trips.js";
 import * as reviewsApi from "./lib/api/reviews.js";
 import * as groupsApi from "./lib/api/groups.js";
 import * as bookingsApi from "./lib/api/bookings.js";
+import * as walletApi from "./lib/api/wallet.js";
 
 loadEnv(); // read a local .env file if present (host env vars still win)
 
@@ -205,6 +206,10 @@ async function route(req, res) {
   if (p === "/api/bookings" && m === "GET") return bookingsApi.list(req, res);
   if (seg[0] === "api" && seg[1] === "bookings" && seg.length === 4 && seg[3] === "cancel" && m === "POST")
     return bookingsApi.cancel(req, res, seg[2]);
+
+  // --- Apple Wallet passes (simulated; real .pkpass is approval-gated) ---
+  if (p === "/api/wallet/config" && m === "GET") return walletApi.config(req, res);
+  if (p === "/api/wallet/pass" && m === "POST") return walletApi.pass(req, res, await readJson(req).catch(() => ({})));
 
   // --- trip groups & discussion ---
   if (seg[0] === "api" && seg[1] === "groups") {
