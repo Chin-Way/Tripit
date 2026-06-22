@@ -19,6 +19,7 @@ import path from "node:path";
 
 import { loadEnv } from "./lib/env.js";
 import { generatePlan } from "./lib/engine.js";
+import { attachTripTransport } from "./lib/transport.js";
 import { getDb } from "./lib/db/index.js";
 import { annotateData } from "./lib/feedback.js";
 import { MIME, send, sendJson, readJson, query } from "./lib/http.js";
@@ -127,6 +128,16 @@ async function handlePlan(req, res) {
   }
   if (!plan) plan = generatePlan(answers, data);
   plan.hotels = data.hotels || []; // the city's stays, for the Stay tab
+
+  // Weave door-to-door transport into the plan: per-leg ride/transit/drive
+  // options (time, cost, deep links) between stops, plus hotel↔stop and
+  // airport↔hotel transfers. Deterministic and additive — older clients ignore
+  // the extra fields, and it never fails the plan.
+  try {
+    attachTripTransport(plan, data);
+  } catch (err) {
+    console.warn("[transport] leg annotation skipped:", err.message);
+  }
 
   sendJson(res, 200, plan);
 }
