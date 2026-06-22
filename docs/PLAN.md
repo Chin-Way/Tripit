@@ -22,6 +22,8 @@ simply report "unavailable" and the front-end shows guest-only UI.
 | Sessions | Server-side, DB-backed opaque tokens in an HTTP-only, `SameSite=Lax`, `Secure` cookie. Revocable. |
 | AI feedback (P4) | Consented review store → engine reweighting → RAG-style prompt grounding → documented curated-dataset export. Not literal in-app fine-tuning. |
 | Photos | Client-downscaled data-URIs (size-capped) stored in the DB — no filesystem dependency. Documented S3/R2 upgrade path. |
+| Transport | Deterministic per-leg estimates (haversine when coords are known, neighborhood heuristic otherwise) with rideshare/transit/walk/drive time + cost. No key, no network. Real **Uber universal** and **Google Maps directions** deep links. |
+| Bookings | **Simulated** end-to-end (confirmation codes + saved reservations), gated by `DEMO_BOOKINGS` (default on, mirrors `DEMO_AUTH`). Real Uber/airline/OpenTable/hotel APIs are an **approval-gated phase 2**. Free deep links (Google Flights/Maps, Uber, OpenTable) work today with no key. **No real payments.** |
 
 ## New dependencies
 
@@ -52,6 +54,7 @@ APPLE_CLIENT_ID / APPLE_TEAM_ID / APPLE_KEY_ID / APPLE_PRIVATE_KEY
 - **review_reports**: `id, review_id, reporter_user_id, reason, status, created_at`
 - *(P3)* **groups, group_members, messages** — created now, wired later
 - *(P4)* aggregated **feedback_signals** view + export script
+- **bookings** (P5): `id, user_id, trip_id, kind (flight|hotel|restaurant|ride|transit|car), title, subtitle, city, starts_at, day_id, confirmation, cost_cents, currency, status (confirmed|cancelled), detail_json, created_at, updated_at`. Guests keep bookings in localStorage; signed-in users with a datastore persist them here.
 
 All columns are portable types (TEXT ids via `randomUUID`, INTEGER 0/1 booleans,
 ISO-8601 TEXT timestamps, JSON stored as TEXT) so the same schema runs on SQLite and
@@ -64,6 +67,10 @@ Postgres. Placeholders are written `?` and rewritten to `$1..$n` for Postgres.
 - **Trips:** `POST /api/trips`, `GET /api/trips`, `GET /api/trips/:id`, `GET /api/shared/:token`
 - **Reviews:** `GET /api/reviews?subjectType&subjectId`, `POST /api/reviews`,
   `POST /api/reviews/:id/report`, `POST /api/reviews/:id/moderate` (admin)
+- **Bookings:** `GET /api/bookings/config`, `POST /api/bookings` (simulate + persist),
+  `GET /api/bookings?tripId`, `POST /api/bookings/:id/cancel`. Transport legs ride
+  along inside `/api/plan` (per-stop `leg`, day `startLeg`/`endLeg`, trip
+  `arrival`/`departure`) — additive, so older clients ignore them.
 
 ## Phasing
 
@@ -77,6 +84,20 @@ Postgres. Placeholders are written `?` and rewritten to `$1..$n` for Postgres.
 - **P4 (deferred):** AI feedback loop (engine reweighting + RAG grounding + dataset
   export). **Native IG/TikTok/FB API posting is approval-gated phase 2** (documented,
   not built).
+- **P5 (this branch) — Transportation & bookings:** door-to-door transport woven into
+  the itinerary (rideshare/transit/walk/drive per leg with time + cost + real Uber and
+  Google Maps deep links), a **No-walking mode** with a per-day transport summary, and
+  **simulated end-to-end bookings** (flights, hotel, rides, restaurant tables) surfaced
+  in a **Reservations** ("Booked") view — each with a confirmation code and time, plus a
+  one-tap "Book this trip". Gated by `DEMO_BOOKINGS` (default on), mirroring `DEMO_AUTH`.
+  **Real provider APIs (Uber / airlines / OpenTable / hotels) are an approval-gated
+  phase 2:** the seam is `simulateBooking()` in `lib/bookings.js` (swap for a provider
+  call behind that provider's env key), with `sync:false` placeholders in
+  `render.yaml` / `.env.example`. Free deep links work today with no key; no real
+  payment is ever taken. Reservations can also be added to **Apple Wallet** — an
+  in-app pass + "Add to Apple Wallet" (simulated, `DEMO_WALLET` default on; see
+  `lib/wallet.js`); real installable `.pkpass` signing is the same approval-gated
+  seam, behind an Apple Pass Type ID cert (`APPLE_PASS_*`).
 
 ## Privacy & child safety
 

@@ -98,6 +98,15 @@ async function checkAuth() {
   else ok(`PUBLIC_BASE_URL = ${process.env.PUBLIC_BASE_URL}`);
 }
 
+async function checkBookings() {
+  const { demoBookingsEnabled } = await import("../lib/bookings.js");
+  if (demoBookingsEnabled()) ok("DEMO_BOOKINGS on — simulated flights/hotels/rides/tables with confirmation codes");
+  else skip("DEMO_BOOKINGS off — wire a real provider below to take live bookings");
+  const real = ["UBER_SERVER_TOKEN", "OPENTABLE_PARTNER_KEY", "FLIGHTS_API_KEY", "HOTELS_API_KEY"].filter((k) => process.env[k]);
+  if (real.length) ok(`Real booking providers set: ${real.join(", ")}`);
+  else skip("Real booking providers: none — free deep links (Google Flights/Maps, Uber, OpenTable) still work");
+}
+
 function activeProvider() {
   const p = (process.env.AI_PROVIDER || "auto").toLowerCase();
   const c = !!process.env.ANTHROPIC_API_KEY;
@@ -116,5 +125,7 @@ await checkPlaces();
 console.log("\nAccounts & persistence:");
 await checkDatabase();
 await checkAuth();
+console.log("\nBookings & transport:");
+await checkBookings();
 console.log(`\n/api/plan will use: \x1b[36m${activeProvider()}\x1b[0m`);
 console.log("(set AI_PROVIDER=claude|gemini to choose; data uses Places when its key is set)\n");

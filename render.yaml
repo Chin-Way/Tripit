@@ -54,6 +54,18 @@ services:
       # product once you've configured real providers below. See docs/DEPLOY.md.
       - key: DEMO_AUTH
         value: "1"
+      # DEMO bookings for the pitch: flights, hotels, rides, transit & restaurant
+      # reservations are SIMULATED end-to-end (confirmation codes + saved
+      # reservations), clearly labeled, with no payment and no provider setup.
+      # The deep links (Google Flights/Maps, Uber, OpenTable) are real and free.
+      # Set to 0 (and wire the providers below) for real bookings. See docs/PLAN.md.
+      - key: DEMO_BOOKINGS
+        value: "1"
+      # DEMO Apple Wallet: reservations get an in-app Wallet pass + "Add to Apple
+      # Wallet" (simulated, labeled demo). Real installable .pkpass passes need an
+      # Apple Pass Type ID cert (APPLE_PASS_* below) — approval-gated phase 2.
+      - key: DEMO_WALLET
+        value: "1"
       # Public origin for OAuth redirect URIs (optional — inferred from the
       # Render URL when unset). Set it for real OAuth, e.g. https://tripit.onrender.com
       - key: PUBLIC_BASE_URL
@@ -78,6 +90,30 @@ services:
       - key: APPLE_KEY_ID
         sync: false
       - key: APPLE_PRIVATE_KEY
+        sync: false
+
+      # --- Real booking providers (approval-gated phase 2; all optional) -----
+      # These need partner/business accounts + approval. Until they're set,
+      # bookings stay SIMULATED (DEMO_BOOKINGS=1) and the free deep links work.
+      # When approved, wire the relevant key(s) and set DEMO_BOOKINGS=0.
+      - key: UBER_CLIENT_ID
+        sync: false
+      - key: UBER_SERVER_TOKEN
+        sync: false
+      - key: OPENTABLE_PARTNER_KEY
+        sync: false
+      - key: FLIGHTS_API_KEY
+        sync: false
+      - key: HOTELS_API_KEY
+        sync: false
+      # Apple Wallet Pass Type ID cert (real .pkpass signing; phase 2). Set these
+      # + the existing APPLE_TEAM_ID + DEMO_WALLET=0 to issue installable passes.
+      # Never commit the cert.
+      - key: APPLE_PASS_TYPE_ID
+        sync: false
+      - key: APPLE_PASS_CERT
+        sync: false
+      - key: APPLE_PASS_KEY
         sync: false
 
 # Auto-provisioned Postgres for accounts/reviews/groups. Render's FREE database

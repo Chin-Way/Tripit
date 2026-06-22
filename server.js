@@ -19,6 +19,7 @@ import path from "node:path";
 
 import { loadEnv } from "./lib/env.js";
 import { generatePlan } from "./lib/engine.js";
+import { attachTripTransport } from "./lib/transport.js";
 import { getDb } from "./lib/db/index.js";
 import { annotateData } from "./lib/feedback.js";
 import { MIME, send, sendJson, readJson, query } from "./lib/http.js";
@@ -26,6 +27,8 @@ import * as authApi from "./lib/api/auth.js";
 import * as tripsApi from "./lib/api/trips.js";
 import * as reviewsApi from "./lib/api/reviews.js";
 import * as groupsApi from "./lib/api/groups.js";
+import * as bookingsApi from "./lib/api/bookings.js";
+import * as walletApi from "./lib/api/wallet.js";
 
 loadEnv(); // read a local .env file if present (host env vars still win)
 
@@ -128,6 +131,16 @@ async function handlePlan(req, res) {
   if (!plan) plan = generatePlan(answers, data);
   plan.hotels = data.hotels || []; // the city's stays, for the Stay tab
 
+  // Weave door-to-door transport into the plan: per-leg ride/transit/drive
+  // options (time, cost, deep links) between stops, plus hotel↔stop and
+  // airport↔hotel transfers. Deterministic and additive — older clients ignore
+  // the extra fields, and it never fails the plan.
+  try {
+    attachTripTransport(plan, data);
+  } catch (err) {
+    console.warn("[transport] leg annotation skipped:", err.message);
+  }
+
   sendJson(res, 200, plan);
 }
 
@@ -186,6 +199,17 @@ async function route(req, res) {
     if (seg[3] === "report") return reviewsApi.report(req, res, id, body);
     if (seg[3] === "moderate") return reviewsApi.moderate(req, res, id, body);
   }
+
+  // --- bookings (simulated reservations) ---
+  if (p === "/api/bookings/config" && m === "GET") return bookingsApi.config(req, res);
+  if (p === "/api/bookings" && m === "POST") return bookingsApi.create(req, res, await readJson(req).catch(() => ({})));
+  if (p === "/api/bookings" && m === "GET") return bookingsApi.list(req, res);
+  if (seg[0] === "api" && seg[1] === "bookings" && seg.length === 4 && seg[3] === "cancel" && m === "POST")
+    return bookingsApi.cancel(req, res, seg[2]);
+
+  // --- Apple Wallet passes (simulated; real .pkpass is approval-gated) ---
+  if (p === "/api/wallet/config" && m === "GET") return walletApi.config(req, res);
+  if (p === "/api/wallet/pass" && m === "POST") return walletApi.pass(req, res, await readJson(req).catch(() => ({})));
 
   // --- trip groups & discussion ---
   if (seg[0] === "api" && seg[1] === "groups") {
