@@ -10,8 +10,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Triperly">
-<link rel="apple-touch-icon" href="icon.svg">
-<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-light-192.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-dark-192.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-light-192.png">
 <script>/* set theme before paint to avoid a flash */try{var _t=localStorage.getItem('tripit.theme')||'system';var _e=_t==='system'?(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'):_t;document.documentElement.setAttribute('data-theme',_e);}catch(_){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +24,6 @@
     --line:rgba(150,178,210,.14);--line2:rgba(150,178,210,.26);
     --ink:#eaf2fb;--muted:#90a6c0;--muted2:#5f7790;
     --teal:#37d6e0;--teal2:#1fb6c8;--blue:#4aa3f0;--amber:#eb964c;--green:#34c77b;--purple:#9d7eea;--gold:#ffc23d;
-    --logo-tile:#0f2440;--logo-edge:rgba(146,166,192,.22);
     --safeT:env(safe-area-inset-top,0px);--safeB:env(safe-area-inset-bottom,0px);
   }
   /* ---- warm light theme (toggle in Profile; defaults to system) ---- */
@@ -31,7 +32,6 @@
     --line:rgba(92,68,46,.16);--line2:rgba(92,68,46,.28);
     --ink:#2b2521;--muted:#6f635a;--muted2:#9b8c80;
     --teal:#0c8b98;--teal2:#0a7480;--blue:#2f7fce;--amber:#c0702c;--green:#1f9c5c;--purple:#7355c4;--gold:#e0930f;
-    --logo-tile:#ffffff;--logo-edge:rgba(92,68,46,.12);
   }
   [data-theme="light"] body{
     background:radial-gradient(900px 600px at 85% -10%,rgba(255,176,112,.20),transparent 60%),
@@ -101,8 +101,8 @@
   /* ---- top app bar ---- */
   .appbar{display:flex;align-items:center;justify-content:space-between;padding:10px 2px 4px;position:sticky;top:0;z-index:4}
   .abL{display:flex;align-items:center;gap:10px}
-  .ablogo{width:34px;height:34px;border-radius:10px;background:var(--logo-tile);display:grid;place-items:center;box-shadow:0 4px 12px -5px rgba(0,0,0,.45),inset 0 0 0 1px var(--logo-edge)}
-  .ablogo svg{width:24px;height:24px;display:block}
+  .ablogo{width:34px;height:34px;border-radius:10px;background:url(icon-dark-512.png) center/cover no-repeat;box-shadow:0 3px 9px -4px rgba(0,0,0,.5)}
+  [data-theme="light"] .ablogo{background-image:url(icon-light-512.png)}
   .abtitle{font-family:"Plus Jakarta Sans";font-weight:800;font-size:19px;letter-spacing:.3px;color:#fff}
   .absub{font-size:11.5px;color:var(--muted);margin-top:1px}
   .avatar{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 200deg,var(--purple),var(--teal),var(--blue),var(--purple));display:grid;place-items:center;font-weight:700;font-size:12px;color:#07131f;border:2px solid rgba(255,255,255,.18)}
@@ -279,8 +279,8 @@
   #splash{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;
     background:radial-gradient(700px 500px at 50% 30%,rgba(55,214,224,.16),transparent 60%),linear-gradient(180deg,#0b1d35,#06121f);transition:opacity .55s ease,visibility .55s}
   #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-  .sp-logo{width:90px;height:90px;border-radius:26px;display:grid;place-items:center;background:var(--logo-tile);box-shadow:0 20px 50px -16px rgba(0,0,0,.5),inset 0 0 0 1px var(--logo-edge);animation:pop .7s cubic-bezier(.2,.9,.3,1.3) both}
-  .sp-logo svg{width:62px;height:62px;display:block}
+  .sp-logo{width:90px;height:90px;border-radius:24px;background:url(icon-dark-512.png) center/cover no-repeat;box-shadow:0 18px 44px -18px rgba(0,0,0,.55);animation:pop .7s cubic-bezier(.2,.9,.3,1.3) both}
+  [data-theme="light"] .sp-logo{background-image:url(icon-light-512.png)}
   @keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
   .sp-name{font-family:"Plus Jakarta Sans";font-weight:800;font-size:28px;letter-spacing:-.5px;margin-top:20px;color:#fff;animation:rise .6s .15s both}
   .sp-tag{font-size:12.5px;color:var(--muted);margin-top:7px;animation:rise .6s .28s both}
@@ -544,7 +544,7 @@
     </nav>
 
     <div id="splash">
-      <div class="sp-logo"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="pinS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ad3de"/><stop offset="1" stop-color="#1aa6b8"/></linearGradient></defs><g transform="translate(4.8 4.8) scale(.85)"><path fill="url(#pinS)" fill-rule="evenodd" d="M32 45 C24 34 19 27 19 20 A13 13 0 1 1 45 20 C45 27 40 34 32 45 Z M37 17 A5 5 0 1 1 27 17 A5 5 0 1 1 37 17 Z"/><path fill="none" stroke="url(#pinS)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="0.1 5.2" d="M34 47 C41 50 39 55 32 55.5 C25.5 56 26.5 60 32 60.5"/></g></svg></div>
+      <div class="sp-logo" role="img" aria-label="Triperly"></div>
       <div class="sp-name">Triperly</div>
       <div class="sp-tag">Family trips, planned around the nap</div>
       <div class="sp-dots"><span></span><span></span><span></span></div>
@@ -687,7 +687,7 @@ function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null')
   return !!(profileData&&tripOK&&TRIP.length);}catch(e){return false;}}
 
 /* ============ SURVEY ============ */
-function brandHead(sub){return `<div class="appbar"><div class="abL"><div class="ablogo"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="pinB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ad3de"/><stop offset="1" stop-color="#1aa6b8"/></linearGradient></defs><g transform="translate(4.8 4.8) scale(.85)"><path fill="url(#pinB)" fill-rule="evenodd" d="M32 45 C24 34 19 27 19 20 A13 13 0 1 1 45 20 C45 27 40 34 32 45 Z M37 17 A5 5 0 1 1 27 17 A5 5 0 1 1 37 17 Z"/><path fill="none" stroke="url(#pinB)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="0.1 5.2" d="M34 47 C41 50 39 55 32 55.5 C25.5 56 26.5 60 32 60.5"/></g></svg></div><div><div class="abtitle">Triperly</div><div class="absub">${sub}</div></div></div></div>`;}
+function brandHead(sub){return `<div class="appbar"><div class="abL"><div class="ablogo" role="img" aria-label="Triperly"></div><div><div class="abtitle">Triperly</div><div class="absub">${sub}</div></div></div></div>`;}
 function renderSurvey(){
   const sv=el('surveyView'),q=SURVEY[svStep],total=SURVEY.length,sel=svAns[q.id];
   let body,canNext;
@@ -770,7 +770,7 @@ function tripSub(){const m={day:'Day trip',wknd:'Long weekend',mid:'4\u20135 day
 
 function renderPlan(animate){
   el('planView').innerHTML=
-    `<div class="appbar"><div class="abL"><div class="ablogo"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="pinP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ad3de"/><stop offset="1" stop-color="#1aa6b8"/></linearGradient></defs><g transform="translate(4.8 4.8) scale(.85)"><path fill="url(#pinP)" fill-rule="evenodd" d="M32 45 C24 34 19 27 19 20 A13 13 0 1 1 45 20 C45 27 40 34 32 45 Z M37 17 A5 5 0 1 1 27 17 A5 5 0 1 1 37 17 Z"/><path fill="none" stroke="url(#pinP)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="0.1 5.2" d="M34 47 C41 50 39 55 32 55.5 C25.5 56 26.5 60 32 60.5"/></g></svg></div><div><div class="abtitle">Triperly</div><div class="absub">${tripSub()}</div></div></div><button class="avatar" id="shareTripBtn" aria-label="Share this trip" style="background:linear-gradient(150deg,var(--teal),var(--teal2))"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#06131f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button></div>
+    `<div class="appbar"><div class="abL"><div class="ablogo" role="img" aria-label="Triperly"></div><div><div class="abtitle">Triperly</div><div class="absub">${tripSub()}</div></div></div><button class="avatar" id="shareTripBtn" aria-label="Share this trip" style="background:linear-gradient(150deg,var(--teal),var(--teal2))"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#06131f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button></div>
     <div class="profile"><div class="ptop"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round"><circle cx="9" cy="10" r="2.1"/><path d="M9 14c.7-2 3.3-2 4 0"/><path d="M15 7l1.3 1.3M19 5l-1 1"/></svg><b>This day is built for your family</b><span class="edit" id="editChip">Edit</span></div><div class="pflags">${profileFlags()}</div></div>
     <div class="daytabs" id="daytabs"></div><div class="filtrow" id="filtrow"></div><div id="dayprog"></div><div id="daysum"></div><div class="tl" id="timeline"></div>
     <div class="foot">Real ratings via Google \u00b7 routes, nap timing &amp; check-offs by Triperly</div>`;
