@@ -1,10 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64" role="img" aria-label="Triperly">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#37d6e0"/>
-      <stop offset="1" stop-color="#1fb6c8"/>
+    <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3ad3de"/>
+      <stop offset="1" stop-color="#1aa6b8"/>
     </linearGradient>
+    <style>
+      .tile{fill:#0f2440}
+      @media (prefers-color-scheme: light){ .tile{fill:#ffffff} }
+    </style>
   </defs>
-  <rect width="512" height="512" rx="115" fill="url(#g)"/>
-  <text x="256" y="356" font-family="'Plus Jakarta Sans','Segoe UI',sans-serif" font-size="300" font-weight="800" text-anchor="middle" fill="#06131f" letter-spacing="-12">T</text>
+  <rect class="tile" width="64" height="64" rx="15"/>
+  <g transform="translate(4.8 4.8) scale(.85)">
+    <path fill="url(#pin)" fill-rule="evenodd" d="M32 45 C24 34 19 27 19 20 A13 13 0 1 1 45 20 C45 27 40 34 32 45 Z M37 17 A5 5 0 1 1 27 17 A5 5 0 1 1 37 17 Z"/>
+    <path fill="none" stroke="url(#pin)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="0.1 5.2" d="M34 47 C41 50 39 55 32 55.5 C25.5 56 26.5 60 32 60.5"/>
+  </g>
 </svg>

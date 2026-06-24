@@ -1,10 +1,10 @@
-# Render blueprint — deploys TripIt as a free web service.
+# Render blueprint — deploys Triperly as a free web service.
 #
 # Steps:
 #   1. Push this repo to GitHub (it already is).
 #   2. Go to https://render.com  ->  New  ->  Blueprint  ->  pick this repo.
 #   3. (Optional) Paste your ANTHROPIC_API_KEY when prompted to turn on the AI
-#      engine. Skip it and TripIt still works on the rules engine.
+#      engine. Skip it and Triperly still works on the rules engine.
 #   4. Render gives you a public URL like https://tripit.onrender.com.
 #      Then run:  npm run qr -- https://tripit.onrender.com
 #

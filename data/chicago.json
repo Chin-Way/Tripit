@@ -1,6 +1,6 @@
 {
   "city": "Chicago",
-  "note": "Seed dataset for the TripIt itinerary engine. Ratings/review counts are real-ish Google figures captured for the prototype; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
+  "note": "Seed dataset for the Triperly itinerary engine. Ratings/review counts are real-ish Google figures captured for the prototype; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
   "venues": [
     {
       "id": "lincoln-park-zoo",

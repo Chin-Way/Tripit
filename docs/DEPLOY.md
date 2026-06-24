@@ -1,6 +1,6 @@
 # Turning on accounts, reviews, groups & feedback in production
 
-TripIt deploys and runs with **zero** of this configured (guest mode: itineraries, the
+Triperly deploys and runs with **zero** of this configured (guest mode: itineraries, the
 light/dark theme, the share sheet). The steps below switch on the account-gated features
 (sign-in, reviews, groups, and the consented feedback loop) on Render.
 
@@ -136,7 +136,7 @@ URLs, so this only works on your https Render URL.
 ## Step 6 — Deploy & verify
 
 1. After saving env vars, Render redeploys. (Or **Manual Deploy → Deploy latest commit**.)
-2. **Logs** should show `[db] persistence on (postgres)` and `TripIt running…`.
+2. **Logs** should show `[db] persistence on (postgres)` and `Triperly running…`.
 3. Quick check from your machine:
    ```bash
    curl https://YOUR-APP.onrender.com/api/auth/providers

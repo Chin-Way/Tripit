@@ -1,6 +1,6 @@
-// Minimal service worker — caches the app shell so TripIt opens offline.
+// Minimal service worker — caches the app shell so Triperly opens offline.
 // Network-first for the live itinerary API; cache-first for the static shell.
-const CACHE = "tripit-v8";
+const CACHE = "triperly-v1";
 const SHELL = ["/", "/index.html", "/manifest.webmanifest", "/icon.svg"];
 
 self.addEventListener("install", (e) => {
