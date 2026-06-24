@@ -245,6 +245,6 @@ server.listen(PORT, async () => {
       : process.env.CLAUDE_MODEL || "claude-sonnet-4-6"
     : null;
   const mode = engine ? `${engine.name} engine on (${model})` : "rules engine (no AI key set)";
-  console.log(`TripIt running at http://localhost:${PORT}  —  ${mode}`);
+  console.log(`Triperly running at http://localhost:${PORT}  —  ${mode}`);
   await getDb(); // warm up persistence (logs whether it's on); never fatal
 });

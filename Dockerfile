@@ -1,4 +1,4 @@
-# Portable container image — runs TripIt on any host (Railway, Fly.io, Cloud
+# Portable container image — runs Triperly on any host (Railway, Fly.io, Cloud
 # Run, a VPS, etc.). For Render, the blueprint in render.yaml is simpler.
 # Node 22+ is required for the built-in node:sqlite persistence layer.
 FROM node:22-alpine

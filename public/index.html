@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>TripIt</title>
+<title>Triperly</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0a1a2f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="TripIt">
-<link rel="apple-touch-icon" href="icon.svg">
-<link rel="icon" href="icon.svg">
+<meta name="apple-mobile-web-app-title" content="Triperly">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-light-192.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-dark-192.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-light-192.png">
 <script>/* set theme before paint to avoid a flash */try{var _t=localStorage.getItem('tripit.theme')||'system';var _e=_t==='system'?(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'):_t;document.documentElement.setAttribute('data-theme',_e);}catch(_){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,8 +101,8 @@
   /* ---- top app bar ---- */
   .appbar{display:flex;align-items:center;justify-content:space-between;padding:10px 2px 4px;position:sticky;top:0;z-index:4}
   .abL{display:flex;align-items:center;gap:10px}
-  .ablogo{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,var(--teal),var(--teal2));display:grid;place-items:center;box-shadow:0 6px 16px -6px rgba(55,214,224,.7)}
-  .ablogo b{font-family:"Plus Jakarta Sans";font-weight:800;font-size:20px;color:#06131f;letter-spacing:-1.5px;line-height:1}
+  .ablogo{width:34px;height:34px;border-radius:10px;background:url(icon-dark-512.png) center/cover no-repeat;box-shadow:0 3px 9px -4px rgba(0,0,0,.5)}
+  [data-theme="light"] .ablogo{background-image:url(icon-light-512.png)}
   .abtitle{font-family:"Plus Jakarta Sans";font-weight:800;font-size:19px;letter-spacing:.3px;color:#fff}
   .absub{font-size:11.5px;color:var(--muted);margin-top:1px}
   .avatar{width:34px;height:34px;border-radius:50%;background:conic-gradient(from 200deg,var(--purple),var(--teal),var(--blue),var(--purple));display:grid;place-items:center;font-weight:700;font-size:12px;color:#07131f;border:2px solid rgba(255,255,255,.18)}
@@ -277,8 +279,8 @@
   #splash{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;
     background:radial-gradient(700px 500px at 50% 30%,rgba(55,214,224,.16),transparent 60%),linear-gradient(180deg,#0b1d35,#06121f);transition:opacity .55s ease,visibility .55s}
   #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-  .sp-logo{width:90px;height:90px;border-radius:26px;display:grid;place-items:center;background:linear-gradient(150deg,var(--teal),var(--teal2));box-shadow:0 20px 50px -14px rgba(55,214,224,.6),inset 0 1px 0 rgba(255,255,255,.4);animation:pop .7s cubic-bezier(.2,.9,.3,1.3) both}
-  .sp-logo b{font-family:"Plus Jakarta Sans";font-weight:800;font-size:50px;color:#06131f;letter-spacing:-3px;line-height:1}
+  .sp-logo{width:90px;height:90px;border-radius:24px;background:url(icon-dark-512.png) center/cover no-repeat;box-shadow:0 18px 44px -18px rgba(0,0,0,.55);animation:pop .7s cubic-bezier(.2,.9,.3,1.3) both}
+  [data-theme="light"] .sp-logo{background-image:url(icon-light-512.png)}
   @keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
   .sp-name{font-family:"Plus Jakarta Sans";font-weight:800;font-size:28px;letter-spacing:-.5px;margin-top:20px;color:#fff;animation:rise .6s .15s both}
   .sp-tag{font-size:12.5px;color:var(--muted);margin-top:7px;animation:rise .6s .28s both}
@@ -542,8 +544,8 @@
     </nav>
 
     <div id="splash">
-      <div class="sp-logo"><b>T</b></div>
-      <div class="sp-name">TripIt</div>
+      <div class="sp-logo" role="img" aria-label="Triperly"></div>
+      <div class="sp-name">Triperly</div>
       <div class="sp-tag">Family trips, planned around the nap</div>
       <div class="sp-dots"><span></span><span></span><span></span></div>
     </div>
@@ -552,7 +554,7 @@
 
 <div id="hint">
   <svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
-  <span>Open on your phone, or <b>Add to Home Screen</b> to install TripIt.</span>
+  <span>Open on your phone, or <b>Add to Home Screen</b> to install Triperly.</span>
   <button id="installBtn">Install</button>
 </div>
 
@@ -606,7 +608,7 @@ const DAYS=[
  {id:2,label:'Day 2',stops:[
    {time:'9:30 AM',name:'Shedd Aquarium',icon:'fish',color:'blue',meta:'$$$ · indoor · Museum Campus',rating:4.5,count:32613,tags:['stroller','indoor','changing'],why:'All-indoor and stroller-friendly with changing tables — book the early entry to beat the midday crowd.',score:90,hop:'8 min · lakefront path',
      hl:{stroller:'Ramps and elevators throughout; visitors confirm it\u2019s fully stroller-friendly.',indoor:'Being entirely indoors, families call it the perfect rainy-day plan.'}},
-   {time:'12:30 PM',name:'Lunch near Museum Campus',icon:'fork',color:'amber',meta:'We\u2019ll suggest 3 kid-ready spots',rating:null,count:null,tags:['kidmenu'],flex:true,why:'Flexible stop — TripIt shortlists three high-chair-equipped spots within a 6-minute stroller push.',score:0,hop:'10 min',
+   {time:'12:30 PM',name:'Lunch near Museum Campus',icon:'fork',color:'amber',meta:'We\u2019ll suggest 3 kid-ready spots',rating:null,count:null,tags:['kidmenu'],flex:true,why:'Flexible stop — Triperly shortlists three high-chair-equipped spots within a 6-minute stroller push.',score:0,hop:'10 min',
      hl:{kidmenu:'We only shortlist spots with kids\u2019 menus and high chairs within a short stroll of your route.'}},
    {time:'2:30 PM',name:'Maggie Daley Park',icon:'play',color:'green',meta:'Play garden · free · climbing',rating:4.7,count:8560,tags:['naptimed','outdoor','free'],why:'Enclosed play areas with one or two entrances make it easy to keep eyes on both kids after nap.',score:94,hop:null,
      hl:{naptimed:'Shaded benches near the play garden make an easy pause for a stroller nap.',free:'A free play garden families say they come back to again and again.'}}
@@ -685,7 +687,7 @@ function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'null')
   return !!(profileData&&tripOK&&TRIP.length);}catch(e){return false;}}
 
 /* ============ SURVEY ============ */
-function brandHead(sub){return `<div class="appbar"><div class="abL"><div class="ablogo"><b>T</b></div><div><div class="abtitle">TripIt</div><div class="absub">${sub}</div></div></div></div>`;}
+function brandHead(sub){return `<div class="appbar"><div class="abL"><div class="ablogo" role="img" aria-label="Triperly"></div><div><div class="abtitle">Triperly</div><div class="absub">${sub}</div></div></div></div>`;}
 function renderSurvey(){
   const sv=el('surveyView'),q=SURVEY[svStep],total=SURVEY.length,sel=svAns[q.id];
   let body,canNext;
@@ -768,10 +770,10 @@ function tripSub(){const m={day:'Day trip',wknd:'Long weekend',mid:'4\u20135 day
 
 function renderPlan(animate){
   el('planView').innerHTML=
-    `<div class="appbar"><div class="abL"><div class="ablogo"><b>T</b></div><div><div class="abtitle">TripIt</div><div class="absub">${tripSub()}</div></div></div><button class="avatar" id="shareTripBtn" aria-label="Share this trip" style="background:linear-gradient(150deg,var(--teal),var(--teal2))"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#06131f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button></div>
+    `<div class="appbar"><div class="abL"><div class="ablogo" role="img" aria-label="Triperly"></div><div><div class="abtitle">Triperly</div><div class="absub">${tripSub()}</div></div></div><button class="avatar" id="shareTripBtn" aria-label="Share this trip" style="background:linear-gradient(150deg,var(--teal),var(--teal2))"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#06131f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button></div>
     <div class="profile"><div class="ptop"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round"><circle cx="9" cy="10" r="2.1"/><path d="M9 14c.7-2 3.3-2 4 0"/><path d="M15 7l1.3 1.3M19 5l-1 1"/></svg><b>This day is built for your family</b><span class="edit" id="editChip">Edit</span></div><div class="pflags">${profileFlags()}</div></div>
     <div class="daytabs" id="daytabs"></div><div class="filtrow" id="filtrow"></div><div id="dayprog"></div><div id="daysum"></div><div class="tl" id="timeline"></div>
-    <div class="foot">Real ratings via Google \u00b7 routes, nap timing &amp; check-offs by TripIt</div>`;
+    <div class="foot">Real ratings via Google \u00b7 routes, nap timing &amp; check-offs by Triperly</div>`;
   buildTabs();buildFilters();renderTimeline(animate);
   el('editChip').onclick=openSurvey;
   const sb=el('shareTripBtn');if(sb)sb.onclick=shareTrip;
@@ -883,7 +885,7 @@ function renderSaved(){
 /* ============ PROFILE ============ */
 function renderProfile(){
   if(!profileData)computeProfile();
-  el('profileView').innerHTML=`<div class="ph-title">Your profile</div><div class="ph-sub">This is how TripIt tailors every recommendation to your family.</div>
+  el('profileView').innerHTML=`<div class="ph-title">Your profile</div><div class="ph-sub">This is how Triperly tailors every recommendation to your family.</div>
     ${accountSectionHTML()}
     ${resultCardHTML(false)}
     <button class="retake" id="retakeBtn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/></svg>Retake the 60-second profile</button>
@@ -958,7 +960,7 @@ function accountSectionHTML(){
       <div id="myTrips"></div></div>`;
   }
   if(!authState.providers.length){
-    return `<div class="acct"><div class="authintro"><b>You're using TripIt as a guest.</b> Your trip is saved on this device. Social sign-in isn't set up on this server — everything still works without an account.</div></div>`;
+    return `<div class="acct"><div class="authintro"><b>You're using Triperly as a guest.</b> Your trip is saved on this device. Social sign-in isn't set up on this server — everything still works without an account.</div></div>`;
   }
   const btns=authState.providers.map(p=>`<button class="authbtn" data-provider="${esc(p.key)}" style="${providerStyle(p.key)}">${BRAND[p.key]||''}Continue with ${esc(p.label)}</button>`).join('');
   const anyDemo=authState.providers.some(p=>p.demo);
@@ -1003,7 +1005,7 @@ function paintReviews(sec,data){
   const list=(data.reviews||[]).map(r=>{
     const dt=r.createdAt?new Date(r.createdAt).toLocaleDateString():'';
     const flagged=r.status&&r.status!=='visible'?` <span style="color:#e0708a;font-size:9.5px">(${esc(r.status)})</span>`:'';
-    const consent=r.consentAi?'<span class="consentchip">♥ helping TripIt</span>':'';
+    const consent=r.consentAi?'<span class="consentchip">♥ helping Triperly</span>':'';
     const photo=r.photo?`<img class="rph" src="${esc(r.photo)}" alt="Photo from ${esc(r.author)}">`:'';
     const mod=data.canModerate?`<button data-mod="hide" data-id="${r.id}">Hide</button><button data-mod="remove" data-id="${r.id}" class="danger">Remove</button><button data-mod="restore" data-id="${r.id}">Restore</button>`:'';
     return `<div class="revitem"><div class="revitop"><span class="revstars">${reviewStars(r.rating)}</span><span class="ra">${esc(r.author)}</span>${consent}${flagged}<span class="rd">${esc(dt)}</span></div>${r.title?`<div class="ra" style="margin-bottom:3px">${esc(r.title)}</div>`:''}<div class="rb">${esc(r.body)}</div>${photo}<div class="revfoot"><button data-report="${r.id}">⚐ Report</button>${mod}</div></div>`;
@@ -1017,7 +1019,7 @@ function reviewFormHTML(){
     <input type="text" class="rv-title" placeholder="Title (optional)" maxlength="120">
     <textarea class="rv-body" placeholder="What worked for your family? Strollers, naps, high chairs…" maxlength="2000"></textarea>
     <div class="photopick"><label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-4-4 3-2-1.5L3 18"/></svg>Add photo<input type="file" accept="image/*" hidden class="rv-photo"></label><img class="photoprev" alt="" style="display:none"></div>
-    <label class="consent"><input type="checkbox" class="rv-consent"><span>Use my review to help improve TripIt's recommendations for families like mine. <b>Optional</b>, and you can delete it anytime.</span></label>
+    <label class="consent"><input type="checkbox" class="rv-consent"><span>Use my review to help improve Triperly's recommendations for families like mine. <b>Optional</b>, and you can delete it anytime.</span></label>
     <div class="formerr"></div>
     <div class="revactions"><button class="revsubmit">Post review</button><button class="revcancel">Cancel</button></div></div>`;
 }
@@ -1074,7 +1076,7 @@ const SHARE_ICONS={
 async function shareTrip(){
   let url=location.origin+'/';
   if(authState.user){const saved=await saveTripToAccount('link');if(saved&&saved.shareToken)url=location.origin+'/?trip='+saved.shareToken;}
-  openShareOrNative({title:'Our family trip on TripIt',text:`Our ${svAns.city||'family'} itinerary — nap-friendly and kid-tested, planned with TripIt.`,url});
+  openShareOrNative({title:'Our family trip on Triperly',text:`Our ${svAns.city||'family'} itinerary — nap-friendly and kid-tested, planned with Triperly.`,url});
 }
 async function openShareOrNative(d){
   if(navigator.share){try{await navigator.share(d);return;}catch(e){if(e&&e.name==='AbortError')return;}}
@@ -1087,7 +1089,7 @@ function openShareSheet(d){
     tile('whatsapp','WhatsApp',`https://wa.me/?text=${full}`),
     tile('facebook','Facebook',`https://www.facebook.com/sharer/sharer.php?u=${enc(link)}`),
     tile('x','X',`https://twitter.com/intent/tweet?text=${enc(txt)}&url=${enc(link)}`),
-    tile('email','Email',`mailto:?subject=${enc(d.title||'TripIt')}&body=${full}`),
+    tile('email','Email',`mailto:?subject=${enc(d.title||'Triperly')}&body=${full}`),
     tile('instagram','Instagram','','copy'),
     tile('tiktok','TikTok','','copy'),
     tile('copy','Copy link','','copy'),
@@ -1292,7 +1294,7 @@ async function cancelBookingByConf(conf){const b=bookings.find(x=>x.confirmation
   if(b.persisted&&b.id){try{await fetch('/api/bookings/'+enc(b.id)+'/cancel',{method:'POST'});}catch(e){}}
   bookings=bookings.filter(x=>x.confirmation!==conf);saveState();updateBookedBadge();renderReservations();if(currentTab==='plan')renderTimeline(false);toast('Reservation cancelled');}
 function shareReservations(){const active=bookings.filter(b=>b.status!=='cancelled');const total=active.reduce((a,b)=>a+(b.costCents||0),0);
-  openShareOrNative({title:'Our '+(svAns.city||'family')+' trip is booked',text:active.length+' reservations on TripIt — flights, hotel, rides & tables, ~'+money(total)+' all in. Planned around the nap. ✦',url:location.origin+'/'});}
+  openShareOrNative({title:'Our '+(svAns.city||'family')+' trip is booked',text:active.length+' reservations on Triperly — flights, hotel, rides & tables, ~'+money(total)+' all in. Planned around the nap. ✦',url:location.origin+'/'});}
 async function loadBookings(){if(!authState.user)return;
   try{const r=await fetch('/api/bookings'+(currentTripId?'?tripId='+enc(currentTripId):''));if(!r.ok)return;const d=await r.json();
     if(Array.isArray(d.bookings)){let changed=false;for(const b of d.bookings){if(b.confirmation&&!bookings.some(x=>x.confirmation===b.confirmation)){bookings.push(b);changed=true;}}if(changed){saveState();updateBookedBadge();if(currentTab==='reservations')renderReservations();}}}catch(e){}}
@@ -1307,14 +1309,14 @@ const WCHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-
 const walletHas=conf=>walletAdded.includes(conf);
 async function loadWalletConfig(){try{const r=await fetch('/api/wallet/config');if(r.ok){walletCfg=await r.json();if(currentTab==='reservations')renderReservations();}}catch(e){}}
 function passDescriptorLocal(b){const k=KINDMETA[b.kind]||KINDMETA.ride;
-  return {org:'TripIt',kindLabel:k.label,accent:k.ac,hero:b.title||k.label,sub:b.city||'',
+  return {org:'Triperly',kindLabel:k.label,accent:k.ac,hero:b.title||k.label,sub:b.city||'',
     fields:[b.subtitle?{label:'DETAILS',value:String(b.subtitle).split('·')[0].trim()}:null,b.time?{label:'WHEN',value:b.time}:null].filter(Boolean),
     barcode:b.confirmation||'TF-DEMO',demo:true};}
 function passBarcode(seed){let h=0;const s=String(seed||'TF');for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;let bars='';
   for(let i=0;i<46;i++){h=(h*1103515245+12345)>>>0;const w=1+(h%4);const faint=((h>>5)&3)===0;bars+=`<i style="width:${w}px;${faint?'opacity:.18':''}"></i>`;}return bars;}
 function renderPass(d){const ac=ACS[d.accent]||ACS.blue;
   return `<div class="wpass" style="--ac:${ac.a};--ac2:${ac.b}">
-    <div class="wpass-head"><span class="wpass-org">${WALLET_GLYPH}${esc(d.org||'TripIt')}</span><span class="wpass-kind">${esc(d.kindLabel||'')}</span></div>
+    <div class="wpass-head"><span class="wpass-org">${WALLET_GLYPH}${esc(d.org||'Triperly')}</span><span class="wpass-kind">${esc(d.kindLabel||'')}</span></div>
     <div class="wpass-hero">${esc(d.hero||'')}</div>${d.sub?`<div class="wpass-sub">${esc(d.sub)}</div>`:''}
     <div class="wpass-fields">${(d.fields||[]).map(f=>`<div class="wpass-f"><span>${esc(f.label)}</span><b>${esc(f.value)}</b></div>`).join('')}</div>
     <div class="wpass-bc"><div class="bars">${passBarcode(d.barcode)}</div><span>${esc(d.barcode||'')}</span></div></div>`;}
@@ -1405,7 +1407,7 @@ async function renderGroupDetail(id){
   mi.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendGroupMessage(id);}else if(e.key==='Escape'){replyTo=null;mi.placeholder='Message your group…';}};
   loadGroupMessages(id);
 }
-function inviteToGroup(g){const url=location.origin+'/?group='+enc(g.inviteToken);openShareOrNative({title:'Join our TripIt group',text:`Join “${g.name}” on TripIt so we can plan our trip together.`,url});}
+function inviteToGroup(g){const url=location.origin+'/?group='+enc(g.inviteToken);openShareOrNative({title:'Join our Triperly group',text:`Join “${g.name}” on Triperly so we can plan our trip together.`,url});}
 function viewGroupTrip(trip){Object.assign(svAns,trip.survey||{});if(trip.city)svAns.city=trip.city;TRIP=(trip.plan&&Array.isArray(trip.plan.days))?trip.plan.days:[];stayHotels=(trip.plan&&Array.isArray(trip.plan.hotels))?trip.plan.hotels:[];tripMeta=(trip.plan&&trip.plan.meta)||null;bookings=[];legMode={};walletAdded=[];currentTripId=null;activeDay=1;computeProfile();switchTab('plan');toast('Viewing the group’s trip');}
 async function loadGroupMessages(id){
   const box=el('discuss');if(!box)return;

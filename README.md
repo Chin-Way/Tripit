@@ -1,6 +1,6 @@
-# TripIt
+# Triperly
 
-Family trips, planned around the nap. TripIt turns a 60-second family survey into a
+Family trips, planned around the nap. Triperly turns a 60-second family survey into a
 calm, nap-aware, day-by-day itinerary — grounded in real venue data and personalized
 by Claude.
 
@@ -24,7 +24,7 @@ Then open <http://localhost:3000>, take the survey, and you'll get a tailored it
 
 ### Turn on the AI engine (optional)
 
-TripIt supports two AI providers — **Claude** (default) or **Gemini** — chosen with
+Triperly supports two AI providers — **Claude** (default) or **Gemini** — chosen with
 the `AI_PROVIDER` env var. Either way, the rules engine is the fallback.
 
 **Claude (Anthropic) — default, matches the pitch deck's cost model:**
@@ -62,7 +62,7 @@ OK or the exact error — so you know your keys are live before you demo.
 
 ### Live venue data (Google Places)
 
-Set `GOOGLE_PLACES_API_KEY` and TripIt pulls **real venues** (ratings, locations,
+Set `GOOGLE_PLACES_API_KEY` and Triperly pulls **real venues** (ratings, locations,
 opening info, and kid signals like "good for children" / "children's menu" /
 wheelchair access) from the Google Places API instead of the seed file. Results
 are cached per city (6h) to control cost; without the key, the curated seed data
@@ -70,7 +70,7 @@ is used. Get a key in [Google Cloud Console](https://console.cloud.google.com):
 enable **Places API (New)** and **billing** (Google gives a recurring monthly credit).
 
 > Places supplies the *facts*. The deep family-logistics tags (nap-timing, changing
-> tables) are still partly derived in `lib/places.js` — that curation is TripIt's
+> tables) are still partly derived in `lib/places.js` — that curation is Triperly's
 > value-add, and where a human-vetted overlay would live.
 
 ---
@@ -86,10 +86,10 @@ enable **Places API (New)** and **billing** (Google gives a recurring monthly cr
 ```
 
 - **`lib/places.js`** — live venue data from the **Google Places API** (used when
-  `GOOGLE_PLACES_API_KEY` is set), mapped into TripIt's schema and cached per city.
+  `GOOGLE_PLACES_API_KEY` is set), mapped into Triperly's schema and cached per city.
 - **`data/chicago.json`** — the curated *seed* venue list (real ratings + family
   attributes). Used as the fallback when no Places key is set, and as the source of
-  truth for grounding — TripIt never invents hours or places.
+  truth for grounding — Triperly never invents hours or places.
 - **`lib/engine.js`** — the deterministic planner. Filters for the family's
   non-negotiables, scores by what they love, schedules around the 1:30–3:00 nap
   window, and keeps each day geographically tight. Always returns a valid plan.
@@ -114,7 +114,7 @@ with the `CLAUDE_MODEL` env var (e.g. `claude-opus-4-8` for the hardest planning
 
 ## Accounts, reviews & social (all optional)
 
-TripIt now has an optional backend for accounts, saved trips, family reviews, and
+Triperly now has an optional backend for accounts, saved trips, family reviews, and
 sharing. **None of it is required** — with nothing configured the app behaves exactly
 as before: guest mode, on-device storage, the offline PWA shell, and `/api/plan` all
 keep working. The new pieces light up only when you configure them, mirroring how the
@@ -208,7 +208,7 @@ persist them (the `bookings` table) so the Booked view follows them across devic
 
 ### The AI feedback loop (consented)
 
-Reviews where a family ticked **"use my review to improve TripIt"** become a structured
+Reviews where a family ticked **"use my review to improve Triperly"** become a structured
 signal (this is *not* in-app fine-tuning of a foundation model). For each city we
 aggregate consented, visible reviews per venue into an average + volume, shrink it by
 confidence, and feed it back two ways:
@@ -224,9 +224,9 @@ JSONL (`feedback-export.jsonl`, git-ignored — it contains user content; curate
 
 ### Privacy & child safety
 
-- **Consent:** the "use my review to improve TripIt" checkbox is **opt-in (off by
+- **Consent:** the "use my review to improve Triperly" checkbox is **opt-in (off by
   default)** and stored per review. Reviews can be deleted.
-- **Children's data:** accounts are for parents/adults. TripIt stores only kids' **age
+- **Children's data:** accounts are for parents/adults. Triperly stores only kids' **age
   bands** (e.g. "2–3 yrs") — never names or other children's PII — which keeps it on the
   right side of COPPA's spirit. Full COPPA/GDPR compliance (e.g. a formal privacy policy,
   data-subject requests) is out of scope for this prototype but the data model is built
@@ -249,7 +249,7 @@ Goal: a public URL you can put behind a QR code. Easiest path (free, ~5 minutes)
 - Go to <https://render.com> → **New** → **Blueprint** → pick this repo.
   Render reads `render.yaml` and sets everything up.
 - (Optional) Paste your `ANTHROPIC_API_KEY` in the dashboard to turn on the AI
-  engine. Skip it and TripIt still works on the rules engine.
+  engine. Skip it and Triperly still works on the rules engine.
 - Render gives you a URL like `https://tripit.onrender.com`.
 
 > The blueprint deploys the `claude/ecstatic-cori-im2jpg` branch. Once you merge
@@ -264,7 +264,7 @@ npm run qr -- https://tripit.onrender.com
 This prints a scannable QR in your terminal and saves `public/qr.png` (for
 slides/printing) and `public/qr.svg`. Drop it in your pitch deck or on a flyer.
 
-**Why one QR does both jobs:** TripIt is a PWA, so scanning it on a phone lets
+**Why one QR does both jobs:** Triperly is a PWA, so scanning it on a phone lets
 people **try it in the browser *and* "Add to Home Screen"** to install it like an
 app — the "visit the site" and "download the app" goals in one code.
 

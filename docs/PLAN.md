@@ -1,6 +1,6 @@
-# TripIt — Accounts, Reviews, Groups, Social & AI Feedback
+# Triperly — Accounts, Reviews, Groups, Social & AI Feedback
 
-This is the approved, phased plan for turning TripIt from a stateless, client-only
+This is the approved, phased plan for turning Triperly from a stateless, client-only
 prototype into a family product with accounts, user-generated reviews, social sharing,
 trip groups, and a consented feedback loop for the recommender.
 

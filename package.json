@@ -1,8 +1,8 @@
 {
-  "name": "tripit",
+  "name": "triperly",
   "version": "0.1.0",
   "private": true,
-  "description": "TripIt — family trip planner. Survey-driven, nap-aware itineraries grounded in real venue data and personalized by Claude.",
+  "description": "Triperly — family trip planner. Survey-driven, nap-aware itineraries grounded in real venue data and personalized by Claude.",
   "type": "module",
   "engines": {
     "node": ">=22.5.0"
