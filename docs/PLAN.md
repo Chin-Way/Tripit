@@ -1,6 +1,6 @@
-# TripIt — Accounts, Reviews, Groups, Social & AI Feedback
+# Voyet — Accounts, Reviews, Groups, Social & AI Feedback
 
-This is the approved, phased plan for turning TripIt from a stateless, client-only
+This is the approved, phased plan for turning Voyet from a stateless, client-only
 prototype into a family product with accounts, user-generated reviews, social sharing,
 trip groups, and a consented feedback loop for the recommender.
 
@@ -38,7 +38,7 @@ simply report "unavailable" and the front-end shows guest-only UI.
 DATABASE_URL              # set → use Postgres instead of SQLite
 SQLITE_PATH               # optional override for the SQLite file (default ./data/tripit.db)
 SESSION_SECRET            # signs OAuth state + cookie integrity (random 32+ bytes)
-PUBLIC_BASE_URL           # e.g. https://tripit.onrender.com (for OAuth redirect URIs)
+PUBLIC_BASE_URL           # e.g. https://voyet.onrender.com (for OAuth redirect URIs)
 ADMIN_EMAILS              # comma-separated allowlist for moderation actions
 GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET
 FACEBOOK_CLIENT_ID / FACEBOOK_CLIENT_SECRET

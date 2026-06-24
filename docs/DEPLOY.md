@@ -1,6 +1,6 @@
 # Turning on accounts, reviews, groups & feedback in production
 
-TripIt deploys and runs with **zero** of this configured (guest mode: itineraries, the
+Voyet deploys and runs with **zero** of this configured (guest mode: itineraries, the
 light/dark theme, the share sheet). The steps below switch on the account-gated features
 (sign-in, reviews, groups, and the consented feedback loop) on Render.
 
@@ -19,7 +19,7 @@ The `render.yaml` Blueprint already automates the hard parts, so a shareholder-r
 demo needs **no provider setup and no secrets**:
 
 1. Render → **New → Blueprint** → pick this repo → **Apply**. The Blueprint:
-   - **auto-creates the `tripit-db` Postgres** and wires `DATABASE_URL`,
+   - **auto-creates the `voyet-db` Postgres** and wires `DATABASE_URL`,
    - **auto-generates `SESSION_SECRET`**, and
    - sets **`DEMO_AUTH=1`**.
 2. Open the app → **Profile** → tap **Continue with Apple / Google / Facebook**. These
@@ -46,7 +46,7 @@ simulation off for production by setting `DEMO_AUTH=0` (or removing it).
 
 Render's free web disk is ephemeral, so use Postgres for real persistence.
 
-1. Render Dashboard → **New → Postgres** → name it `tripit-db` → Free plan → **Create**.
+1. Render Dashboard → **New → Postgres** → name it `voyet-db` → Free plan → **Create**.
 2. Open the database → **Connections** → copy the **Internal Database URL**
    (use Internal when the DB and web service are in the same region).
 3. You'll paste it as `DATABASE_URL` in Step 2.
@@ -113,7 +113,7 @@ URLs, so this only works on your https Render URL.
 
 1. <https://developer.apple.com/account> → **Certificates, Identifiers & Profiles**.
 2. **Identifiers → +** → **App IDs** → App → enable **Sign In with Apple** capability.
-3. **Identifiers → +** → **Services IDs** → create one (e.g. `com.yourco.tripit.web`).
+3. **Identifiers → +** → **Services IDs** → create one (e.g. `com.yourco.voyet.web`).
    This string becomes `APPLE_CLIENT_ID`. Edit it → enable **Sign In with Apple** →
    **Configure**:
    - Primary App ID: the App ID from step 2
@@ -123,7 +123,7 @@ URLs, so this only works on your https Render URL.
    (one-time download). Note the **Key ID**.
 5. Your **Team ID** is top-right of the developer account.
 6. Put these in Render:
-   - `APPLE_CLIENT_ID` = the Services ID (e.g. `com.yourco.tripit.web`)
+   - `APPLE_CLIENT_ID` = the Services ID (e.g. `com.yourco.voyet.web`)
    - `APPLE_TEAM_ID` = your 10-char Team ID
    - `APPLE_KEY_ID` = the Key ID from step 4
    - `APPLE_PRIVATE_KEY` = the contents of the `.p8`. Easiest reliable form: open it,
@@ -136,7 +136,7 @@ URLs, so this only works on your https Render URL.
 ## Step 6 — Deploy & verify
 
 1. After saving env vars, Render redeploys. (Or **Manual Deploy → Deploy latest commit**.)
-2. **Logs** should show `[db] persistence on (postgres)` and `TripIt running…`.
+2. **Logs** should show `[db] persistence on (postgres)` and `Voyet running…`.
 3. Quick check from your machine:
    ```bash
    curl https://YOUR-APP.onrender.com/api/auth/providers

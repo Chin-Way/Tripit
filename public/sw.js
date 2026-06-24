@@ -1,7 +1,7 @@
-// Minimal service worker — caches the app shell so TripIt opens offline.
+// Minimal service worker — caches the app shell so Voyet opens offline.
 // Network-first for the live itinerary API; cache-first for the static shell.
-const CACHE = "tripit-v8";
-const SHELL = ["/", "/index.html", "/manifest.webmanifest", "/icon.svg"];
+const CACHE = "voyet-v1";
+const SHELL = ["/", "/index.html", "/manifest.webmanifest", "/icon.svg", "/icon-dark.svg"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

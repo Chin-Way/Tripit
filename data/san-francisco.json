@@ -1,6 +1,6 @@
 {
   "city": "San Francisco",
-  "note": "Seed dataset for the TripIt itinerary engine. Ratings/review counts are illustrative seed values for the demo; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
+  "note": "Seed dataset for the Voyet itinerary engine. Ratings/review counts are illustrative seed values for the demo; replace with live Google Places API data before launch. icons must exist in the front-end ICONS map; colors in ACS; tags in TAGMETA.",
   "venues": [
     {
       "id": "sf-cal-academy", "name": "California Academy of Sciences", "icon": "museum", "color": "blue",

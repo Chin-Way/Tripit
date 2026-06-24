@@ -5,7 +5,7 @@
       <stop offset="1" stop-color="#1fb6c8"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="115" fill="#ffffff"/>
+  <rect width="512" height="512" rx="115" fill="#0e2036"/>
   <path d="M300 312C356 330 360 380 300 396C244 412 250 452 300 462" fill="none" stroke="#37d6e0" stroke-width="16" stroke-linecap="round" stroke-dasharray="8 30"/>
   <path fill-rule="evenodd" fill="url(#pinGrad)" d="M236 372C180 304 144 256 144 200A92 92 0 1 1 328 200C328 256 292 304 236 372ZM271 192A35 35 0 1 0 201 192A35 35 0 1 0 271 192Z"/>
 </svg>

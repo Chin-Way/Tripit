@@ -1,18 +1,18 @@
-# Render blueprint — deploys TripIt as a free web service.
+# Render blueprint — deploys Voyet as a free web service.
 #
 # Steps:
 #   1. Push this repo to GitHub (it already is).
 #   2. Go to https://render.com  ->  New  ->  Blueprint  ->  pick this repo.
 #   3. (Optional) Paste your ANTHROPIC_API_KEY when prompted to turn on the AI
-#      engine. Skip it and TripIt still works on the rules engine.
-#   4. Render gives you a public URL like https://tripit.onrender.com.
-#      Then run:  npm run qr -- https://tripit.onrender.com
+#      engine. Skip it and Voyet still works on the rules engine.
+#   4. Render gives you a public URL like https://voyet.onrender.com.
+#      Then run:  npm run qr -- https://voyet.onrender.com
 #
 # Note: the free plan sleeps after ~15 min idle and wakes on the next visit
 # (first hit takes a few seconds). Fine for demos; upgrade for always-on.
 services:
   - type: web
-    name: tripit
+    name: voyet
     runtime: node
     plan: free
     branch: claude/ecstatic-cori-im2jpg
@@ -43,7 +43,7 @@ services:
       # which is wiped on each redeploy on the free web tier.
       - key: DATABASE_URL
         fromDatabase:
-          name: tripit-db
+          name: voyet-db
           property: connectionString
       # Signs the OAuth state cookie — Render generates a random value for you.
       - key: SESSION_SECRET
@@ -67,7 +67,7 @@ services:
       - key: DEMO_WALLET
         value: "1"
       # Public origin for OAuth redirect URIs (optional — inferred from the
-      # Render URL when unset). Set it for real OAuth, e.g. https://tripit.onrender.com
+      # Render URL when unset). Set it for real OAuth, e.g. https://voyet.onrender.com
       - key: PUBLIC_BASE_URL
         sync: false
       # Comma-separated emails allowed to moderate reviews.
@@ -119,5 +119,5 @@ services:
 # Auto-provisioned Postgres for accounts/reviews/groups. Render's FREE database
 # expires ~30 days after creation — upgrade the plan to keep it beyond that.
 databases:
-  - name: tripit-db
+  - name: voyet-db
     plan: free

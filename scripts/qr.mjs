@@ -1,5 +1,5 @@
 // scripts/qr.mjs
-// Generate a QR code that points at your deployed TripIt URL.
+// Generate a QR code that points at your deployed Voyet URL.
 //
 //   npm run qr -- https://your-app.onrender.com
 //
@@ -17,7 +17,7 @@ const url = process.argv[2];
 
 if (!url || !/^https?:\/\//i.test(url)) {
   console.error("\nUsage:  npm run qr -- <your-public-url>");
-  console.error("Example: npm run qr -- https://tripit.onrender.com");
+  console.error("Example: npm run qr -- https://voyet.onrender.com");
   console.error("(the URL must start with http:// or https://)\n");
   process.exit(1);
 }
@@ -30,7 +30,7 @@ const svgPath = path.join(dir, "qr.svg");
 const colors = { dark: "#06131f", light: "#ffffff" }; // high-contrast, scans reliably
 
 // 1) Terminal preview — this block is itself scannable with a phone camera.
-console.log("\nScan to open TripIt on your phone:\n");
+console.log("\nScan to open Voyet on your phone:\n");
 console.log(await QRCode.toString(url, { type: "terminal", small: true, errorCorrectionLevel: "M" }));
 
 // 2) Image files for decks / printing / sharing.
